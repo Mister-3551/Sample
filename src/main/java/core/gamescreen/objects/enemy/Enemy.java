@@ -1,4 +1,4 @@
-package objects.enemy;
+package core.gamescreen.objects.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,8 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import helper.Constants;
-import static helper.Constants.*;
+import core.gamescreen.helper.Constants;
 
 public class Enemy extends EnemyEntity {
 
@@ -29,8 +28,8 @@ public class Enemy extends EnemyEntity {
 
     @Override
     public void update() {
-        x = body.getPosition().x * PPM;
-        y = body.getPosition().y * PPM;
+        x = body.getPosition().x * Constants.PPM;
+        y = body.getPosition().y * Constants.PPM;
         checkUserInput();
         setEnemyBounds(x, y);
     }

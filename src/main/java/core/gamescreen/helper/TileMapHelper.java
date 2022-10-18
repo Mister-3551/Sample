@@ -1,6 +1,5 @@
-package helper;
+package core.gamescreen.helper;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -10,11 +9,9 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import objects.enemy.Enemy;
-import objects.player.Player;
-import screen.GameScreen;
-
-import static helper.Constants.*;
+import core.gamescreen.objects.enemy.Enemy;
+import core.gamescreen.objects.player.Player;
+import core.screen.GameScreen;
 
 public class TileMapHelper {
 
@@ -41,30 +38,15 @@ public class TileMapHelper {
                     float posX = ((TiledMapTileMapObject) mapObject).getX();
                     float posY = ((TiledMapTileMapObject) mapObject).getY();
 
-                    Texture texture = ((TiledMapTileMapObject) mapObject).getTextureRegion().getTexture();
-                    /*BodyDef bodyDef = new BodyDef();
-                    bodyDef.type = BodyDef.BodyType.DynamicBody;
-
-                    bodyDef.position.set(new Vector2(originX, 100));
-
-                    Body body = gameScreen.getWorld().createBody(bodyDef);
-                    PolygonShape shape = new PolygonShape();
-                    shape.setAsBox(1, 1, new Vector2(1, 1), 0);
-                    FixtureDef fixture = new FixtureDef();
-                    fixture.shape = shape;
-                    body.createFixture(fixture);*/
-
                     Body body = BodyHelperService.createPlayerBody(posX, posY, gameScreen.getWorld());
-                    gameScreen.setPlayer(new Player(64, 64, body));
+                    gameScreen.setPlayer(new Player(48, 48, body));
 
                 } else if (mapObject.getName() != null && mapObject.getName().equals("Enemy")) {
                     float posX = ((TiledMapTileMapObject) mapObject).getX();
                     float posY = ((TiledMapTileMapObject) mapObject).getY();
 
-                    //Texture texture = ((TiledMapTileMapObject) mapObject).getTextureRegion().getTexture();
-
                     Body body = BodyHelperService.createPlayerBody(posX, posY, gameScreen.getWorld());
-                    gameScreen.setEnemy(new Enemy(64, 64, body));
+                    gameScreen.setEnemy(new Enemy(48, 48, body));
                 }
             }
         }
@@ -84,7 +66,7 @@ public class TileMapHelper {
         Vector2[] worldVertices = new Vector2[vertices.length / 2];
 
         for (int i = 0; i < vertices.length / 2; i++) {
-            Vector2 current = new Vector2(vertices[i * 2] / PPM, vertices[i * 2 + 1] / PPM);
+            Vector2 current = new Vector2(vertices[i * 2] / Constants.PPM, vertices[i * 2 + 1] / Constants.PPM);
             worldVertices[i] = current;
         }
 

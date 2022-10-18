@@ -1,4 +1,4 @@
-package helper;
+package core.gamescreen.helper;
 
 import com.badlogic.gdx.math.Rectangle;
 

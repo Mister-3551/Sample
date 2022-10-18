@@ -1,17 +1,14 @@
-package objects.player;
+package core.gamescreen.objects.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import helper.Constants;
-
-import static helper.Constants.*;
+import core.gamescreen.helper.Constants;
 
 public class Player extends PlayerEntity {
 
@@ -35,8 +32,8 @@ public class Player extends PlayerEntity {
 
     @Override
     public void update() {
-        x = body.getPosition().x * PPM;
-        y = body.getPosition().y * PPM;
+        x = body.getPosition().x * Constants.PPM;
+        y = body.getPosition().y * Constants.PPM;
         checkUserInput();
         setPlayerBounds(x, y);
     }

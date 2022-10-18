@@ -1,9 +1,8 @@
-package screen;
+package core.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,19 +11,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import helper.CollisionService;
-import helper.Constants;
-import helper.TileMapHelper;
-import objects.enemy.Enemy;
-import objects.player.Player;
-import static helper.Constants.PPM;
+import core.gamescreen.helper.CollisionService;
+import core.gamescreen.helper.Constants;
+import core.gamescreen.helper.TileMapHelper;
+import core.gamescreen.objects.enemy.Enemy;
+import core.gamescreen.objects.player.Player;
+import static core.gamescreen.helper.Constants.PPM;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -36,7 +32,7 @@ public class GameScreen extends ScreenAdapter {
     private TileMapHelper tileMapHelper;
     private BitmapFont font;
 
-    // game objects
+    // game core.objects
     private Player player;
     private Enemy enemy;
 

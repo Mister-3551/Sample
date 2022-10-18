@@ -55,6 +55,11 @@
             <artifactId>gdx-openal</artifactId>
             <version>0.9.9</version>
         </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.31</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>Sample</finalName>
@@ -83,7 +88,7 @@
                             <archive>
                                 <manifest>
                                     <addClasspath>true</addClasspath>
-                                    <mainClass>DesktopLauncher</mainClass>
+                                    <mainClass>launcher.DesktopLauncher</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>

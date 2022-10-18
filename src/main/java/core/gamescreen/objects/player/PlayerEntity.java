@@ -1,15 +1,15 @@
-package objects.enemy;
+package core.gamescreen.objects.player;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 
-public abstract class EnemyEntity {
+public abstract class PlayerEntity {
 
     protected float x, y, velX, velY, speed;
     protected float width, height;
     protected Body body;
 
-    public EnemyEntity(float width, float height, Body body) {
+    public PlayerEntity(float width, float height, Body body) {
         this.x = body.getPosition().x;
         this.y = body.getPosition().y;
         this.width = width;

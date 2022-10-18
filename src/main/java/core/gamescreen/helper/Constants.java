@@ -1,4 +1,4 @@
-package helper;
+package core.gamescreen.helper;
 
 public class Constants {
     public static final float PPM = 32.0f;
