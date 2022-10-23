@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import core.Constants;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.player.Player;
 import core.screen.GameScreen;

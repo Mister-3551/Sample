@@ -16,11 +16,11 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import core.gamescreen.helper.CollisionService;
-import core.gamescreen.helper.Constants;
+import core.Constants;
 import core.gamescreen.helper.TileMapHelper;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.player.Player;
-import static core.gamescreen.helper.Constants.PPM;
+import static core.Constants.PPM;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -59,7 +59,8 @@ public class GameScreen extends ScreenAdapter {
     public void render(float delta) {
         this.update();
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        //Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(211, 211, 211, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         orthogonalTiledMapRenderer.render();
@@ -68,12 +69,14 @@ public class GameScreen extends ScreenAdapter {
         player.render(batch);
         enemy.render(batch);
 
-        font.draw(batch, "LIVES: " + lives, camera.position.x - 450, camera.position.y + 350);
-        font.draw(batch, "KILLS: " + kills, camera.position.x - 275, camera.position.y + 350);
-        font.draw(batch, "DEATHS: " + deaths, camera.position.x - 75, camera.position.y + 350);
+        //font.draw(batch, "LIVES: " + lives, camera.position.x - 450, camera.position.y + 350);
+        //font.draw(batch, "KILLS: " + kills, camera.position.x - 275, camera.position.y + 350);
+        //font.draw(batch, "DEATHS: " + deaths, camera.position.x - 75, camera.position.y + 350);
+        font.draw(batch, Constants.USERNAME + ": " + kills, camera.position.x - (Constants.SCREENWIDTH / 2f) + 50, camera.position.y + (Constants.SCREENHEIGHT / 2f) - 50);
+        font.draw(batch, "Player : 0", camera.position.x - (Constants.SCREENWIDTH / 2f) + 50, camera.position.y + (Constants.SCREENHEIGHT / 2f) - 100);
 
         batch.end();
-        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+        //box2DDebugRenderer.render(world, camera.combined.scl(PPM));
     }
 
     private void update() {

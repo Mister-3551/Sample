@@ -3,17 +3,16 @@ package core;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import core.screen.GameScreen;
-import core.screen.LoginScreen;
+import core.loginscreen.LoginConnection;
+import core.screen.ScreenChanger;
 
 public class Boot extends Game {
 
-    private static Boot INSTANCE;
     private int widthScreen, heightScreen;
     private OrthographicCamera orthographicCamera;
 
     public Boot() {
-        INSTANCE = this;
+        Constants.INSTANCE = this;
     }
 
     @Override
@@ -22,7 +21,12 @@ public class Boot extends Game {
         this.heightScreen = Gdx.graphics.getHeight();
         this.orthographicCamera = new OrthographicCamera();
         this.orthographicCamera.setToOrtho(false, widthScreen, heightScreen);
-        //setScreen(new GameScreen(orthographicCamera));
-        setScreen(new LoginScreen(INSTANCE, orthographicCamera));
+        Constants.orthographicCamera = orthographicCamera;
+        new ScreenChanger().changeScreen(isSignIn());
+    }
+
+    private String isSignIn() {
+        if (!new LoginConnection().checkIfUserSignIn()) return "LoginScreen";
+        else return "MenuScreen";
     }
 }
