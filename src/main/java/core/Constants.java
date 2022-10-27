@@ -22,6 +22,7 @@ public class Constants {
 
     // Database constants
     public static String USERNAME;
+    public static String RANK;
     public static String GAMETOKEN;
 
 }

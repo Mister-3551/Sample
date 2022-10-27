@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import core.Constants;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.player.Player;
-import core.screen.GameScreen;
+import core.screens.GameScreen;
 
 public class TileMapHelper {
 
@@ -24,7 +24,7 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
-        tiledMap = new TmxMapLoader().load("maps/map0.tmx");
+        tiledMap = new TmxMapLoader().load("maps/map1.tmx");
         parseMapObject(tiledMap.getLayers().get("Objects").getObjects());
         return new OrthogonalTiledMapRenderer(tiledMap);
     }
@@ -40,9 +40,9 @@ public class TileMapHelper {
                     float posY = ((TiledMapTileMapObject) mapObject).getY();
 
                     Body body = BodyHelperService.createPlayerBody(posX, posY, gameScreen.getWorld());
-                    gameScreen.setPlayer(new Player(48, 48, body));
-
-                } else if (mapObject.getName() != null && mapObject.getName().equals("Enemy")) {
+                    gameScreen.setPlayer(new Player((14 * 1.5f), (34 * 1.5f), body));
+                }
+                else if (mapObject.getName() != null && mapObject.getName().equals("Enemy")) {
                     float posX = ((TiledMapTileMapObject) mapObject).getX();
                     float posY = ((TiledMapTileMapObject) mapObject).getY();
 

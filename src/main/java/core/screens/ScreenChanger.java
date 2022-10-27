@@ -1,4 +1,4 @@
-package core.screen;
+package core.screens;
 
 import core.Constants;
 
@@ -13,6 +13,10 @@ public class ScreenChanger {
                 Constants.INSTANCE.setScreen(new MenuScreen());
                 return;
             case "SettingsScreen":
+                Constants.INSTANCE.setScreen(new SettingsScreen());
+                return;
+            case "LevelsScreen":
+                Constants.INSTANCE.setScreen(new LevelsScreen());
                 return;
             case "GameScreen":
                 Constants.INSTANCE.setScreen(new GameScreen(Constants.orthographicCamera));

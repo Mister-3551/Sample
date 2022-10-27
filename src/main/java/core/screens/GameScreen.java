@@ -1,4 +1,4 @@
-package core.screen;
+package core.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -15,12 +15,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import core.gamescreen.helper.CollisionService;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import core.Constants;
 import core.gamescreen.helper.TileMapHelper;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.player.Player;
-import static core.Constants.PPM;
+import core.screens.navigation.NavigationBar;
+
+import static core.Constants.*;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -35,6 +38,7 @@ public class GameScreen extends ScreenAdapter {
     // game core.objects
     private Player player;
     private Enemy enemy;
+    private Stage stage;
 
     private int lives, kills, deaths;
 
@@ -50,6 +54,11 @@ public class GameScreen extends ScreenAdapter {
         this.kills = 0;
         this.deaths = 0;
 
+        this.stage = new Stage();
+        createStructure();
+
+        Gdx.input.setInputProcessor(stage);
+
         this.font = new BitmapFont();
         font.setColor(Color.ORANGE);
         font.getData().setScale(2, 2);
@@ -59,24 +68,20 @@ public class GameScreen extends ScreenAdapter {
     public void render(float delta) {
         this.update();
 
-        //Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClearColor(211, 211, 211, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         orthogonalTiledMapRenderer.render();
 
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
+        stage.draw();
+
         batch.begin();
         player.render(batch);
-        enemy.render(batch);
-
-        //font.draw(batch, "LIVES: " + lives, camera.position.x - 450, camera.position.y + 350);
-        //font.draw(batch, "KILLS: " + kills, camera.position.x - 275, camera.position.y + 350);
-        //font.draw(batch, "DEATHS: " + deaths, camera.position.x - 75, camera.position.y + 350);
-        font.draw(batch, Constants.USERNAME + ": " + kills, camera.position.x - (Constants.SCREENWIDTH / 2f) + 50, camera.position.y + (Constants.SCREENHEIGHT / 2f) - 50);
-        font.draw(batch, "Player : 0", camera.position.x - (Constants.SCREENWIDTH / 2f) + 50, camera.position.y + (Constants.SCREENHEIGHT / 2f) - 100);
+        //enemy.render(batch);
 
         batch.end();
-        //box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
     }
 
     private void update() {
@@ -86,11 +91,12 @@ public class GameScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
         player.update();
-        enemy.update();
+        //enemy.update();
 
-        if (CollisionService.checkCollision(player.getPlayerBounds(), enemy.getEnemyBounds())) kills++;
+        //if (CollisionService.checkCollision(player.getPlayerBounds(), enemy.getEnemyBounds())) kills++;
 
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
+        //if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) new ScreenChanger().changeScreen("MenuScreen");
     }
 
     private void cameraUpdate() {
@@ -116,5 +122,16 @@ public class GameScreen extends ScreenAdapter {
     public void setEnemy(Enemy enemy) {
         this.enemy = enemy;
         this.enemy.setSprite(new Sprite(new Texture(Constants.ENEMY_NORMAL)));
+    }
+
+    private void createStructure() {
+        Table table = new Table();
+        Table empty = new Table();
+        table.setFillParent(true);
+        table.add(new NavigationBar().gameScreenNavigationBar()).growX();
+        table.row();
+        table.add(empty).growX().growY();
+
+        stage.addActor(table);
     }
 }

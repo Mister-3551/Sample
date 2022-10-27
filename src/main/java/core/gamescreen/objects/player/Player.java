@@ -7,8 +7,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.*;
 import core.Constants;
+import core.gamescreen.helper.BodyHelperService;
 
 public class Player extends PlayerEntity {
 
@@ -46,14 +47,22 @@ public class Player extends PlayerEntity {
     private void checkUserInput() {
         velX = 0;
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            if (!this.sprite.equals(PLAYER_LEFT)) setSprite(PLAYER_LEFT_SWORD);
+            if (!this.sprite.equals(PLAYER_LEFT)) {
+                setSprite(PLAYER_LEFT);
+                float baseX = 14f, baseY = 34f;
+                changeShape(baseX, baseY);
+            }
             velX = -1;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            if (!this.sprite.equals(PLAYER_RIGHT)) setSprite(PLAYER_RIGHT);
+            if (!this.sprite.equals(PLAYER_RIGHT_SWORD)) {
+                setSprite(PLAYER_RIGHT_SWORD);
+                float baseX = 22f, baseY = 34f;
+                changeShape(baseX, baseY);
+            }
             velX = 1;
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W) && jumpCounter < 2) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W) && jumpCounter < 25) {
             float force = body.getMass() * 18;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
@@ -61,6 +70,26 @@ public class Player extends PlayerEntity {
         }
         if (body.getLinearVelocity().y == 0) jumpCounter = 0;
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
+    }
+
+    private void changeShape(float baseX, float baseY) {
+        int baseUnitX = 64, baseUnitY = 64;
+
+        height = baseY * 1.5f;
+        width = baseX * 1.5f;
+
+        var hx = width / baseUnitX;
+        var hy = height / baseUnitY;
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(hx, hy, new Vector2(hx, hy), 0);
+
+        Fixture previous = body.getFixtureList().first();
+
+        body.destroyFixture(previous);
+        body.createFixture(BodyHelperService.bodyFixture(shape));
+
+        shape.dispose();
     }
 
     public void setSprite(Sprite sprite) {

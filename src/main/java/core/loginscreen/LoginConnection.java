@@ -1,14 +1,11 @@
 package core.loginscreen;
 
 import core.Constants;
-import core.screen.LoginScreen;
 import core.xml.XmlFile;
-import jdk.jshell.execution.Util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.UUID;
 
 public class LoginConnection {
@@ -81,11 +78,12 @@ public class LoginConnection {
     }
 
     private void setUserData() {
-        String query = "SELECT users.username FROM users WHERE users.game_token = '" + Constants.GAMETOKEN + "'";
+        String query = "SELECT users.username, users.rank FROM users WHERE users.game_token = '" + Constants.GAMETOKEN + "'";
         try {
             ResultSet result = connection.createStatement().executeQuery(query);
             while (result.next()) {
                 Constants.USERNAME = result.getString("username");
+                Constants.RANK = result.getString("rank");
             }
             new XmlFile().createXmlFile();
         } catch (Exception e) {

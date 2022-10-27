@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import core.loginscreen.LoginConnection;
-import core.screen.ScreenChanger;
+import core.screens.ScreenChanger;
 
 public class Boot extends Game {
 
