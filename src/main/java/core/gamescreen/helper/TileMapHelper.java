@@ -10,7 +10,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import core.Constants;
-import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.player.Player;
 import core.screens.GameScreen;
 
@@ -39,16 +38,16 @@ public class TileMapHelper {
                     float posX = ((TiledMapTileMapObject) mapObject).getX();
                     float posY = ((TiledMapTileMapObject) mapObject).getY();
 
-                    Body body = BodyHelperService.createPlayerBody(posX, posY, gameScreen.getWorld());
+                    Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld());
                     gameScreen.setPlayer(new Player((14 * 1.5f), (34 * 1.5f), body));
                 }
-                else if (mapObject.getName() != null && mapObject.getName().equals("Enemy")) {
+                /*else if (mapObject.getName() != null && mapObject.getName().equals("Enemy")) {
                     float posX = ((TiledMapTileMapObject) mapObject).getX();
                     float posY = ((TiledMapTileMapObject) mapObject).getY();
 
                     Body body = BodyHelperService.createPlayerBody(posX, posY, gameScreen.getWorld());
-                    gameScreen.setEnemy(new Enemy(48, 48, body));
-                }
+                    gameScreen.setEnemy(new Enemy(14 * 1.5f, 34 * 1.5f, body));
+                }*/
             }
         }
     }

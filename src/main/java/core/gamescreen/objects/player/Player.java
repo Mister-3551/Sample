@@ -10,6 +10,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import core.Constants;
 import core.gamescreen.helper.BodyHelperService;
+import core.gamescreen.objects.bullet.Bullet;
+import core.screens.GameScreen;
+
+import java.util.ArrayList;
 
 public class Player extends PlayerEntity {
 
@@ -49,6 +53,7 @@ public class Player extends PlayerEntity {
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             if (!this.sprite.equals(PLAYER_LEFT)) {
                 setSprite(PLAYER_LEFT);
+                GameScreen.setBulletDirection(-3);
                 float baseX = 14f, baseY = 34f;
                 changeShape(baseX, baseY);
             }
@@ -57,6 +62,7 @@ public class Player extends PlayerEntity {
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             if (!this.sprite.equals(PLAYER_RIGHT_SWORD)) {
                 setSprite(PLAYER_RIGHT_SWORD);
+                GameScreen.setBulletDirection(3);
                 float baseX = 22f, baseY = 34f;
                 changeShape(baseX, baseY);
             }

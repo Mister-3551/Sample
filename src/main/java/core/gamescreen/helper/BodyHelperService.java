@@ -6,15 +6,13 @@ import core.Constants;
 
 public class BodyHelperService {
 
-    public static Body createPlayerBody(float x, float y, World world) {
+    public static Body createObjectBody(float objectWidth, float objectHeight, float x, float y, World world) {
 
         var baseUnitX = 64;
         var baseUnitY = 64;
-        var playerWidth = 14;
-        var playerHeight = 34;
 
-        var width = playerWidth * 1.5f;
-        var height = playerHeight * 1.5f;
+        var width = objectWidth * 1.5f;
+        var height = objectHeight * 1.5f;
 
         var hx = width / baseUnitX;
         var hy = height / baseUnitY;

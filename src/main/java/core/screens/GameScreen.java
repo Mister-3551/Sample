@@ -13,15 +13,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import core.Constants;
+import core.gamescreen.helper.BodyHelperService;
 import core.gamescreen.helper.TileMapHelper;
+import core.gamescreen.objects.bullet.Bullet;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.player.Player;
 import core.screens.navigation.NavigationBar;
+
+import java.util.ArrayList;
 
 import static core.Constants.*;
 
@@ -38,30 +43,39 @@ public class GameScreen extends ScreenAdapter {
     // game core.objects
     private Player player;
     private Enemy enemy;
+    private ArrayList<Bullet> bullets, bulletsToRemoveve;
+    private Table table, empty;
     private Stage stage;
 
     private int lives, kills, deaths;
+    private static int bulletDirection;
 
     public GameScreen(OrthographicCamera camera) {
         this.camera = camera;
-        this.batch = new SpriteBatch();
-        this.world = new World(new Vector2(0, -25f) , false);
-        this.box2DDebugRenderer = new Box2DDebugRenderer();
-        this.tileMapHelper = new TileMapHelper(this);
-        this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
+        batch = new SpriteBatch();
+        world = new World(new Vector2(0, -25f) , false);
+        box2DDebugRenderer = new Box2DDebugRenderer();
+        tileMapHelper = new TileMapHelper(this);
+        orthogonalTiledMapRenderer = tileMapHelper.setupMap();
 
-        this.lives = 3;
-        this.kills = 0;
-        this.deaths = 0;
+        table = new Table();
+        empty = new Table();
 
-        this.stage = new Stage();
+        lives = 3;
+        kills = 0;
+        deaths = 0;
+
+        stage = new Stage();
         createStructure();
 
         Gdx.input.setInputProcessor(stage);
 
-        this.font = new BitmapFont();
+        font = new BitmapFont();
         font.setColor(Color.ORANGE);
         font.getData().setScale(2, 2);
+
+        bullets = new ArrayList<>();
+        bulletsToRemoveve = new ArrayList<>();
     }
 
     @Override
@@ -78,6 +92,11 @@ public class GameScreen extends ScreenAdapter {
 
         batch.begin();
         player.render(batch);
+
+
+        for (Bullet bullet : bullets) {
+            bullet.render(batch);
+        }
         //enemy.render(batch);
 
         batch.end();
@@ -97,12 +116,31 @@ public class GameScreen extends ScreenAdapter {
 
         //if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) new ScreenChanger().changeScreen("MenuScreen");
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            var playerWidth = 15;
+            if (bulletDirection == -3) playerWidth = -15;
+            Body body = BodyHelperService.createObjectBody(5, 5,getPlayer().getBody().getPosition().x * Constants.PPM + playerWidth, getPlayer().getBody().getPosition().y * Constants.PPM + 17, world);
+            bullets.add(new Bullet(5 * 1.5f, 5 * 1.5f, body, bulletDirection));
+        }
+
+        for (Bullet bullet : bullets) {
+            bullet.update();
+            if (bullet.remove) bulletsToRemoveve.add(bullet);
+        }
+        bullets.removeAll(bulletsToRemoveve);
+        if (bullets.size() == 0 && bulletsToRemoveve.size() != 0) bulletsToRemoveve.clear();
     }
 
     private void cameraUpdate() {
+        var playerPositionX = Math.abs(player.getBody().getPosition().x * Constants.PPM * 10) / 10f;
+        var playerPositionY = Math.abs(player.getBody().getPosition().y * Constants.PPM * 10) / 10f;
+        var cameraMovingPosition = 660;
+
         Vector3 position = camera.position;
-        position.x = Math.abs(player.getBody().getPosition().x * PPM * 10) / 10f;
-        position.y = Math.abs(player.getBody().getPosition().y * PPM * 10) / 10f;
+        if (playerPositionX > cameraMovingPosition) position.x = playerPositionX;
+        else position.x = cameraMovingPosition;
+        if (playerPositionY > 400) position.y = playerPositionY;
         camera.position.set(position);
         camera.update();
     }
@@ -124,9 +162,11 @@ public class GameScreen extends ScreenAdapter {
         this.enemy.setSprite(new Sprite(new Texture(Constants.ENEMY_NORMAL)));
     }
 
+    public static void setBulletDirection(int bulletDirection1) {
+        bulletDirection = bulletDirection1;
+    }
+
     private void createStructure() {
-        Table table = new Table();
-        Table empty = new Table();
         table.setFillParent(true);
         table.add(new NavigationBar().gameScreenNavigationBar()).growX();
         table.row();
