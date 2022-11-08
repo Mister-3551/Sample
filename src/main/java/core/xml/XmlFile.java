@@ -46,7 +46,7 @@ public class XmlFile {
             login.setAttribute("id", "1");
 
             token = document.createElement("token");
-            token.appendChild(document.createTextNode(Constants.GAMETOKEN));
+            token.appendChild(document.createTextNode(Constants.GAME_TOKEN));
             login.appendChild(token);
 
             transformerFactory = TransformerFactory.newInstance();
@@ -88,7 +88,7 @@ public class XmlFile {
 
             Element tokenElement = (Element) token;
 
-            Constants.GAMETOKEN = tokenElement.getTextContent();
+            Constants.GAME_TOKEN = tokenElement.getTextContent();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

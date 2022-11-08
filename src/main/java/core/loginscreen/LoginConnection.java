@@ -36,7 +36,7 @@ public class LoginConnection {
                     String gameToken = createGameToken();
                     String gameTokenQuery = "UPDATE users SET users.game_token = '" + gameToken + "' WHERE users.id = '" + result.getString("id") + "'";
                     connection.createStatement().executeUpdate(gameTokenQuery);
-                    Constants.GAMETOKEN = gameToken;
+                    Constants.GAME_TOKEN = gameToken;
                     setUserData();
                     return true;
                 }
@@ -48,14 +48,14 @@ public class LoginConnection {
     }
 
     public boolean checkIfUserSignIn() {
-        if (Constants.GAMETOKEN == null) new XmlFile().getUserData();
-        if (Constants.GAMETOKEN.equals("")) return false;
-        String query = "SELECT users.game_token FROM users WHERE users.game_token = '" + Constants.GAMETOKEN + "'";
+        if (Constants.GAME_TOKEN == null) new XmlFile().getUserData();
+        if (Constants.GAME_TOKEN.equals("")) return false;
+        String query = "SELECT users.game_token FROM users WHERE users.game_token = '" + Constants.GAME_TOKEN + "'";
         try {
             ResultSet result = connection.createStatement().executeQuery(query);
             while (result.next()) {
                 String gameToken = result.getString("game_token");
-                if (gameToken.equals(Constants.GAMETOKEN)) {
+                if (gameToken.equals(Constants.GAME_TOKEN)) {
                     setUserData();
                     return true;
                 }
@@ -68,9 +68,9 @@ public class LoginConnection {
 
     public void signOut() {
         try {
-            String gameTokenQuery = "UPDATE users SET users.game_token = '' WHERE users.game_token = '" + Constants.GAMETOKEN + "'";
+            String gameTokenQuery = "UPDATE users SET users.game_token = '' WHERE users.game_token = '" + Constants.GAME_TOKEN + "'";
             connection.createStatement().executeUpdate(gameTokenQuery);
-            Constants.GAMETOKEN = "";
+            Constants.GAME_TOKEN = "";
             new XmlFile().deleteGameToken();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -78,7 +78,7 @@ public class LoginConnection {
     }
 
     private void setUserData() {
-        String query = "SELECT users.username, users.rank FROM users WHERE users.game_token = '" + Constants.GAMETOKEN + "'";
+        String query = "SELECT users.username, users.rank FROM users WHERE users.game_token = '" + Constants.GAME_TOKEN + "'";
         try {
             ResultSet result = connection.createStatement().executeQuery(query);
             while (result.next()) {

@@ -5,18 +5,17 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 public abstract class BulletEntity {
 
-    protected float x, y, velX, velY, speed;
-    protected float width, height;
+    protected float x, y, width, height, directionX, directionY, speed;
     protected Body body;
 
-    public BulletEntity(float width, float height, Body body, int direction) {
+    public BulletEntity(float width, float height, Body body, float directionX, float directionY) {
         this.x = body.getPosition().x;
         this.y = body.getPosition().y;
         this.width = width;
         this.height = height;
         this.body = body;
-        this.velX = direction;
-        this.velY = 0;
+        this.directionX = directionX;
+        this.directionY = directionY;
         this.speed = 0;
     }
 

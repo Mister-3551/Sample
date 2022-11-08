@@ -1,6 +1,9 @@
 package core;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import core.levelscreen.objects.Level;
+
+import java.util.ArrayList;
 
 public class Constants {
     public static final float PPM = 32.0f;
@@ -14,15 +17,26 @@ public class Constants {
     public static final String PLAYER_LEFT_SWORD = "player/player_left/player_left_sword.png";
     public static final String PLAYER_RIGHT = "player/player_right/player_right.png";
     public static final String PLAYER_RIGHT_SWORD = "player/player_right/player_right_sword.png";
+    public static final String BULLET = "gameScreen/bullet/bullet.png";
     public static final String ENEMY_NORMAL = "enemy/enemy_normal/enemy_normal.png";
     public static final String ENEMY_LEFT = "enemy/enemy_left/enemy_left.png";
     public static final String ENEMY_RIGHT = "enemy/enemy_right/enemy_right.png";
+    public static final String HOSTAGE_NORMAL = "hostage/hostage_normal/hostage_normal.png";
+    public static final String HOSTAGE_LEFT = "hostage/hostage_left/hostage_left.png";
+    public static final String HOSTAGE_RIGHT = "hostage/hostage_right/hostage_right.png";
     public static Boot INSTANCE;
-    public static OrthographicCamera orthographicCamera;
+    public static OrthographicCamera ORTHOGRAPHIC_CAMERA;
 
     // Database constants
     public static String USERNAME;
     public static String RANK;
-    public static String GAMETOKEN;
+    public static String GAME_TOKEN;
 
+    // GameScreen
+    public static int ENEMY_KILLS = 0;
+    public static boolean RESET_CAMERA_POSITION;
+
+    // LevelsScreen
+    public static ArrayList<Level> LEVEL_LIST;
+    public static int CURRENT_LEVEL;
 }

@@ -1,33 +1,24 @@
-package core.gamescreen.objects.enemy;
+package core.gamescreen.objects.hostage;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.MassData;
 import core.Constants;
 import core.gamescreen.helper.CollisionService;
 
-public class Enemy extends EnemyEntity {
-
-    private int jumpCounter;
+public class Hostage extends HostageEntity {
     private Sprite sprite;
-    private final Sprite ENEMY_NORMAL, ENEMY_LEFT, ENEMY_RIGHT;
+    private final Sprite HOSTAGE_NORMAL, HOSTAGE_LEFT, HOSTAGE_RIGHT;
 
     private CollisionService rect;
 
-    public Enemy(float width, float height, Body body) {
+    public Hostage(float width, float height, Body body) {
         super(width, height, body);
-        this.speed = 10f;
-        this.jumpCounter = 0;
-        ENEMY_NORMAL = new Sprite(new Texture(Constants.ENEMY_NORMAL));
-        ENEMY_LEFT = new Sprite(new Texture(Constants.ENEMY_LEFT));
-        ENEMY_RIGHT = new Sprite(new Texture(Constants.ENEMY_RIGHT));
-        this.sprite = new Sprite(ENEMY_NORMAL);
+        HOSTAGE_NORMAL = new Sprite(new Texture(Constants.HOSTAGE_NORMAL));
+        HOSTAGE_LEFT = new Sprite(new Texture(Constants.HOSTAGE_LEFT));
+        HOSTAGE_RIGHT = new Sprite(new Texture(Constants.HOSTAGE_RIGHT));
+        this.sprite = new Sprite(HOSTAGE_NORMAL);
 
         this.rect = new CollisionService(x, y, width, height);
     }
@@ -48,7 +39,7 @@ public class Enemy extends EnemyEntity {
         this.sprite = sprite;
     }
 
-    public void destroyEnemy() {
+    public void destroyHostage() {
         if (body.getFixtureList().first() != null) body.destroyFixture(body.getFixtureList().first());
     }
 

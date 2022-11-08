@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="60" tileheight="60" infinite="0" nextlayerid="9" nextobjectid="129">
+ <tileset firstgid="1" source="tiles/tiles.tsx"/>
+ <tileset firstgid="101" name="babuska" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="babuska.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="102" name="player_normal" tilewidth="14" tileheight="34" tilecount="1" columns="1">
+  <image source="../player/player_normal/player_normal.png" width="14" height="34"/>
+ </tileset>
+ <tileset firstgid="103" name="enemy_normal" tilewidth="14" tileheight="34" tilecount="1" columns="1">
+  <image source="../enemy/enemy_normal/enemy_normal.png" width="14" height="34"/>
+ </tileset>
+ <tileset firstgid="104" name="hostage_normal" tilewidth="14" tileheight="34" tilecount="1" columns="1">
+  <image source="../hostage/hostage_normal/hostage_normal.png" width="14" height="34"/>
+ </tileset>
+ <objectgroup id="2" name="Objects">
+  <object id="120" name="Player" gid="102" x="100" y="1736" width="64" height="64"/>
+  <object id="122" x="0" y="1800">
+   <polygon points="0,0 0,-1500 60,-1500 60,0"/>
+  </object>
+  <object id="123" x="60" y="1800">
+   <polygon points="0,0 1860,0 1860,-60 0,-60"/>
+  </object>
+  <object id="124" x="1920" y="1800">
+   <polygon points="0,0 0,-1500 60,-1500 60,0"/>
+  </object>
+  <object id="125" x="1920" y="360">
+   <polygon points="0,0 -1920,0 -1920,-60 0,-60"/>
+  </object>
+  <object id="126" x="1080" y="1740">
+   <polygon points="0,0 0,-180 60,-180 60,0"/>
+  </object>
+  <object id="127" x="1440" y="1560">
+   <polygon points="0,0 60,0 60,180 0,180"/>
+  </object>
+  <object id="128" name="Hostage" gid="104" x="1006.21" y="1734.33" width="64" height="64"/>
+ </objectgroup>
+ <layer id="7" name="Map" width="100" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt2kEKg1AUBEFD7n/n4CoIQjZCdWAK/taBfluPY2ZmZv7dK/DmS/fQ+zW6h96v0T30fo3uofdrdA+9X6N76P0a3UPv1+geer9G99D7NbqH3q/RPfR+je6h92t0D71fo3vo/RrdQ+/X6B56v0b30Ps1uofer9E99H6N7qH3a57qcX7nffN+fX/3uNo9WnaPFv3v1e5x9QHUuwCk
+  </data>
+ </layer>
+</map>

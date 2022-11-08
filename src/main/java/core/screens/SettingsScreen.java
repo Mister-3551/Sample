@@ -22,6 +22,7 @@ public class SettingsScreen extends ScreenAdapter {
     private ScrollPane scrollPane;
     private TextButton music, soundEffects, test2, test3, test4, test5, test6, test7, test8, test9;
     private Slider musicSlider ,soundEffectsSlider;
+    private Label label;
     private Skin skin;
     private Stage stage;
 
@@ -44,10 +45,12 @@ public class SettingsScreen extends ScreenAdapter {
         test9 = new TextButton("Save Settings", skin);
         musicSlider = new Slider(0.0f, 100.0f, 1.0f, false, skin);
         soundEffectsSlider = new Slider(0.0f, 100.0f, 1.0f, false, skin);
+        label = new Label("Settings", skin.get("big-title", Label.LabelStyle.class));
 
         createStructure();
 
         stage.addActor(table);
+        stage.setScrollFocus(scrollPane);
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -68,7 +71,7 @@ public class SettingsScreen extends ScreenAdapter {
 
         table.setFillParent(true);
 
-        table.add(new NavigationBar().levelsAndSettingsNavigationBar()).growX();
+        table.add(new NavigationBar().basicNavigationBar()).growX();
 
         table.row();
 
@@ -104,10 +107,6 @@ public class SettingsScreen extends ScreenAdapter {
         scrollPaneTable.add(test7).padBottom(10).height(50).growX();
         scrollPaneTable.row();
         scrollPaneTable.add(test8).height(50).growX();
-
-        Label label = new Label("Settings", skin);
-        label.setColor(Color.BLACK);
-        label.setFontScale(4f, 5f);
 
         form.add(label);
         form.row();

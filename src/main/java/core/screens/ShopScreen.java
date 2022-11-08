@@ -14,18 +14,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import core.Constants;
-import core.levelscreen.LevelConnection;
-import core.levelscreen.objects.Level;
 import core.screens.navigation.NavigationBar;
 
 import java.util.ArrayList;
 
-public class LevelsScreen extends ScreenAdapter {
+public class ShopScreen extends ScreenAdapter {
 
     private Table table, scrollPaneTable, form;
 
-    private ArrayList<Table> levelTables;
-    private ArrayList<Level> levelList;
+    private ArrayList<Table> skinTables, mapTables;
     private ScrollPane scrollPane;
     private Label label;
     private TextButton textButton;
@@ -33,9 +30,8 @@ public class LevelsScreen extends ScreenAdapter {
     private Image image;
     private Skin skin;
     private Stage stage;
-    private LevelConnection levelConnection;
 
-    public LevelsScreen() {
+    public ShopScreen() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal(Constants.SKIN));
         table = new Table();
@@ -43,12 +39,10 @@ public class LevelsScreen extends ScreenAdapter {
         scrollPaneTable = new Table();
         scrollPane = new ScrollPane(scrollPaneTable, skin);
 
-        label = new Label("Level Select", skin.get("big-title", Label.LabelStyle.class));
+        label = new Label("Shop", skin.get("big-title", Label.LabelStyle.class));
 
-        levelTables = new ArrayList<>();
-
-        levelConnection = new LevelConnection();
-        levelList = levelConnection.levelsList();
+        skinTables = new ArrayList<>();
+        mapTables = new ArrayList<>();
 
         createStructure();
 
@@ -88,13 +82,14 @@ public class LevelsScreen extends ScreenAdapter {
         scrollPane.setFadeScrollBars(false);
         scrollPane.setFlickScroll(false);
 
-        for (int i = 0; i < levelList.size(); i++) {
+        for (int i = 0; i < 10; i++) {
             bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGB565);
             bgPixmap.setColor(Color.LIME);
             bgPixmap.fill();
             background = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
 
-            levelTables.add(createLevelProduct(i));
+            skinTables.add(createSkinProduct());
+            mapTables.add(createMapProduct());
         }
 
         addProducts();
@@ -106,29 +101,34 @@ public class LevelsScreen extends ScreenAdapter {
     }
 
     private void addProducts() {
-        int index = 0;
-        for (Table skin : levelTables) {
-            if (index++ % 3 == 0) scrollPaneTable.row();
+        Label skins = new Label("Skins", skin);
+        skins.setAlignment(Align.center);
+        Label maps = new Label("Maps", skin);
+        maps.setAlignment(Align.center);
+
+        for (Table skin : skinTables) {
             scrollPaneTable.add(skin).pad(0, 10, 10, 10).width(300).height(200);
+        }
+        scrollPaneTable.row();
+        for (Table map : mapTables) {
+            scrollPaneTable.add(map).pad(0, 10, 0, 10).width(300).height(200);
         }
     }
 
-    private Table createLevelProduct(int index) {
+    private Table createSkinProduct() {
         Table product = new Table();
 
-        Level level = levelList.get(index);
-
-        textButton = new TextButton(level.getCompleted() + " / Play", skin);
+        textButton = new TextButton("Buy", skin);
         image = new Image(new Texture(Constants.PLAYER_NORMAL));
         image.setAlign(Align.center);
 
-        Label levelName = new Label(level.getName(), skin);
-        levelName.setAlignment(Align.center);
-        levelName.setColor(Color.RED);
+        Label label = new Label("Skin", skin);
+        label.setAlignment(Align.center);
+        label.setColor(Color.RED);
 
         product.setBackground(background);
 
-        product.add(levelName).pad(0, 10, 10, 10).growX().growY();
+        product.add(label).pad(0, 10, 10, 10).growX().growY();
         product.row();
         product.add(image).pad(0, 10, 10, 10).width(100).height(100);
         product.row();
@@ -136,8 +136,34 @@ public class LevelsScreen extends ScreenAdapter {
 
         textButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.CURRENT_LEVEL = index + 1;
-                new ScreenChanger().changeScreen("GameScreen", level.getMap());
+
+            }
+        });
+        return product;
+    }
+
+    private Table createMapProduct() {
+        Table product = new Table();
+
+        textButton = new TextButton("Buy", skin);
+        image = new Image(new Texture(Constants.ENEMY_NORMAL));
+        image.setAlign(Align.center);
+
+        Label label = new Label("Map", skin);
+        label.setAlignment(Align.center);
+        label.setColor(Color.RED);
+
+        product.setBackground(background);
+
+        product.add(label).pad(0, 10, 10, 10).growX().growY();
+        product.row();
+        product.add(image).pad(0, 10, 10, 10).width(100).height(100);
+        product.row();
+        product.add(textButton).height(50).growX();
+
+        textButton.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+
             }
         });
         return product;

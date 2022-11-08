@@ -10,6 +10,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import core.Constants;
+import core.gamescreen.objects.enemy.Enemy;
+import core.gamescreen.objects.hostage.Hostage;
 import core.gamescreen.objects.player.Player;
 import core.screens.GameScreen;
 
@@ -22,8 +24,10 @@ public class TileMapHelper {
         this.gameScreen = gameScreen;
     }
 
-    public OrthogonalTiledMapRenderer setupMap() {
-        tiledMap = new TmxMapLoader().load("maps/map1.tmx");
+    public OrthogonalTiledMapRenderer setupMap(String... level) {
+        Constants.RESET_CAMERA_POSITION = true;
+        String map = level.length == 0 ? Constants.LEVEL_LIST.get(Constants.LEVEL_LIST.size() - 1).getMap() : level[0];
+        tiledMap = new TmxMapLoader().load("maps/" + map + ".tmx");
         parseMapObject(tiledMap.getLayers().get("Objects").getObjects());
         return new OrthogonalTiledMapRenderer(tiledMap);
     }
@@ -41,13 +45,23 @@ public class TileMapHelper {
                     Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld());
                     gameScreen.setPlayer(new Player((14 * 1.5f), (34 * 1.5f), body));
                 }
-                /*else if (mapObject.getName() != null && mapObject.getName().equals("Enemy")) {
+                else if (mapObject.getName() != null && mapObject.getName().equals("Enemy")) {
                     float posX = ((TiledMapTileMapObject) mapObject).getX();
                     float posY = ((TiledMapTileMapObject) mapObject).getY();
 
-                    Body body = BodyHelperService.createPlayerBody(posX, posY, gameScreen.getWorld());
-                    gameScreen.setEnemy(new Enemy(14 * 1.5f, 34 * 1.5f, body));
-                }*/
+                    Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld());
+                    gameScreen.enemies.add(new Enemy(14 * 1.5f, 34 * 1.5f, body));
+                }
+                else if (mapObject.getName() != null && mapObject.getName().equals("Hostage")) {
+
+                    for (int i = 0; i < 10; i++) {
+                        float posX = ((TiledMapTileMapObject) mapObject).getX() + i * 4;
+                        float posY = ((TiledMapTileMapObject) mapObject).getY() + i * 100;
+
+                        Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld());
+                        gameScreen.hostages.add(new Hostage(14 * 1.5f, 34 * 1.5f, body));
+                    }
+                }
             }
         }
     }

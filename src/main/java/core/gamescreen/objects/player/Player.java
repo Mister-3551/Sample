@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import core.Constants;
 import core.gamescreen.helper.BodyHelperService;
+import core.gamescreen.helper.CollisionService;
 import core.gamescreen.objects.bullet.Bullet;
 import core.screens.GameScreen;
 
@@ -21,7 +22,7 @@ public class Player extends PlayerEntity {
     private Sprite sprite;
     private final Sprite PLAYER_NORMAL, PLAYER_LEFT, PLAYER_LEFT_SWORD, PLAYER_RIGHT, PLAYER_RIGHT_SWORD;
 
-    private boolean flip = false;
+    private CollisionService rect, rectRight, rectLeft;
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
@@ -33,14 +34,18 @@ public class Player extends PlayerEntity {
         PLAYER_RIGHT = new Sprite(new Texture(Constants.PLAYER_RIGHT));
         PLAYER_RIGHT_SWORD = new Sprite(new Texture(Constants.PLAYER_RIGHT_SWORD));
         this.sprite = new Sprite(PLAYER_NORMAL);
+        this.rect = new CollisionService(x, y, width, height);
+
+        this.rectLeft = new CollisionService(x, y, width, height);
+        this.rectRight = new CollisionService(x, y, 22 * 1.5f, height);
     }
 
     @Override
     public void update() {
         x = body.getPosition().x * Constants.PPM;
         y = body.getPosition().y * Constants.PPM;
+        rect.move(x, y);
         checkUserInput();
-        setPlayerBounds(x, y);
     }
 
     @Override
@@ -56,6 +61,7 @@ public class Player extends PlayerEntity {
                 GameScreen.setBulletDirection(-3);
                 float baseX = 14f, baseY = 34f;
                 changeShape(baseX, baseY);
+                this.rect = rectLeft;
             }
             velX = -1;
         }
@@ -65,9 +71,11 @@ public class Player extends PlayerEntity {
                 GameScreen.setBulletDirection(3);
                 float baseX = 22f, baseY = 34f;
                 changeShape(baseX, baseY);
+                this.rect = rectRight;
             }
             velX = 1;
         }
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.W) && jumpCounter < 25) {
             float force = body.getMass() * 18;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
@@ -102,11 +110,7 @@ public class Player extends PlayerEntity {
         this.sprite = sprite;
     }
 
-    public Rectangle getPlayerBounds() {
-        return sprite.getBoundingRectangle();
-    }
-
-    private void setPlayerBounds(float x, float y) {
-        sprite.setBounds(x , y, width, height);
+    public CollisionService getCollisionRect() {
+        return this.rect;
     }
 }

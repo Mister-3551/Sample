@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="60" tileheight="60" infinite="0" nextlayerid="9" nextobjectid="122">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="60" tileheight="60" infinite="0" nextlayerid="9" nextobjectid="123">
  <tileset firstgid="1" source="tiles/tiles.tsx"/>
  <tileset firstgid="101" name="babuska" tilewidth="64" tileheight="64" tilecount="1" columns="1">
   <image source="babuska.png" width="64" height="64"/>
@@ -9,6 +9,9 @@
  </tileset>
  <tileset firstgid="103" name="enemy_normal" tilewidth="14" tileheight="34" tilecount="1" columns="1">
   <image source="../enemy/enemy_normal/enemy_normal.png" width="14" height="34"/>
+ </tileset>
+ <tileset firstgid="104" name="hostage_normal" tilewidth="14" tileheight="34" tilecount="1" columns="1">
+  <image source="../hostage/hostage_normal/hostage_normal.png" width="14" height="34"/>
  </tileset>
  <objectgroup id="2" name="Objects">
   <object id="113" x="0" y="1800">
@@ -29,7 +32,8 @@
   <object id="118" x="420" y="1260">
    <polygon points="0,0 0,60 480,60 480,0 0,0"/>
   </object>
-  <object id="120" name="Player" gid="102" x="500" y="480" width="64" height="64"/>
+  <object id="120" name="Player" gid="102" x="100" y="1736" width="64" height="64"/>
+  <object id="122" name="Hostage" gid="104" x="592" y="1246" width="64" height="64"/>
  </objectgroup>
  <layer id="7" name="Map" width="100" height="30">
   <data encoding="base64" compression="zlib">
