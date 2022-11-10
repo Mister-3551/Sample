@@ -1,0 +1,193 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	Article-Description: {
+		file: Article-Description.fnt
+	}
+	big-title: {
+		file: Calibri Regular(1).fnt
+	}
+	Calibri_Regular: {
+		file: Calibri Regular.fnt
+	}
+	Label-Font: {
+		file: Label-Font.fnt
+	}
+	TextField-Font: {
+		file: TextField-Font.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	Background-Color: {
+		r: 0.9764706
+		g: 0.81960785
+		b: 0.81960785
+		a: 1
+	}
+	Hover-Color: {
+		r: 0.9882353
+		g: 0.30980393
+		b: 0.30980393
+		a: 1
+	}
+	Label-Text: {
+		r: 1
+		g: 0
+		b: 0
+		a: 1
+	}
+	light-gray: {
+		r: 0.827451
+		g: 0.827451
+		b: 0.827451
+		a: 1
+	}
+	ScrollPane-Background-Color: {
+		r: 0.9882353
+		g: 0.63529414
+		b: 0.63529414
+		a: 1
+	}
+	Slider-Color: {
+		r: 1
+		g: 0
+		b: 0
+		a: 1
+	}
+	Table-background: {
+		r: 0.9137255
+		g: 0.84313726
+		b: 0.84313726
+		a: 1
+	}
+	Text-Color: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	TextField-Cursor-Color: {
+		r: 0.13333334
+		g: 0
+		b: 1
+		a: 1
+	}
+	TextField-Selection-Color: {
+		r: 0.13333334
+		g: 0
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	Focused: {
+		name: white-pixel
+		color: Hover-Color
+	}
+	over: {
+		name: white-pixel
+		color: Background-Color
+	}
+	TextField-Background-Color: {
+		name: white-pixel
+		color: Background-Color
+	}
+	TextField-Cursor-Color: {
+		name: white-pixel
+		color: TextField-Cursor-Color
+	}
+	TextField-Selection-Color: {
+		name: white-pixel
+		color: TextField-Selection-Color
+	}
+	Table-background: {
+		name: white-pixel
+		color: Background-Color
+	}
+	ScrollPane-background: {
+		name: white-pixel
+		color: ScrollPane-Background-Color
+	}
+	Slider-Background: {
+		name: white-pixel
+		color: Slider-Color
+	}
+	light-gray-background: {
+		name: white-pixel
+		color: light-gray
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: Calibri_Regular
+		fontColor: Label-Text
+	}
+	article-description: {
+		font: Article-Description
+		fontColor: Text-Color
+	}
+	big-title: {
+		font: big-title
+		fontColor: Text-Color
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+	default: {
+		font: Calibri_Regular
+		fontColorSelected: Text-Color
+		fontColorUnselected: Text-Color
+		selection: Focused
+		down: Focused
+		over: Focused
+		background: light-gray-background
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		background: light-gray-background
+		hScrollKnob: horinzontal-slider-cursor
+		vScrollKnob: scroller
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+	default: {
+		font: Calibri_Regular
+		fontColor: Text-Color
+		overFontColor: light-gray
+		disabledFontColor: Text-Color
+		background: light-gray-background
+		scrollStyle: default
+		listStyle: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	default-horizontal: {
+		background: Slider-Background
+		knob: slider-cursor
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: Calibri_Regular
+		fontColor: Text-Color
+		up: over
+		over: Focused
+		pressedOffsetY: 2
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: Calibri_Regular
+		fontColor: Text-Color
+		background: light-gray-background
+		cursor: TextField-Cursor-Color
+		selection: TextField-Selection-Color
+		messageFont: Calibri_Regular
+		messageFontColor: TextField-Cursor-Color
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+}

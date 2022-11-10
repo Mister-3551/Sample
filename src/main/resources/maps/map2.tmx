@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="60" tileheight="60" infinite="0" nextlayerid="9" nextobjectid="169">
+ <tileset firstgid="1" source="tiles/tiles.tsx"/>
+ <tileset firstgid="101" name="babuska" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="babuska.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="102" name="player_normal" tilewidth="14" tileheight="34" tilecount="1" columns="1">
+  <image source="../player/player_normal/player_normal.png" width="14" height="34"/>
+ </tileset>
+ <tileset firstgid="103" name="enemy_normal" tilewidth="14" tileheight="34" tilecount="1" columns="1">
+  <image source="../enemy/enemy_normal/enemy_normal.png" width="14" height="34"/>
+ </tileset>
+ <tileset firstgid="104" name="hostage_normal" tilewidth="14" tileheight="34" tilecount="1" columns="1">
+  <image source="../hostage/hostage_normal/hostage_normal.png" width="14" height="34"/>
+ </tileset>
+ <objectgroup id="2" name="Objects">
+  <object id="120" name="Player" gid="102" x="100" y="1736" width="64" height="64"/>
+  <object id="124" x="60" y="1800">
+   <polygon points="0,0 0,-60 5880,-60 5940,-60 5940,0"/>
+  </object>
+  <object id="125" x="6000" y="1740">
+   <polygon points="0,0 -60,0 -60,-1680 0,-1680"/>
+  </object>
+  <object id="132" name="Enemy" gid="103" x="300" y="1736" width="67" height="79"/>
+  <object id="133" name="Enemy" gid="103" x="200" y="1736" width="70" height="74"/>
+  <object id="145" x="64" y="1740">
+   <polygon points="0,0 -60,0 -60,-1740 0,-1740"/>
+  </object>
+  <object id="146" x="960" y="1680">
+   <polygon points="0,0 0,60 180,60 180,0"/>
+  </object>
+  <object id="147" x="1020" y="1680">
+   <polygon points="0,0 0,-60 120,-60 120,0"/>
+  </object>
+  <object id="148" x="1080" y="1620">
+   <polygon points="0,0 0,-60 60,-60 60,0"/>
+  </object>
+  <object id="149" name="Enemy" gid="103" x="698" y="1714" width="70" height="74"/>
+  <object id="150" name="Enemy" gid="103" x="967" y="1665" width="44" height="46"/>
+  <object id="151" name="Enemy" gid="103" x="1086" y="1549" width="53" height="53"/>
+  <object id="152" name="Enemy" gid="103" x="1340" y="1726" width="70" height="74"/>
+  <object id="153" name="Enemy" gid="103" x="509" y="1349" width="70" height="74"/>
+  <object id="154" name="Enemy" gid="103" x="839" y="1209" width="70" height="74"/>
+  <object id="155" name="Enemy" gid="103" x="251" y="1139" width="70" height="74"/>
+  <object id="156" name="Enemy" gid="103" x="1057" y="1131" width="70" height="74"/>
+  <object id="157" name="Enemy" gid="103" x="1035" y="1291" width="70" height="74"/>
+  <object id="158" name="Enemy" gid="103" x="675" y="1355" width="70" height="74"/>
+  <object id="159" name="Enemy" gid="103" x="401" y="1399" width="70" height="74"/>
+  <object id="160" name="Enemy" gid="103" x="107" y="1307" width="70" height="74"/>
+  <object id="161" name="Enemy" gid="103" x="233" y="1413" width="70" height="74"/>
+  <object id="162" name="Enemy" gid="103" x="485" y="1027" width="70" height="74"/>
+  <object id="163" name="Enemy" gid="103" x="993" y="893" width="70" height="74"/>
+  <object id="164" name="Enemy" gid="103" x="759" y="857" width="70" height="74"/>
+  <object id="165" name="Enemy" gid="103" x="641" y="1001" width="70" height="74"/>
+  <object id="167" x="0" y="1440">
+   <polygon points="0,0 0,60 780,60 780,0"/>
+  </object>
+  <object id="168" name="Hostage" gid="104" x="864.435" y="1424.71" width="64" height="64"/>
+ </objectgroup>
+ <layer id="7" name="Map" width="100" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1bENAEAIAzG+YP+VmeERRQpbuhEIVQAAAAAAAAAAAGz0IuCPu8lhx3L4K7eeohpOHQDE
+  </data>
+ </layer>
+</map>

@@ -39,4 +39,6 @@ public class Constants {
     // LevelsScreen
     public static ArrayList<Level> LEVEL_LIST;
     public static int CURRENT_LEVEL;
+
+    public static final int SCROLL_PANE_SIZE = 810;
 }

@@ -1,0 +1,76 @@
+
+gappy-skin.png
+size: 2048, 2048
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+white-pixel
+  rotate: false
+  xy: 1199, 1168
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+login-background
+  rotate: false
+  xy: 1, 915
+  size: 1196, 800
+  orig: 1196, 800
+  offset: 0, 0
+  index: -1
+scroller
+  rotate: false
+  xy: 1, 422
+  size: 13, 67
+  orig: 13, 67
+  offset: 0, 0
+  index: -1
+horinzontal-slider-cursor
+  rotate: false
+  xy: 509, 903
+  size: 37, 10
+  orig: 37, 10
+  offset: 0, 0
+  index: -1
+slider-cursor
+  rotate: false
+  xy: 1707, 1678
+  size: 10, 37
+  orig: 10, 37
+  offset: 0, 0
+  index: -1
+Article-Description
+  rotate: false
+  xy: 1199, 1654
+  size: 506, 61
+  orig: 506, 61
+  offset: 0, 0
+  index: -1
+Calibri Regular
+  rotate: false
+  xy: 1, 809
+  size: 506, 104
+  orig: 506, 104
+  offset: 0, 0
+  index: -1
+Calibri Regular(1)
+  rotate: false
+  xy: 1199, 1171
+  size: 504, 481
+  orig: 504, 481
+  offset: 0, 0
+  index: -1
+TextField-Font
+  rotate: false
+  xy: 1, 491
+  size: 505, 316
+  orig: 505, 316
+  offset: 0, 0
+  index: -1
+Label-Font
+  rotate: false
+  xy: 1, 491
+  size: 505, 316
+  orig: 505, 316
+  offset: 0, 0
+  index: -1

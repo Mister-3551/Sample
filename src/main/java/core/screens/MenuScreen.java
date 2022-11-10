@@ -62,6 +62,10 @@ public class MenuScreen extends ScreenAdapter {
 
     private void createStructure() {
 
+        Pixmap pm = new Pixmap(Gdx.files.internal("sword/sword.png"));
+        Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
+        pm.dispose();
+
         table.setFillParent(true);
 
         table.add(new NavigationBar().menuNavigationBar()).growX();

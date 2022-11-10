@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class LevelsScreen extends ScreenAdapter {
 
-    private Table table, scrollPaneTable, form;
+    private Table stageTable;
 
     private ArrayList<Table> levelTables;
     private ArrayList<Level> levelList;
@@ -33,26 +33,17 @@ public class LevelsScreen extends ScreenAdapter {
     private Image image;
     private Skin skin;
     private Stage stage;
-    private LevelConnection levelConnection;
 
     public LevelsScreen() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal(Constants.SKIN));
-        table = new Table();
-        form = new Table();
-        scrollPaneTable = new Table();
-        scrollPane = new ScrollPane(scrollPaneTable, skin);
+        stageTable = new Table();
 
-        label = new Label("Level Select", skin.get("big-title", Label.LabelStyle.class));
-
-        levelTables = new ArrayList<>();
-
-        levelConnection = new LevelConnection();
-        levelList = levelConnection.levelsList();
+        levelList = new LevelConnection().levelsList();
 
         createStructure();
 
-        stage.addActor(table);
+        stage.addActor(stageTable);
         stage.setScrollFocus(scrollPane);
         Gdx.input.setInputProcessor(stage);
     }
@@ -72,74 +63,73 @@ public class LevelsScreen extends ScreenAdapter {
 
     private void createStructure() {
 
-        table.setFillParent(true);
-
-        table.add(new NavigationBar().basicNavigationBar()).growX();
-
-        table.row();
-
-        Pixmap bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGB565);
-        bgPixmap.setColor(Color.LIGHT_GRAY);
-        bgPixmap.fill();
-        background = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
-        table.setBackground(background);
-        scrollPaneTable.setBackground(background);
+        stageTable.setBackground(setBackground(Color.LIGHT_GRAY));
+        //Level
+        Table scrollPaneTable = new Table();
+        //scrollPaneTable.setBackground(setBackground(Color.LIGHT_GRAY));
+        ScrollPane scrollPane = new ScrollPane(scrollPaneTable, skin);
 
         scrollPane.setFadeScrollBars(false);
         scrollPane.setFlickScroll(false);
+        scrollPane.setScrollingDisabled(true, false);
 
-        for (int i = 0; i < levelList.size(); i++) {
-            bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGB565);
-            bgPixmap.setColor(Color.LIME);
-            bgPixmap.fill();
-            background = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
+        stage.setScrollFocus(scrollPane);
 
-            levelTables.add(createLevelProduct(i));
-        }
+        Label title = new Label("Select Level", skin.get("big-title", Label.LabelStyle.class));
 
-        addProducts();
-
-        form.add(label);
-        form.row();
-        form.add(scrollPane).growX().growY();
-        table.add(form).growX().growY();
-    }
-
-    private void addProducts() {
         int index = 0;
-        for (Table skin : levelTables) {
+
+        for (Level level : levelList) {
+            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image.setAlign(Align.center);
+
+            Table product = new Table();
+            TextButton play = new TextButton("Play", skin);
+
+            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image.setAlign(Align.center);
+
+            Label levelName = new Label(level.getName(), skin);
+            levelName.setAlignment(Align.center);
+            levelName.setColor(Color.RED);
+
+            product.setBackground(setBackground(Color.GREEN));
+
+            product.add(levelName).pad(10, 10, 10, 10).growX();
+            product.row();
+            product.add(image).pad(0, 10, 10, 10).width(100).height(100);
+            product.row();
+            product.add(play).pad(0, 0, 0, 0).height(50).growX();
+
             if (index++ % 3 == 0) scrollPaneTable.row();
-            scrollPaneTable.add(skin).pad(0, 10, 10, 10).width(300).height(200);
+            scrollPaneTable.add(product).pad(0, 10, 10, 10).width(250).growY();
+
+            int finalIndex = index;
+            play.addListener(new ChangeListener() {
+                public void changed(ChangeEvent event, Actor actor) {
+                    Constants.CURRENT_LEVEL = finalIndex;
+                    new ScreenChanger().changeScreen("GameScreen", level.getMap());
+                }
+            });
         }
+
+
+        stageTable.setFillParent(true);
+
+        stageTable.add(new NavigationBar().basicNavigationBar()).pad(0, 0, 100, 0).growX();
+        stageTable.row();
+        stageTable.add(title);
+
+        stageTable.row();
+        stageTable.add(scrollPane).width(Constants.SCROLL_PANE_SIZE);
+        stageTable.row();
+        stageTable.add(new Table()).growY();
     }
 
-    private Table createLevelProduct(int index) {
-        Table product = new Table();
-
-        Level level = levelList.get(index);
-
-        textButton = new TextButton(level.getCompleted() + " / Play", skin);
-        image = new Image(new Texture(Constants.PLAYER_NORMAL));
-        image.setAlign(Align.center);
-
-        Label levelName = new Label(level.getName(), skin);
-        levelName.setAlignment(Align.center);
-        levelName.setColor(Color.RED);
-
-        product.setBackground(background);
-
-        product.add(levelName).pad(0, 10, 10, 10).growX().growY();
-        product.row();
-        product.add(image).pad(0, 10, 10, 10).width(100).height(100);
-        product.row();
-        product.add(textButton).height(50).growX();
-
-        textButton.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.CURRENT_LEVEL = index + 1;
-                new ScreenChanger().changeScreen("GameScreen", level.getMap());
-            }
-        });
-        return product;
+    private TextureRegionDrawable setBackground(Color color) {
+        Pixmap bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGB565);
+        bgPixmap.setColor(color);
+        bgPixmap.fill();
+        return new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
     }
 }

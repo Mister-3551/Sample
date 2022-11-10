@@ -14,40 +14,34 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import core.Constants;
+import core.levelscreen.LevelConnection;
+import core.levelscreen.objects.Level;
 import core.screens.navigation.NavigationBar;
+import core.shopscreen.ShopConnection;
+import core.shopscreen.objects.Unit;
 
 import java.util.ArrayList;
 
 public class ShopScreen extends ScreenAdapter {
 
-    private Table table, scrollPaneTable, form;
-
-    private ArrayList<Table> skinTables, mapTables;
-    private ScrollPane scrollPane;
-    private Label label;
-    private TextButton textButton;
-    private TextureRegionDrawable background;
+    private Table stageTable;
     private Image image;
+    private ArrayList<Unit> unitsList;
+    private ArrayList<Level> levelsList;
     private Skin skin;
     private Stage stage;
 
     public ShopScreen() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal(Constants.SKIN));
-        table = new Table();
-        form = new Table();
-        scrollPaneTable = new Table();
-        scrollPane = new ScrollPane(scrollPaneTable, skin);
 
-        label = new Label("Shop", skin.get("big-title", Label.LabelStyle.class));
-
-        skinTables = new ArrayList<>();
-        mapTables = new ArrayList<>();
+        stageTable = new Table();
+        unitsList = new ShopConnection().unitsList();
+        levelsList = new LevelConnection().levelsList();
 
         createStructure();
 
-        stage.addActor(table);
-        stage.setScrollFocus(scrollPane);
+        stage.addActor(stageTable);
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -65,107 +59,135 @@ public class ShopScreen extends ScreenAdapter {
     }
 
     private void createStructure() {
+        //Shop
 
-        table.setFillParent(true);
+        Table frame = new Table();
+        frame.add(unitsTable()).growX().growY();
 
-        table.add(new NavigationBar().basicNavigationBar()).growX();
+        Table unitMapTable = new Table();
 
-        table.row();
+        Table unitMap = new Table();
+        TextButton unitButton = new TextButton("Units - Skins", skin);
+        TextButton mapButton = new TextButton("Maps - Skins", skin);
 
-        Pixmap bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGB565);
-        bgPixmap.setColor(Color.LIGHT_GRAY);
-        bgPixmap.fill();
-        background = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
-        table.setBackground(background);
-        scrollPaneTable.setBackground(background);
+        unitMapTable.add(unitButton).pad(0, 0, 0, 5).height(50).growX();
+        unitMapTable.add(mapButton).pad(0, 5, 0, 0).height(50).growX();
+
+        unitMap.add(unitMapTable).pad(0, 0, 10, 0).growX();
+        unitMap.row();
+        unitMap.add(frame).growX();
+
+        Label title = new Label("Shop", skin.get("big-title", Label.LabelStyle.class));
+
+        stageTable.setFillParent(true);
+        stageTable.setBackground(setBackground(Color.LIGHT_GRAY));
+
+        stageTable.add(new NavigationBar().basicNavigationBar()).pad(0, 0, 100, 0).growX();
+        stageTable.row();
+        stageTable.add(title).pad(0, 0, 10, 0);
+        stageTable.row();
+        stageTable.add(unitMap).width(Constants.SCROLL_PANE_SIZE);
+        stageTable.row();
+        stageTable.add(new Table()).growY();
+
+        unitButton.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                frame.clear();
+                frame.add(unitsTable()).width(Constants.SCROLL_PANE_SIZE).growY();
+            }
+        });
+        mapButton.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                frame.clear();
+                frame.add(mapsTable()).width(Constants.SCROLL_PANE_SIZE).growY();
+            }
+        });
+    }
+
+    private ScrollPane unitsTable() {
+        Table scrollPaneTable = new Table();
+        //scrollPaneTable.setBackground(setBackground(Color.LIGHT_GRAY));
+        ScrollPane scrollPane = new ScrollPane(scrollPaneTable, skin);
 
         scrollPane.setFadeScrollBars(false);
         scrollPane.setFlickScroll(false);
+        scrollPane.setScrollingDisabled(true, false);
 
-        for (int i = 0; i < 10; i++) {
-            bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGB565);
-            bgPixmap.setColor(Color.LIME);
-            bgPixmap.fill();
-            background = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
+        stage.setScrollFocus(scrollPane);
 
-            skinTables.add(createSkinProduct());
-            mapTables.add(createMapProduct());
+        int index = 0;
+        for (Unit unit : unitsList) {
+            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image.setAlign(Align.center);
+
+            Table product = new Table();
+            TextButton buy = new TextButton("Buy", skin);
+
+            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image.setAlign(Align.center);
+
+            Label unitName = new Label(unit.getName(), skin);
+            unitName.setAlignment(Align.center);
+            unitName.setColor(Color.RED);
+
+            product.setBackground(setBackground(Color.GREEN));
+
+            product.add(unitName).pad(10, 10, 10, 10).growX();
+            product.row();
+            product.add(image).pad(0, 10, 10, 10).width(100).height(100);
+            product.row();
+            product.add(buy).pad(0, 0, 0, 0).height(50).growX();
+
+            if (index++ % 3 == 0) scrollPaneTable.row();
+            scrollPaneTable.add(product).pad(0, 10, 10, 10).width(200).growY();
         }
-
-        addProducts();
-
-        form.add(label);
-        form.row();
-        form.add(scrollPane).growX().growY();
-        table.add(form).growX().growY();
+        return scrollPane;
     }
 
-    private void addProducts() {
-        Label skins = new Label("Skins", skin);
-        skins.setAlignment(Align.center);
-        Label maps = new Label("Maps", skin);
-        maps.setAlignment(Align.center);
+    private ScrollPane mapsTable() {
+        Table scrollPaneTable = new Table();
+        //scrollPaneTable.setBackground(setBackground(Color.LIGHT_GRAY));
+        ScrollPane scrollPane = new ScrollPane(scrollPaneTable, skin);
 
-        for (Table skin : skinTables) {
-            scrollPaneTable.add(skin).pad(0, 10, 10, 10).width(300).height(200);
+        scrollPane.setFadeScrollBars(false);
+        scrollPane.setFlickScroll(false);
+        scrollPane.setScrollingDisabled(true, false);
+
+        stage.setScrollFocus(scrollPane);
+
+        int index = 0;
+        for (Level level : levelsList) {
+            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image.setAlign(Align.center);
+
+            Table product = new Table();
+            TextButton buy = new TextButton("Buy", skin);
+
+            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image.setAlign(Align.center);
+
+            Label levelName = new Label(level.getName(), skin);
+            levelName.setAlignment(Align.center);
+            levelName.setColor(Color.RED);
+
+            product.setBackground(setBackground(Color.GREEN));
+
+            product.add(levelName).pad(10, 10, 10, 10).growX();
+            product.row();
+            product.add(image).pad(0, 10, 10, 10).width(100).height(100);
+            product.row();
+            product.add(buy).pad(0, 0, 0, 0).height(50).growX();
+
+            if (index++ % 3 == 0) scrollPaneTable.row();
+            scrollPaneTable.add(product).pad(0, 10, 10, 10).width(200).growY();
         }
-        scrollPaneTable.row();
-        for (Table map : mapTables) {
-            scrollPaneTable.add(map).pad(0, 10, 0, 10).width(300).height(200);
-        }
+        return scrollPane;
     }
 
-    private Table createSkinProduct() {
-        Table product = new Table();
-
-        textButton = new TextButton("Buy", skin);
-        image = new Image(new Texture(Constants.PLAYER_NORMAL));
-        image.setAlign(Align.center);
-
-        Label label = new Label("Skin", skin);
-        label.setAlignment(Align.center);
-        label.setColor(Color.RED);
-
-        product.setBackground(background);
-
-        product.add(label).pad(0, 10, 10, 10).growX().growY();
-        product.row();
-        product.add(image).pad(0, 10, 10, 10).width(100).height(100);
-        product.row();
-        product.add(textButton).height(50).growX();
-
-        textButton.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-
-            }
-        });
-        return product;
-    }
-
-    private Table createMapProduct() {
-        Table product = new Table();
-
-        textButton = new TextButton("Buy", skin);
-        image = new Image(new Texture(Constants.ENEMY_NORMAL));
-        image.setAlign(Align.center);
-
-        Label label = new Label("Map", skin);
-        label.setAlignment(Align.center);
-        label.setColor(Color.RED);
-
-        product.setBackground(background);
-
-        product.add(label).pad(0, 10, 10, 10).growX().growY();
-        product.row();
-        product.add(image).pad(0, 10, 10, 10).width(100).height(100);
-        product.row();
-        product.add(textButton).height(50).growX();
-
-        textButton.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-
-            }
-        });
-        return product;
+    private TextureRegionDrawable setBackground(Color color) {
+        Pixmap bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGB565);
+        bgPixmap.setColor(color);
+        bgPixmap.fill();
+        return new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
     }
 }

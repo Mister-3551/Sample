@@ -27,7 +27,7 @@ public class LoginScreen extends ScreenAdapter {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal(Constants.SKIN));
         errorLabel = new Label("", skin);
-        gameName = new TextButton("Game Name", skin);
+        gameName = new TextButton("Sample Case", skin);
         empty = new TextButton("", skin);
         username = new TextField("", skin);
         password = new TextField("", skin);
@@ -63,6 +63,8 @@ public class LoginScreen extends ScreenAdapter {
     private void createStructure() {
 
         table.setFillParent(true);
+        table.setDebug(true);
+        form.setDebug(true);
 
         errorLabel.setAlignment(Align.center);
 
@@ -89,19 +91,41 @@ public class LoginScreen extends ScreenAdapter {
         var background = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
         table.setBackground(background);
 
-        form.add(errorLabel).padBottom(10).fill(true).height(50).growX();
-        form.row();
-        form.add(username).padBottom(10.0f).fill(true).width(400.0f).height(50.0f);
-        form.row();
-        form.add(password).padBottom(10.0f).fill(true).width(400.0f).height(50.0f);
-        form.row();
-        form.add(signIn).padBottom(10.0f).fill(true).width(400.0f).height(50.0f);
-        form.row();
-        form.add(exit).fill(true).width(400.0f).height(50.0f);
+        Label title = new Label("Sign In", skin.get("big-title", Label.LabelStyle.class));
+        title.setAlignment(Align.center);
+        title.setColor(Color.RED);
 
-        table.add(form).fill(true).growX().growY();
+        Table lower = new Table();
+        Table panel = new Table();
+        Table form = new Table();
 
-        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
+        bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGB565);
+        bgPixmap.setColor(Color.WHITE);
+        bgPixmap.fill();
+        background = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
+        panel.setBackground(background);
+        bgPixmap.dispose();
+
+        form.add(title).growX().growY();
+        form.row();
+        form.add(errorLabel).pad(0, 10, 10, 10).height(50).growX();
+        form.row();
+        form.add(username).pad(0, 10, 10, 10).height(50).growX();
+        form.row();
+        form.add(password).pad(0, 10, 10, 10).height(50).growX();
+        form.row();
+        form.add(signIn).pad(0, 10, 10, 10).height(50).growX();
+
+        panel.add(form).growX();
+
+        lower.add(panel).width(400).height(300);
+        table.add(lower).growX().growY();
+
+        Pixmap pm = new Pixmap(Gdx.files.internal("sword/sword.png"));
+        Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
+        pm.dispose();
+
+        //Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
         username.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 errorLabel.setText("");

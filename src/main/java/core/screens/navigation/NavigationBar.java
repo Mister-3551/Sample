@@ -36,8 +36,8 @@ public class NavigationBar {
         navigation.add(username).fill(true).height(50.0f).growX();
         navigation.add(rank).fill(true).height(50.0f).growX();
         navigation.add(money).fill(true).height(50.0f).growX();
-        navigation.add(shop).fill(true).width(200);
-        navigation.add(signOut).fill(true).width(200.0f).height(50.0f);
+        navigation.add(empty).fill(true).height(50).width(200);
+        navigation.add(shop).fill(true).height(50).width(200);
 
         shop.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
