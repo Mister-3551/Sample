@@ -40,7 +40,7 @@ public class Hostage extends HostageEntity {
     }
 
     public void destroyHostage() {
-        if (body.getFixtureList().first() != null) body.destroyFixture(body.getFixtureList().first());
+        if (!body.getFixtureList().isEmpty()) body.destroyFixture(body.getFixtureList().first());
     }
 
     public CollisionService getCollisionRect() {

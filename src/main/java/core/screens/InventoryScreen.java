@@ -526,7 +526,7 @@ public class InventoryScreen extends ScreenAdapter {
 
         stage.setScrollFocus(scrollPane);
 
-        String[] settings = {"Language", "Sign Out"};
+        String[] settings = {"Language", "Sign Out", "Profile"};
 
         int index = 0;
 
@@ -535,7 +535,6 @@ public class InventoryScreen extends ScreenAdapter {
             image.setAlign(Align.center);
 
             Table product = new Table();
-            TextButton play = new TextButton("Play", skin);
 
             image = new Image(new Texture(Constants.PLAYER_NORMAL));
             image.setAlign(Align.center);
@@ -551,6 +550,7 @@ public class InventoryScreen extends ScreenAdapter {
             selectBox.setItems(items);
 
             TextButton signOut = new TextButton("Sign Out", skin);
+            TextButton deleteProfile = new TextButton("Delete", skin);
 
             product.setBackground(setBackground(Color.GREEN));
 
@@ -558,7 +558,8 @@ public class InventoryScreen extends ScreenAdapter {
             product.add(levelName).pad(10, 10, 10, 10).growX();
 
             if (index == 0) product.add(selectBox).pad(10, 10, 10, 10).height(50).growX();
-            else product.add(signOut).pad(10, 10, 10, 10).height(50).growX();
+            else if (index == 1) product.add(signOut).pad(10, 10, 10, 10).height(50).growX();
+            else if (index == 2) product.add(deleteProfile).pad(10, 10, 10, 10).height(50).growX();
 
             if (index++ % 2 == 0) scrollPaneTable.row();
             scrollPaneTable.add(product).pad(10, 10, 10, 10).height(70).width(400);

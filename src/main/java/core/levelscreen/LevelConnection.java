@@ -30,19 +30,23 @@ public class LevelConnection {
     }
 
     public ArrayList<Level> levelsList() {
-        String query = "SELECT levels.name, levels.map, levels_users.completed FROM levels \n" +
-                "INNER JOIN levels_users ON levels_users.id_levels = levels.id\n" +
-                "INNER JOIN users ON users.id = levels_users.id_users\n" +
-                "WHERE users.username = '" + Constants.USERNAME + "'";
+        String query = "SELECT l.id, l.name, l.map, CASE WHEN user_levels.completed IS NULL THEN 0 ELSE user_levels.completed END as completed " +
+                "FROM levels l " +
+                "LEFT JOIN (SELECT lu.id_levels as id_levels, lu.completed as completed " +
+                "FROM levels_users lu " +
+                "JOIN users ON users.id = lu.id_users " +
+                "WHERE users.username = ?) as user_levels ON user_levels.id_levels = l.id ";
 
         ArrayList<Level> levelsList = new ArrayList<>();
 
         try {
-            ResultSet result = connection.createStatement().executeQuery(query);
+            var statement = connection.prepareStatement(query);
+            statement.setString(1, Constants.USERNAME);
+            ResultSet result = statement.executeQuery();
             while (result.next()) {
                 String name = result.getString("name");
                 String map = result.getString("map");
-                String completed = result.getInt("completed") == 0 ? "uncompleted" : "completed";
+                int completed = result.getInt("completed");
                 levelsList.add(new Level(name, map, completed));
             }
         } catch (Exception e) {

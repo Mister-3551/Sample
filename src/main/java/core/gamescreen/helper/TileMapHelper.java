@@ -26,7 +26,7 @@ public class TileMapHelper {
 
     public OrthogonalTiledMapRenderer setupMap(String... level) {
         Constants.RESET_CAMERA_POSITION = true;
-        String map = level.length == 0 ? Constants.LEVEL_LIST.get(Constants.LEVEL_LIST.size() - 1).getMap() : level[0];
+        String map = level.length == 0 ? Constants.LEVEL_LIST.get(Constants.CURRENT_LEVEL - 1).getMap() : level[0];
         tiledMap = new TmxMapLoader().load("maps/" + map + ".tmx");
         parseMapObject(tiledMap.getLayers().get("Objects").getObjects());
         return new OrthogonalTiledMapRenderer(tiledMap);

@@ -3,10 +3,7 @@ package core.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -81,6 +78,10 @@ public class GameScreen extends ScreenAdapter {
         font = new BitmapFont();
         font.setColor(Color.ORANGE);
         font.getData().setScale(2, 2);
+
+        Pixmap pm = new Pixmap(Gdx.files.internal("gameScreen/aim/aim.png"));
+        Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
+        pm.dispose();
     }
 
     @Override
@@ -124,11 +125,11 @@ public class GameScreen extends ScreenAdapter {
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) new ScreenChanger().changeScreen("MenuScreen");
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             var playerWidth = 20;
-            if (bulletDirection == -3) playerWidth = -20;
+            if (Bullet.diffX(camera, player) < 0) playerWidth = -6;
             Body body = BodyHelperService.createObjectBody(5, 5, player.getX() + playerWidth, player.getY() + 17, world);
-            bullets.add(new Bullet(5 * 1.5f, 5 * 1.5f, body, Bullet.getBulletDirection(player), Bullet.getBulletDirection(player)));
+            bullets.add(new Bullet(5 * 1.5f, 5 * 1.5f, body, Bullet.getBulletAngle(player, camera)));
         }
 
         for (Enemy enemy : enemies) {

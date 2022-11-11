@@ -1,6 +1,7 @@
 package core;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import core.levelscreen.objects.Level;
 
 import java.util.ArrayList;
@@ -15,8 +16,10 @@ public class Constants {
     public static final String PLAYER_NORMAL = "player/player_normal/player_normal.png";
     public static final String PLAYER_LEFT = "player/player_left/player_left.png";
     public static final String PLAYER_LEFT_SWORD = "player/player_left/player_left_sword.png";
+    public static Sprite PLAYER_LEFT_SPRITE;
     public static final String PLAYER_RIGHT = "player/player_right/player_right.png";
     public static final String PLAYER_RIGHT_SWORD = "player/player_right/player_right_sword.png";
+    public static Sprite PLAYER_RIGHT_SPRITE;
     public static final String BULLET = "gameScreen/bullet/bullet.png";
     public static final String ENEMY_NORMAL = "enemy/enemy_normal/enemy_normal.png";
     public static final String ENEMY_LEFT = "enemy/enemy_left/enemy_left.png";

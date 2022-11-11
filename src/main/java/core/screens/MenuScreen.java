@@ -27,13 +27,13 @@ public class MenuScreen extends ScreenAdapter {
 
     public MenuScreen() {
         Constants.LEVEL_LIST = new LevelConnection().levelsList();
-        Constants.CURRENT_LEVEL = Constants.LEVEL_LIST.size();
+        Constants.CURRENT_LEVEL = (int) Constants.LEVEL_LIST.stream().filter(level -> level.getCompleted() == 1 || level.getCompleted() == 2).count();
         stage = new Stage();
         skin = new Skin(Gdx.files.internal(Constants.SKIN));
         label = new Label("", skin);
         multiplayer = new TextButton("Multiplayer", skin);
         localMultiplayer = new TextButton("Local Multiplayer", skin);
-        play = new TextButton("Play - Level " + Constants.LEVEL_LIST.size(), skin);
+        play = new TextButton("Play - Level " + Constants.CURRENT_LEVEL, skin);
         levels = new TextButton("Levels", skin);
         settings = new TextButton("Settings", skin);
         table = new Table();

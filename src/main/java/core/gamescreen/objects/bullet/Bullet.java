@@ -1,6 +1,7 @@
 package core.gamescreen.objects.bullet;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,8 +23,8 @@ public class Bullet extends BulletEntity {
 
     private CollisionService rect;
 
-    public Bullet(float width, float height, Body body, float directionX, float directionY) {
-        super(width, height, body, directionX, directionY);
+    public Bullet(float width, float height, Body body, float directionX) {
+        super(width, height, body, directionX);
         this.speed = 10f;
         this.jumpCounter = 0;
         this.BULLET_NORMAL = new Sprite(new Texture(Gdx.files.internal(Constants.BULLET)));
@@ -31,12 +32,13 @@ public class Bullet extends BulletEntity {
         this.remove = false;
         this.rect = new CollisionService(x, y, width, height);
     }
+
     @Override
     public void update() {
         x = body.getPosition().x * Constants.PPM;
         y = body.getPosition().y * Constants.PPM;
 
-        body.setLinearVelocity(speed * MathUtils.cos(directionX), speed * MathUtils.sin(directionY));
+        body.setLinearVelocity(speed * MathUtils.cos(angle), speed * MathUtils.sin(angle));
 
         if (posX == x || posY == y) {
             remove = true;
@@ -53,21 +55,28 @@ public class Bullet extends BulletEntity {
     }
 
     public void destroyBullet() {
-        if (body.getFixtureList().first() != null) body.destroyFixture(body.getFixtureList().first());
+        if (!body.getFixtureList().isEmpty()) body.destroyFixture(body.getFixtureList().first());
     }
 
     public CollisionService getCollisionRect() {
         return rect;
     }
 
-    public static float getBulletDirection(Player player) {
-        var deltaY = SCREENHEIGHT - Gdx.input.getY() - player.getY();
-        //var deltaX = (player.getX() - Gdx.input.getX()) * -1;
-        var deltaX = (SCREENWIDTH / 2 - Gdx.input.getX());
-        var rad = Math.atan2(deltaY, deltaX);
-        var deg = Math.round(rad * (180 / Math.PI));
+    public static float getBulletAngle(Player player, OrthographicCamera camera) {
+        return (float) Math.atan2(diffY(camera, player), diffX(camera, player));
+    }
 
-        var radians = ((float) (deg * Math.PI / 180));
-        return radians;
+    public static float diffX(OrthographicCamera camera, Player player) {
+        int xMouse = Gdx.input.getX();
+        var XMouse = xMouse + camera.position.x - SCREENWIDTH / 2;
+        return XMouse - player.getX();
+    }
+
+    public static float diffY(OrthographicCamera camera, Player player) {
+        // mouse ordinate direction is the opposite to pane window
+        int yMouse = SCREENHEIGHT - Gdx.input.getY();
+        // translate screen coordinates to current camera position in world coordinates
+        var YMouse = yMouse + camera.position.y - SCREENHEIGHT / 2;
+        return YMouse - player.getY();
     }
 }

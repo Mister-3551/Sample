@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -44,7 +45,6 @@ public class LevelsScreen extends ScreenAdapter {
         createStructure();
 
         stage.addActor(stageTable);
-        stage.setScrollFocus(scrollPane);
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -69,22 +69,26 @@ public class LevelsScreen extends ScreenAdapter {
         //scrollPaneTable.setBackground(setBackground(Color.LIGHT_GRAY));
         ScrollPane scrollPane = new ScrollPane(scrollPaneTable, skin);
 
+        stage.setScrollFocus(scrollPane);
+
         scrollPane.setFadeScrollBars(false);
         scrollPane.setFlickScroll(false);
         scrollPane.setScrollingDisabled(true, false);
 
-        stage.setScrollFocus(scrollPane);
-
-        Label title = new Label("Select Level", skin.get("big-title", Label.LabelStyle.class));
+        Label title = new Label("Level Select", skin.get("big-title", Label.LabelStyle.class));
 
         int index = 0;
-
         for (Level level : levelList) {
             image = new Image(new Texture(Constants.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Table product = new Table();
-            TextButton play = new TextButton("Play", skin);
+
+            int completed = level.getCompleted();
+            String levelType = completed == 0  ? "Locked" : completed == 1 ? "Completed / Play" : "Uncompleted / Play";
+
+            TextButton play = new TextButton(levelType, skin);
+            if (completed == 0) play.setTouchable(Touchable.disabled);
 
             image = new Image(new Texture(Constants.PLAYER_NORMAL));
             image.setAlign(Align.center);

@@ -4,9 +4,9 @@ public class Level {
 
     private String name;
     private String map;
-    private String completed;
+    private int completed;
 
-    public Level(String name, String map, String completed) {
+    public Level(String name, String map, int completed) {
         this.name = name;
         this.map = map;
         this.completed = completed;
@@ -20,7 +20,7 @@ public class Level {
         return map;
     }
 
-    public String getCompleted() {
+    public int getCompleted() {
         return completed;
     }
 }
