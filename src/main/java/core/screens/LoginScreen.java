@@ -145,7 +145,7 @@ public class LoginScreen extends ScreenAdapter {
                 if (username.getText().isEmpty() || password.getText().isEmpty())
                     setErrorLabelText("Fields can not be empty");
                 else {
-                    if (new LoginConnection().checkIfUserExists(username.getText(), password.getText()))
+                    if (new LoginConnection().userAuthentication(username.getText(), password.getText()))
                         new ScreenChanger().changeScreen("MenuScreen");
                     else setErrorLabelText("Wrong username or password");
                 }

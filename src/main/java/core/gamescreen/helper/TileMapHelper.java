@@ -2,6 +2,7 @@ package core.gamescreen.helper;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import core.Constants;
+import core.PlayerData;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.hostage.Hostage;
 import core.gamescreen.objects.player.Player;
@@ -26,8 +28,13 @@ public class TileMapHelper {
 
     public OrthogonalTiledMapRenderer setupMap(String... level) {
         Constants.RESET_CAMERA_POSITION = true;
-        String map = level.length == 0 ? Constants.LEVEL_LIST.get(Constants.CURRENT_LEVEL - 1).getMap() : level[0];
+        String map = level.length == 0 ? Constants.LEVEL_LIST.get(PlayerData.CURRENT_LEVEL - 1).getMap() : level[0];
         tiledMap = new TmxMapLoader().load("maps/" + map + ".tmx");
+        MapProperties prop = tiledMap.getProperties();
+
+        Constants.MAP_WIDTH = prop.get("width", Integer.class);
+        Constants.MAP_HEIGHT = prop.get("height", Integer.class);
+
         parseMapObject(tiledMap.getLayers().get("Objects").getObjects());
         return new OrthogonalTiledMapRenderer(tiledMap);
     }

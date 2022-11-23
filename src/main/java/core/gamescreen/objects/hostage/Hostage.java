@@ -35,10 +35,6 @@ public class Hostage extends HostageEntity {
         batch.draw(sprite, x, y, width, height);
     }
 
-    public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
-    }
-
     public void destroyHostage() {
         if (!body.getFixtureList().isEmpty()) body.destroyFixture(body.getFixtureList().first());
     }

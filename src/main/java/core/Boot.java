@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import core.loginscreen.LoginConnection;
 import core.screens.ScreenChanger;
+import core.xml.XmlFile;
 
 public class Boot extends Game {
 
@@ -26,7 +27,8 @@ public class Boot extends Game {
     }
 
     private String isSignIn() {
-        if (!new LoginConnection().checkIfUserSignIn()) return "LoginScreen";
-        else return "MenuScreen";
+        //if (!new LoginConnection().checkIfUserSignIn(new XmlFile().getUserToken())) return "LoginScreen";
+        //else return "MenuScreen";
+        return "LoginScreen";
     }
 }

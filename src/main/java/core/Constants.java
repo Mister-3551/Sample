@@ -3,6 +3,7 @@ package core;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import core.levelscreen.objects.Level;
+import core.screens.GameScreen;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,8 @@ public class Constants {
     public static final String HOSTAGE_RIGHT = "hostage/hostage_right/hostage_right.png";
     public static Boot INSTANCE;
     public static OrthographicCamera ORTHOGRAPHIC_CAMERA;
+    public static int MAP_WIDTH;
+    public static int MAP_HEIGHT;
 
     // Database constants
     public static String USERNAME;
@@ -36,12 +39,16 @@ public class Constants {
     public static String GAME_TOKEN;
 
     // GameScreen
+    public static GameScreen GAME_SCREEN;
     public static int ENEMY_KILLS = 0;
     public static boolean RESET_CAMERA_POSITION;
+    public static int KEY_LEFT;
+    public static int KEY_RIGHT;
+    public static int KEY_JUMP;
+    public static int KEY_SHOOT;
 
     // LevelsScreen
     public static ArrayList<Level> LEVEL_LIST;
-    public static int CURRENT_LEVEL;
+    public static final int SCROLL_PANE_SIZE = 800;
 
-    public static final int SCROLL_PANE_SIZE = 810;
 }

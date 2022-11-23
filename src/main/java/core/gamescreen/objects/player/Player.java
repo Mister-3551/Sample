@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import core.Constants;
+import core.PlayerData;
 import core.gamescreen.helper.BodyHelperService;
 import core.gamescreen.helper.CollisionService;
 import core.gamescreen.objects.bullet.Bullet;
@@ -61,7 +62,7 @@ public class Player extends PlayerEntity {
 
     private void checkUserInput() {
         velX = 0;
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if (Gdx.input.isKeyPressed(PlayerData.PLAYER_KEY_LEFT)) {
             if (!this.sprite.equals(Constants.PLAYER_LEFT_SPRITE)) {
                 //setSprite(PLAYER_LEFT);
                 GameScreen.setBulletDirection(-3);
@@ -71,7 +72,7 @@ public class Player extends PlayerEntity {
             }
             velX = -1;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+        if (Gdx.input.isKeyPressed(PlayerData.PLAYER_KEY_RIGHT)) {
             if (!this.sprite.equals(Constants.PLAYER_RIGHT_SPRITE)) {
                 //setSprite(PLAYER_RIGHT_SWORD);
                 GameScreen.setBulletDirection(3);
@@ -82,7 +83,7 @@ public class Player extends PlayerEntity {
             velX = 1;
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W) && jumpCounter < 25) {
+        if (Gdx.input.isKeyJustPressed(PlayerData.PLAYER_KEY_JUMP) && jumpCounter < 25) {
             float force = body.getMass() * 18;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);

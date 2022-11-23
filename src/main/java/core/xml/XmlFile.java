@@ -69,7 +69,39 @@ public class XmlFile {
         }
     }
 
-    public void getUserData() {
+    // SET Game token if token is different
+    public void setUserData(String token) {
+        try {
+            documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+
+            filePath = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "/" + mapName + "/" + fileName;
+            existingFile = new File(filePath);
+
+            if (!existingFile.exists()) createXmlFile();
+
+            document = documentBuilder.parse(existingFile);
+
+            Node loginState = document.getElementsByTagName("Login").item(0);
+
+            NodeList state = loginState.getChildNodes();
+            Node node = state.item(0);
+            Element element = (Element) node;
+            if ("token".equals(element.getNodeName())) element.setTextContent(token);
+
+            transformerFactory = TransformerFactory.newInstance();
+            transformer = transformerFactory.newTransformer();
+            source = new DOMSource(document);
+
+            result = new StreamResult(existingFile);
+            transformer.transform(source, result);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public String getUserToken() {
+        String gameToken = "";
         try {
             documentBuilderFactory = DocumentBuilderFactory.newInstance();
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -88,10 +120,11 @@ public class XmlFile {
 
             Element tokenElement = (Element) token;
 
-            Constants.GAME_TOKEN = tokenElement.getTextContent();
+            gameToken = tokenElement.getTextContent();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return gameToken;
     }
 
     public void deleteGameToken() {

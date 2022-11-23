@@ -1,7 +1,9 @@
 package core.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.backends.lwjgl3.DefaultLwjgl3Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -20,10 +22,16 @@ import core.levelscreen.LevelConnection;
 import core.levelscreen.objects.Level;
 import core.loginscreen.LoginConnection;
 import core.screens.navigation.NavigationBar;
+import core.settingsscreen.SettingsConnection;
+import core.settingsscreen.objects.Settings;
 import core.shopscreen.ShopConnection;
 import core.shopscreen.objects.Unit;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
+import java.util.Locale;
+
+import static com.badlogic.gdx.Gdx.input;
 
 public class InventoryScreen extends ScreenAdapter {
     private TextureRegionDrawable background;
@@ -55,7 +63,7 @@ public class InventoryScreen extends ScreenAdapter {
 
         stage.addActor(stageTable);
         //stage.setScrollFocus(scrollPane);
-        Gdx.input.setInputProcessor(stage);
+        input.setInputProcessor(stage);
     }
 
     @Override
@@ -438,36 +446,44 @@ public class InventoryScreen extends ScreenAdapter {
 
         stage.setScrollFocus(scrollPane);
 
-        String[] settings = {"Left", "Right", "Jump", "Shoot"};
+        //ArrayList<Settings> controlsList = new SettingsConnection().controlsList();
+        ArrayList<Settings> controlsList = new ArrayList<>();
 
         int index = 0;
-
-        for (String setting : settings) {
+        for (Settings control : controlsList) {
             image = new Image(new Texture(Constants.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Table product = new Table();
-            TextButton play = new TextButton("Play", skin);
 
             image = new Image(new Texture(Constants.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
-            Label levelName = new Label(setting, skin);
+            Label levelName = new Label("control.getName(", skin);
             levelName.setAlignment(Align.center);
             levelName.setColor(Color.RED);
 
-            TextField enterField = new TextField("", skin);
-            enterField.setAlignment(Align.center);
-            enterField.setMaxLength(1);
+            String keyName = GLFW.glfwGetKeyName(DefaultLwjgl3Input.getGlfwKeyCode(Integer.parseInt("2")), 0);
+            if (keyName != null) keyName = keyName.toUpperCase(Locale.ROOT);
+
+            TextButton textButton = new TextButton(keyName, skin);
+
+            //enterField.setMaxLength(1);
 
             product.setBackground(setBackground(Color.GREEN));
 
             product.add(image).pad(10, 10, 10, 10).width(50).height(50);
             product.add(levelName).pad(10, 10, 10, 10).growX();
-            product.add(enterField).pad(10, 10, 10, 10).height(50).growX();
+            product.add(textButton).pad(10, 10, 10, 10).width(150).height(50);
 
             if (index++ % 2 == 0) scrollPaneTable.row();
             scrollPaneTable.add(product).pad(10, 10, 10, 10).height(70).width(400);
+
+            textButton.addListener(new InputListener() {
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    textButton.setText(String.valueOf(Input.Keys.ENTER));
+                }
+            });
         }
         return scrollPane;
     }
@@ -483,11 +499,11 @@ public class InventoryScreen extends ScreenAdapter {
 
         stage.setScrollFocus(scrollPane);
 
-        String[] settings = {"Music", "Sound Effect"};
+        //ArrayList<Settings> volumeList = new SettingsConnection().volumeList();
+        ArrayList<Settings> volumeList = new ArrayList<>();
 
         int index = 0;
-
-        for (String setting : settings) {
+        for (Settings volume : volumeList) {
             image = new Image(new Texture(Constants.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
@@ -497,11 +513,12 @@ public class InventoryScreen extends ScreenAdapter {
             image = new Image(new Texture(Constants.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
-            Label levelName = new Label(setting, skin);
+            Label levelName = new Label("volume.getName()", skin);
             levelName.setAlignment(Align.center);
             levelName.setColor(Color.RED);
 
             Slider musicSlider = new Slider(0.0f, 100.0f, 1.0f, false, skin);
+            musicSlider.setVisualPercent(Float.parseFloat("2"));
 
             product.setBackground(setBackground(Color.GREEN));
 
@@ -526,10 +543,14 @@ public class InventoryScreen extends ScreenAdapter {
 
         stage.setScrollFocus(scrollPane);
 
+        //ArrayList<Settings> otherList = new SettingsConnection().otherList();
+        ArrayList<Settings> otherList = new ArrayList<>();
+
         String[] settings = {"Language", "Sign Out", "Profile"};
 
-        int index = 0;
+        String[] items = {"English", "Slovenian", "Russian"};
 
+        int index = 0;
         for (String setting : settings) {
             image = new Image(new Texture(Constants.PLAYER_NORMAL));
             image.setAlign(Align.center);
@@ -542,8 +563,6 @@ public class InventoryScreen extends ScreenAdapter {
             Label levelName = new Label(setting, skin);
             levelName.setAlignment(Align.center);
             levelName.setColor(Color.RED);
-
-            String[] items = {"English", "Slovenian", "Russian"};
 
             SelectBox<String> selectBox = new SelectBox(skin);
             selectBox.setAlignment(Align.center);
@@ -566,7 +585,7 @@ public class InventoryScreen extends ScreenAdapter {
 
             signOut.addListener(new ChangeListener() {
                 public void changed(ChangeEvent event, Actor actor) {
-                    new LoginConnection().signOut();
+                    //new LoginConnection().signOut();
                     new ScreenChanger().changeScreen("LoginScreen");
                 }
             });

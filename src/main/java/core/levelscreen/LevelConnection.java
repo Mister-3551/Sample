@@ -1,57 +1,29 @@
 package core.levelscreen;
 
-import core.Constants;
+import com.badlogic.gdx.utils.Json;
+import core.ApiResponse;
+import core.PlayerData;
 import core.levelscreen.objects.Level;
-import core.xml.XmlFile;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.UUID;
+
+import static core.API.API_GET_LEVELS;
 
 public class LevelConnection {
 
-    private String url;
-    private String username;
-    private String password;
-    private Connection connection;
+    private URL url;
 
-    public LevelConnection() {
-        url = "jdbc:mysql://localhost:3306/javafx";
-        username = "root";
-        password = "";
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+    public LevelConnection() {}
 
     public ArrayList<Level> levelsList() {
-        String query = "SELECT l.id, l.name, l.map, CASE WHEN user_levels.completed IS NULL THEN 0 ELSE user_levels.completed END as completed " +
-                "FROM levels l " +
-                "LEFT JOIN (SELECT lu.id_levels as id_levels, lu.completed as completed " +
-                "FROM levels_users lu " +
-                "JOIN users ON users.id = lu.id_users " +
-                "WHERE users.username = ?) as user_levels ON user_levels.id_levels = l.id ";
-
-        ArrayList<Level> levelsList = new ArrayList<>();
-
+        ArrayList<Level> levels = new ArrayList<>();
         try {
-            var statement = connection.prepareStatement(query);
-            statement.setString(1, Constants.USERNAME);
-            ResultSet result = statement.executeQuery();
-            while (result.next()) {
-                String name = result.getString("name");
-                String map = result.getString("map");
-                int completed = result.getInt("completed");
-                levelsList.add(new Level(name, map, completed));
-            }
+            url = new URL(String.format(API_GET_LEVELS, PlayerData.PLAYER_GAME_TOKEN));
+            String response = ApiResponse.getResponse(url);
+            if (!response.isBlank()) return new Json().fromJson(ArrayList.class, Level.class, response);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return levelsList;
+        return levels;
     }
 }

@@ -13,8 +13,7 @@ public class ScreenChanger {
                 Constants.INSTANCE.setScreen(new MenuScreen());
                 return;
             case "SettingsScreen":
-                //Constants.INSTANCE.setScreen(new SettingsScreen());
-                Constants.INSTANCE.setScreen(new InventoryScreen());
+                Constants.INSTANCE.setScreen(new SettingsScreen());
                 return;
             case "LevelsScreen":
                 Constants.INSTANCE.setScreen(new LevelsScreen());

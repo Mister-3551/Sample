@@ -1,57 +1,78 @@
 package core.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.backends.lwjgl3.DefaultLwjgl3Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import core.Constants;
+import core.PlayerData;
+import core.levelscreen.LevelConnection;
+import core.levelscreen.objects.Level;
 import core.screens.navigation.NavigationBar;
+import core.settingsscreen.objects.Settings;
+import core.shopscreen.ShopConnection;
+import core.shopscreen.objects.Unit;
+import org.lwjgl.glfw.GLFW;
+
+import java.util.ArrayList;
+import java.util.Locale;
+
+import static com.badlogic.gdx.Gdx.input;
 
 public class SettingsScreen extends ScreenAdapter {
-
-    private Table table, scrollPaneTable, form;
-    private ScrollPane scrollPane;
-    private TextButton music, soundEffects, test2, test3, test4, test5, test6, test7, test8, test9;
-    private Slider musicSlider ,soundEffectsSlider;
-    private Label label;
+    private TextureRegionDrawable background;
+    private Image image;
     private Skin skin;
     private Stage stage;
+
+    private Table stageTable;
+
+    private ArrayList<Unit> unitsList;
+    private ArrayList<Level> levelList;
+    private Settings playerSettings;
+
+    private Slider musicSlider;
+    private Slider soundEffectSlider;
+    private SelectBox<String> selectBox;
 
     public SettingsScreen() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal(Constants.SKIN));
-        table = new Table();
-        scrollPaneTable = new Table();
-        scrollPane = new ScrollPane(scrollPaneTable, skin);
-        form = new Table();
-        music = new TextButton("Music", skin);
-        soundEffects = new TextButton("Sound Effects", skin);
-        test2 = new TextButton("Zvok2", skin);
-        test3 = new TextButton("Zvok3", skin);
-        test4 = new TextButton("Zvok4", skin);
-        test5 = new TextButton("Zvok5", skin);
-        test6 = new TextButton("Zvok6", skin);
-        test7 = new TextButton("Zvok7", skin);
-        test8 = new TextButton("Zvok8", skin);
-        test9 = new TextButton("Save Settings", skin);
+
+        stageTable = new Table();
+
+        unitsList = new ShopConnection().unitsList();
+        levelList = new LevelConnection().levelsList();
+        playerSettings = PlayerData.PLAYER_SETTINGS;
+
         musicSlider = new Slider(0.0f, 100.0f, 1.0f, false, skin);
-        soundEffectsSlider = new Slider(0.0f, 100.0f, 1.0f, false, skin);
-        label = new Label("Settings", skin.get("big-title", Label.LabelStyle.class));
+        soundEffectSlider = new Slider(0.0f, 100.0f, 1.0f, false, skin);
+        selectBox = new SelectBox(skin);
 
         createStructure();
 
-        stage.addActor(table);
-        stage.setScrollFocus(scrollPane);
-        Gdx.input.setInputProcessor(stage);
+        Pixmap bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGB565);
+        bgPixmap.setColor(Color.LIGHT_GRAY);
+        bgPixmap.fill();
+        background = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
+        stageTable.setBackground(background);
+
+        stage.addActor(stageTable);
+        //stage.setScrollFocus(scrollPane);
+        input.setInputProcessor(stage);
     }
 
     @Override
@@ -68,64 +89,235 @@ public class SettingsScreen extends ScreenAdapter {
     }
 
     private void createStructure() {
+        //Settings
 
-        table.setFillParent(true);
+        Table frame = new Table();
+        frame.add(controlTable()).growX().growY();
 
-        table.add(new NavigationBar().basicNavigationBar()).growX();
+        Table unitMapTable = new Table();
 
-        table.row();
+        Table unitMap = new Table();
+        TextButton controlSettings = new TextButton("Control Settings", skin);
+        TextButton volumeSettings = new TextButton("Volume Settings", skin);
+        TextButton otherSettings = new TextButton("Other Settings", skin);
 
-        Pixmap bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGB565);
-        bgPixmap.setColor(Color.LIGHT_GRAY);
-        bgPixmap.fill();
-        var background = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
-        table.setBackground(background);
+        unitMapTable.add(controlSettings).pad(0, 0, 0, 5).height(50).growX();
+        unitMapTable.add(volumeSettings).pad(0, 5, 0, 0).height(50).growX();
+        unitMapTable.add(otherSettings).pad(0, 5, 0, 0).height(50).growX();
 
-        music.setTouchable(Touchable.disabled);
-        soundEffects.setTouchable(Touchable.disabled);
+        unitMap.add(unitMapTable).pad(0, 0, 10, 0).growX();
+        unitMap.row();
+        unitMap.add(frame).growX();
 
-        scrollPaneTable.hasKeyboardFocus();
+        Label title = new Label("Settings", skin.get("big-title", Label.LabelStyle.class));
+
+        stageTable.setFillParent(true);
+        stageTable.setBackground(setBackground(Color.LIGHT_GRAY));
+
+        stageTable.add(new NavigationBar().basicNavigationBar()).pad(0, 0, 100, 0).growX();
+        stageTable.row();
+        stageTable.add(title).pad(0, 0, 10, 0);
+        stageTable.row();
+        stageTable.add(unitMap).width(Constants.SCROLL_PANE_SIZE);
+        stageTable.row();
+        stageTable.add(new Table()).growY();
+
+        controlSettings.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                frame.clear();
+                frame.add(controlTable()).width(Constants.SCROLL_PANE_SIZE).growY();
+            }
+        });
+        volumeSettings.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                frame.clear();
+                frame.add(volumeTable()).width(Constants.SCROLL_PANE_SIZE).growY();
+            }
+        });
+        otherSettings.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                frame.clear();
+                frame.add(otherTable()).width(Constants.SCROLL_PANE_SIZE).growY();
+            }
+        });
+    }
+
+    private ScrollPane controlTable() {
+        Table scrollPaneTable = new Table();
+        //scrollPaneTable.setBackground(setBackground(Color.LIGHT_GRAY));
+        ScrollPane scrollPane = new ScrollPane(scrollPaneTable, skin);
+
         scrollPane.setFadeScrollBars(false);
         scrollPane.setFlickScroll(false);
+        scrollPane.setScrollingDisabled(true, false);
 
-        scrollPaneTable.add(music).padBottom(10).height(50).growX();
-        scrollPaneTable.add(musicSlider).pad(10).height(10);
-        scrollPaneTable.row();
-        scrollPaneTable.add(soundEffects).padBottom(10).height(50).growX();
-        scrollPaneTable.add(soundEffectsSlider).pad(10).height(10);
-        scrollPaneTable.row();
-        scrollPaneTable.add(test2).padBottom(10).height(50).growX();
-        scrollPaneTable.row();
-        scrollPaneTable.add(test3).padBottom(10).height(50).growX();
-        scrollPaneTable.row();
-        scrollPaneTable.add(test4).padBottom(10).height(50).growX();
-        scrollPaneTable.row();
-        scrollPaneTable.add(test5).padBottom(10).height(50).growX();
-        scrollPaneTable.row();
-        scrollPaneTable.add(test6).padBottom(10).height(50).growX();
-        scrollPaneTable.row();
-        scrollPaneTable.add(test7).padBottom(10).height(50).growX();
-        scrollPaneTable.row();
-        scrollPaneTable.add(test8).height(50).growX();
+        stage.setScrollFocus(scrollPane);
 
-        form.add(label);
-        form.row();
-        form.add(scrollPane).padBottom(10).width(600).height(400);
-        form.row();
-        form.add(test9).width(400).height(50).growX();
+        ArrayList<Settings.Setting> setting = new ArrayList<>();
+        setting.add(new Settings.Setting("KEY LEFT", playerSettings.getKeyLeft()));
+        setting.add(new Settings.Setting("KEY RIGHT", playerSettings.getKeyRight()));
+        setting.add(new Settings.Setting("KEY JUMP", playerSettings.getKeyJump()));
+        setting.add(new Settings.Setting("KEY SHOOT", playerSettings.getKeyShoot()));
 
-        table.add(form).growX().growY();
+        int index = 0;
+        for (Settings.Setting control : setting) {
+            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image.setAlign(Align.center);
 
-        musicSlider.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-                System.out.println(musicSlider.getPercent());
-            }
-        });
+            Table product = new Table();
 
-        soundEffectsSlider.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-                System.out.println(soundEffectsSlider.getPercent());
-            }
-        });
+            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image.setAlign(Align.center);
+
+            Label controlName = new Label(control.getName(), skin);
+            controlName.setAlignment(Align.center);
+            controlName.setColor(Color.RED);
+
+            String keyName = GLFW.glfwGetKeyName(DefaultLwjgl3Input.getGlfwKeyCode((int) control.getCode()), 0);
+            if (keyName != null) keyName = keyName.toUpperCase(Locale.ROOT);
+
+            TextButton textButton = new TextButton(keyName, skin);
+
+            //enterField.setMaxLength(1);
+
+            product.setBackground(setBackground(Color.GREEN));
+
+            product.add(image).pad(10, 10, 10, 10).width(50).height(50);
+            product.add(controlName).pad(10, 10, 10, 10).growX();
+            product.add(textButton).pad(10, 10, 10, 10).width(150).height(50);
+
+            if (index++ % 2 == 0) scrollPaneTable.row();
+            scrollPaneTable.add(product).pad(10, 10, 10, 10).height(70).width(400);
+
+            textButton.addListener(new InputListener() {
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    textButton.setText(String.valueOf(Input.Keys.ENTER));
+                }
+            });
+        }
+        return scrollPane;
+    }
+    private ScrollPane volumeTable() {
+        Table scrollPaneTable = new Table();
+        //scrollPaneTable.setBackground(setBackground(Color.LIGHT_GRAY));
+        ScrollPane scrollPane = new ScrollPane(scrollPaneTable, skin);
+
+        scrollPane.setFadeScrollBars(false);
+        scrollPane.setFlickScroll(false);
+        scrollPane.setScrollingDisabled(true, false);
+
+        stage.setScrollFocus(scrollPane);
+
+        ArrayList<Settings.Setting> setting = new ArrayList<>();
+        setting.add(new Settings.Setting("MUSIC", playerSettings.getMusic()));
+        setting.add(new Settings.Setting("SOUND EFFECT", playerSettings.getSoundEffect()));
+
+        image = new Image(new Texture(Constants.PLAYER_NORMAL));
+        image.setAlign(Align.center);
+
+        Table musicProduct = new Table();
+        Table soundEffectProduct = new Table();
+
+        image = new Image(new Texture(Constants.PLAYER_NORMAL));
+        image.setAlign(Align.center);
+
+        Label musicLabel = new Label("Music", skin);
+        musicLabel.setAlignment(Align.center);
+        musicLabel.setColor(Color.RED);
+
+        Label soundEffectLabel = new Label("SoundEffect", skin);
+        soundEffectLabel.setAlignment(Align.center);
+        soundEffectLabel.setColor(Color.RED);
+
+        musicSlider.setVisualPercent(setting.get(0).getCode());
+        soundEffectSlider.setVisualPercent(setting.get(1).getCode());
+
+        musicProduct.setBackground(setBackground(Color.GREEN));
+
+        musicProduct.add(image).pad(10, 10, 10, 10).width(50).height(50);
+        musicProduct.add(musicLabel).pad(10, 10, 10, 10).growX();
+        musicProduct.add(musicSlider).pad(10, 10, 10, 10).height(50).growX();
+
+        soundEffectProduct.setBackground(setBackground(Color.GREEN));
+
+        image = new Image(new Texture(Constants.PLAYER_NORMAL));
+        image.setAlign(Align.center);
+
+        soundEffectProduct.add(image).pad(10, 10, 10, 10).width(50).height(50);
+        soundEffectProduct.add(soundEffectLabel).pad(10, 10, 10, 10).growX();
+        soundEffectProduct.add(soundEffectSlider).pad(10, 10, 10, 10).height(50).growX();
+
+        scrollPaneTable.add(musicProduct).pad(10, 10, 10, 10).height(70).width(400);
+        scrollPaneTable.add(soundEffectProduct).pad(10, 10, 10, 10).height(70).width(400);
+        scrollPaneTable.row();
+
+        return scrollPane;
+    }
+
+    private ScrollPane otherTable() {
+        Table scrollPaneTable = new Table();
+        //scrollPaneTable.setBackground(setBackground(Color.LIGHT_GRAY));
+        ScrollPane scrollPane = new ScrollPane(scrollPaneTable, skin);
+
+        scrollPane.setFadeScrollBars(false);
+        scrollPane.setFlickScroll(false);
+        scrollPane.setScrollingDisabled(true, false);
+
+        stage.setScrollFocus(scrollPane);
+
+        ///ArrayList<Settings> otherList = new SettingsConnection().otherList();
+        ArrayList<Settings> otherList = new ArrayList<>();
+
+        String[] settings = {"Language", "Sign Out", "Profile"};
+
+        int index = 0;
+        for (String setting : settings) {
+            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image.setAlign(Align.center);
+
+            Table product = new Table();
+
+            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image.setAlign(Align.center);
+
+            Label levelName = new Label(setting, skin);
+            levelName.setAlignment(Align.center);
+            levelName.setColor(Color.RED);
+
+            String[] items = {"English", "Slovenian", "Russian"};
+            selectBox.setAlignment(Align.center);
+            selectBox.setItems(items);
+            selectBox.setSelected("w");
+
+            TextButton signOut = new TextButton("Sign Out", skin);
+            TextButton deleteProfile = new TextButton("Delete", skin);
+
+            product.setBackground(setBackground(Color.GREEN));
+
+            product.add(image).pad(10, 10, 10, 10).width(50).height(50);
+            product.add(levelName).pad(10, 10, 10, 10).growX();
+
+            if (index == 0) product.add(selectBox).pad(10, 10, 10, 10).height(50).growX();
+            else if (index == 1) product.add(signOut).pad(10, 10, 10, 10).height(50).growX();
+            else if (index == 2) product.add(deleteProfile).pad(10, 10, 10, 10).height(50).growX();
+
+            if (index++ % 2 == 0) scrollPaneTable.row();
+            scrollPaneTable.add(product).pad(10, 10, 10, 10).height(70).width(400);
+
+            signOut.addListener(new ChangeListener() {
+                public void changed(ChangeEvent event, Actor actor) {
+                    //new LoginConnection().signOut();
+                    new ScreenChanger().changeScreen("LoginScreen");
+                }
+            });
+        }
+        return scrollPane;
+    }
+
+    private TextureRegionDrawable setBackground(Color color) {
+        Pixmap bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGB565);
+        bgPixmap.setColor(color);
+        bgPixmap.fill();
+        return new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
     }
 }

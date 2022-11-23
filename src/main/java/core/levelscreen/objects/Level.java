@@ -6,6 +6,8 @@ public class Level {
     private String map;
     private int completed;
 
+    public Level() {}
+
     public Level(String name, String map, int completed) {
         this.name = name;
         this.map = map;

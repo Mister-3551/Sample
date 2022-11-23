@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import core.Constants;
+import core.PlayerData;
 import core.levelscreen.LevelConnection;
 import core.levelscreen.objects.Level;
 import core.screens.navigation.NavigationBar;
@@ -90,9 +91,6 @@ public class LevelsScreen extends ScreenAdapter {
             TextButton play = new TextButton(levelType, skin);
             if (completed == 0) play.setTouchable(Touchable.disabled);
 
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
-            image.setAlign(Align.center);
-
             Label levelName = new Label(level.getName(), skin);
             levelName.setAlignment(Align.center);
             levelName.setColor(Color.RED);
@@ -111,7 +109,7 @@ public class LevelsScreen extends ScreenAdapter {
             int finalIndex = index;
             play.addListener(new ChangeListener() {
                 public void changed(ChangeEvent event, Actor actor) {
-                    Constants.CURRENT_LEVEL = finalIndex;
+                    PlayerData.CURRENT_LEVEL = finalIndex;
                     new ScreenChanger().changeScreen("GameScreen", level.getMap());
                 }
             });

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import core.Constants;
 import core.gamescreen.helper.CollisionService;
+import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.player.Player;
 
 import static core.Constants.*;
@@ -60,6 +61,24 @@ public class Bullet extends BulletEntity {
 
     public CollisionService getCollisionRect() {
         return rect;
+    }
+
+    public static float getBulletAngleEnemy(Enemy enemy, Player player, OrthographicCamera camera) {
+        return (float) Math.atan2(diffYEnemy(camera, enemy, player), diffXEnemy(camera, enemy, player));
+    }
+
+    public static float diffXEnemy(OrthographicCamera camera, Enemy enemy, Player player) {
+        float xMouse = player.getX();
+        var XMouse = xMouse + camera.position.x - SCREENWIDTH / 2;
+        return XMouse - enemy.getX();
+    }
+
+    public static float diffYEnemy(OrthographicCamera camera, Enemy enemy, Player player) {
+        // mouse ordinate direction is the opposite to pane window
+        float yMouse = player.getY();
+        // translate screen coordinates to current camera position in world coordinates
+        var YMouse = yMouse + camera.position.y - SCREENHEIGHT / 2;
+        return YMouse - enemy.getY();
     }
 
     public static float getBulletAngle(Player player, OrthographicCamera camera) {

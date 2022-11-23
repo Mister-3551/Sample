@@ -12,9 +12,23 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.mysql.cj.xdevapi.JsonArray;
+import com.mysql.cj.xdevapi.JsonParser;
 import core.Constants;
+import core.PlayerData;
 import core.levelscreen.LevelConnection;
+import core.levelscreen.objects.Level;
 import core.screens.navigation.NavigationBar;
+import core.settingsscreen.SettingsConnection;
+import core.settingsscreen.objects.Settings;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class MenuScreen extends ScreenAdapter {
 
@@ -24,16 +38,17 @@ public class MenuScreen extends ScreenAdapter {
     private Image playerSkin;
     private Skin skin;
     private Stage stage;
+    private ArrayList<Level> levelsList;
 
     public MenuScreen() {
-        Constants.LEVEL_LIST = new LevelConnection().levelsList();
-        Constants.CURRENT_LEVEL = (int) Constants.LEVEL_LIST.stream().filter(level -> level.getCompleted() == 1 || level.getCompleted() == 2).count();
+        levelsList = new LevelConnection().levelsList();
+        PlayerData.CURRENT_LEVEL = (int) levelsList.stream().filter(level -> level.getCompleted() == 1 || level.getCompleted() == 2).count();
         stage = new Stage();
         skin = new Skin(Gdx.files.internal(Constants.SKIN));
         label = new Label("", skin);
         multiplayer = new TextButton("Multiplayer", skin);
         localMultiplayer = new TextButton("Local Multiplayer", skin);
-        play = new TextButton("Play - Level " + Constants.CURRENT_LEVEL, skin);
+        play = new TextButton("Play - Level " + PlayerData.CURRENT_LEVEL, skin);
         levels = new TextButton("Levels", skin);
         settings = new TextButton("Settings", skin);
         table = new Table();
@@ -41,6 +56,7 @@ public class MenuScreen extends ScreenAdapter {
         combine = new Table();
         playerSkin = new Image(new Texture(Gdx.files.internal("player/player_normal/player_normal.png")));
 
+        new SettingsConnection().getControls();
         createStructure();
 
         stage.addActor(table);
@@ -78,20 +94,21 @@ public class MenuScreen extends ScreenAdapter {
         var background = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
         table.setBackground(background);
 
-        form.add(play).padBottom(10.0f).fill(true).width(400.0f).height(50.0f);
+        form.add(play).padBottom(10.0f).width(400.0f).height(50.0f);
         form.row();
-        form.add(levels).padBottom(10.0f).fill(true).width(400.0f).height(50.0f);
+        form.add(levels).padBottom(10.0f).width(400.0f).height(50.0f);
         form.row();
-        form.add(settings).padBottom(10.0f).fill(true).width(400.0f).height(50.0f);
+        form.add(settings).padBottom(10.0f).width(400.0f).height(50.0f);
 
         combine.add(playerSkin).width(400).height(400).growX();
         combine.add(form).width(400).growX();
 
-        table.add(combine).fill(true).growX().growY();
+        table.add(combine).growX().growY();
 
         play.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                new ScreenChanger().changeScreen("GameScreen");
+                var currentLevel = levelsList.get(PlayerData.CURRENT_LEVEL - 1).getMap();
+                new ScreenChanger().changeScreen("GameScreen", currentLevel);
             }
         });
         levels.addListener(new ChangeListener() {

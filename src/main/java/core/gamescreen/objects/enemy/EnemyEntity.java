@@ -27,4 +27,7 @@ public abstract class EnemyEntity {
     public Body getBody() {
         return body;
     }
+
+    public float getX() { return x;}
+    public float getY() { return y;}
 }

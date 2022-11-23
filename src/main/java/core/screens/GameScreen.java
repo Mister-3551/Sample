@@ -82,6 +82,8 @@ public class GameScreen extends ScreenAdapter {
         Pixmap pm = new Pixmap(Gdx.files.internal("gameScreen/aim/aim.png"));
         Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
         pm.dispose();
+
+        GAME_SCREEN = this;
     }
 
     @Override
@@ -125,7 +127,7 @@ public class GameScreen extends ScreenAdapter {
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) new ScreenChanger().changeScreen("MenuScreen");
 
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isButtonJustPressed(KEY_SHOOT) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             var playerWidth = 20;
             if (Bullet.diffX(camera, player) < 0) playerWidth = -6;
             Body body = BodyHelperService.createObjectBody(5, 5, player.getX() + playerWidth, player.getY() + 17, world);
@@ -147,6 +149,11 @@ public class GameScreen extends ScreenAdapter {
         checkCollisions();
     }
 
+    public void enemyShoot(Enemy enemy) {
+        Body body = BodyHelperService.createObjectBody(5, 5, enemy.getX() + 30, enemy.getY() + 17, world);
+        bullets.add(new Bullet(5 * 1.5f, 5 * 1.5f, body, Bullet.getBulletAngleEnemy(enemy, player, camera)));
+    }
+
     private void cameraUpdate() {
         var playerPositionX = Math.abs(player.getBody().getPosition().x * PPM * 10) / 10f;
         var playerPositionY = Math.abs(player.getBody().getPosition().y * PPM * 10) / 10f;
@@ -154,10 +161,13 @@ public class GameScreen extends ScreenAdapter {
         var cameraMovingPositionX = 660;
         var cameraMovingPositionY = 400;
 
+        var mapWidth = MAP_WIDTH * 64;
+
         Vector3 position = camera.position;
 
         if (!RESET_CAMERA_POSITION) {
             if (playerPositionX > cameraMovingPositionX) position.x = playerPositionX;
+            else if (playerPositionX > mapWidth - SCREENWIDTH / 2) position.x = playerPositionX;
             else position.x = cameraMovingPositionX;
             if (playerPositionY > cameraMovingPositionY) position.y = playerPositionY;
         } else {
