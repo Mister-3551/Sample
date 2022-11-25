@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import core.Constants;
+import core.PlayerData;
 import core.gamescreen.helper.BodyHelperService;
 import core.gamescreen.helper.TileMapHelper;
 import core.gamescreen.objects.bullet.Bullet;
@@ -127,7 +128,7 @@ public class GameScreen extends ScreenAdapter {
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) new ScreenChanger().changeScreen("MenuScreen");
 
-        if (Gdx.input.isButtonJustPressed(KEY_SHOOT) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isButtonJustPressed(PlayerData.PLAYER_KEY_SHOOT) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             var playerWidth = 20;
             if (Bullet.diffX(camera, player) < 0) playerWidth = -6;
             Body body = BodyHelperService.createObjectBody(5, 5, player.getX() + playerWidth, player.getY() + 17, world);

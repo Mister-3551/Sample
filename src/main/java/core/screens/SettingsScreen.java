@@ -21,6 +21,7 @@ import core.Constants;
 import core.PlayerData;
 import core.levelscreen.LevelConnection;
 import core.levelscreen.objects.Level;
+import core.loginscreen.LoginConnection;
 import core.screens.navigation.NavigationBar;
 import core.settingsscreen.objects.Settings;
 import core.shopscreen.ShopConnection;
@@ -306,8 +307,7 @@ public class SettingsScreen extends ScreenAdapter {
 
             signOut.addListener(new ChangeListener() {
                 public void changed(ChangeEvent event, Actor actor) {
-                    //new LoginConnection().signOut();
-                    new ScreenChanger().changeScreen("LoginScreen");
+                    if (new LoginConnection().userSignOut()) new ScreenChanger().changeScreen("LoginScreen");
                 }
             });
         }

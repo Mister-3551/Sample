@@ -4,6 +4,8 @@ import com.badlogic.gdx.utils.Json;
 import core.ApiResponse;
 import core.PlayerData;
 import core.settingsscreen.objects.Settings;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -11,15 +13,16 @@ import java.util.ArrayList;
 import static core.API.*;
 
 public class SettingsConnection {
-    private URL url;
 
     public SettingsConnection() {}
 
     public Settings getControls() {
         Settings settings = null;
         try {
-            url = new URL(String.format(API_GET_SETTINGS, PlayerData.PLAYER_GAME_TOKEN));
-            String response = ApiResponse.getResponse(url);
+            RequestBody formBody = new FormBody.Builder()
+                    .add("gameToken", PlayerData.PLAYER_GAME_TOKEN)
+                    .build();
+            String response = ApiResponse.getResponse(API_GET_SETTINGS, formBody);
             if (!response.isBlank())  {
                 settings = new Json().fromJson(Settings.class, Settings.class, response);
                 setControls(settings);

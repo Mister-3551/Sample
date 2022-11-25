@@ -1,6 +1,7 @@
 package core.xml;
 
 import core.Constants;
+import core.PlayerData;
 import org.w3c.dom.*;
 
 import javax.swing.filechooser.FileSystemView;
@@ -46,7 +47,7 @@ public class XmlFile {
             login.setAttribute("id", "1");
 
             token = document.createElement("token");
-            token.appendChild(document.createTextNode(Constants.GAME_TOKEN));
+            token.appendChild(document.createTextNode(PlayerData.PLAYER_GAME_TOKEN));
             login.appendChild(token);
 
             transformerFactory = TransformerFactory.newInstance();

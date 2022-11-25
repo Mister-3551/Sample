@@ -1,19 +1,18 @@
 package core;
 
+import okhttp3.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Scanner;
 
 public class ApiResponse {
 
-    public static String getResponse(URL url) throws Exception {
-        HttpURLConnection conn;
-        int responseCode = 0;
+    private static HttpURLConnection conn;
+
+    /*public static String getResponse(URL url) throws Exception {
+        int responseCode;
         String inline = "";
 
         conn = (HttpURLConnection) url.openConnection();
@@ -31,6 +30,23 @@ public class ApiResponse {
         }
         conn.disconnect();
         return inline;
+    }*/
+
+    public static String getResponse(String url, RequestBody formBody) throws Exception {
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(formBody)
+                .build();
+
+        Call call = client.newCall(request);
+        Response response = call.execute();
+
+        String responseString = response.body().string();
+
+        response.close();
+        return responseString;
     }
 
     public static JSONObject getDataFromGameToken(String response) throws Exception {

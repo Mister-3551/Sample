@@ -33,19 +33,10 @@ public class Constants {
     public static int MAP_WIDTH;
     public static int MAP_HEIGHT;
 
-    // Database constants
-    public static String USERNAME;
-    public static String RANK;
-    public static String GAME_TOKEN;
-
     // GameScreen
     public static GameScreen GAME_SCREEN;
     public static int ENEMY_KILLS = 0;
     public static boolean RESET_CAMERA_POSITION;
-    public static int KEY_LEFT;
-    public static int KEY_RIGHT;
-    public static int KEY_JUMP;
-    public static int KEY_SHOOT;
 
     // LevelsScreen
     public static ArrayList<Level> LEVEL_LIST;
