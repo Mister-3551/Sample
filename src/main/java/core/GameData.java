@@ -1,6 +1,7 @@
 package core;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import core.levelscreen.objects.Level;
 import core.settingsscreen.objects.Settings;
 
@@ -26,6 +27,11 @@ public class GameData {
         public static int PLAYER_KEY_JUMP;
         public static int PLAYER_KEY_SHOOT;
         public static Settings PLAYER_SETTINGS;
+
+        public static class Sprite {
+            public static com.badlogic.gdx.graphics.g2d.Sprite PLAYER_LEFT_SPRITE;
+            public static com.badlogic.gdx.graphics.g2d.Sprite PLAYER_RIGHT_SPRITE;
+        }
     }
 
     public static class GameScreen {
@@ -46,8 +52,14 @@ public class GameData {
 
     public static class Skins {
 
-        public static class Player {
+        public static final String SKIN = "skins/skin/gappy-skin.json";
 
+        public static class Player {
+            public static final String PLAYER_NORMAL = "player/player_normal/player_normal.png";
+            public static final String PLAYER_LEFT = "player/player_left/player_left.png";
+            public static final String PLAYER_LEFT_SWORD = "player/player_left/player_left_sword.png";
+            public static final String PLAYER_RIGHT = "player/player_right/player_right.png";
+            public static final String PLAYER_RIGHT_SWORD = "player/player_right/player_right_sword.png";
         }
 
         public static class Enemy {

@@ -6,15 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import core.Constants;
 import core.GameData;
 import core.gamescreen.helper.BodyHelperService;
 import core.gamescreen.helper.CollisionService;
 import core.gamescreen.objects.bullet.Bullet;
 import core.screens.GameScreen;
-
-import static core.Constants.PLAYER_LEFT_SPRITE;
-import static core.Constants.PLAYER_RIGHT_SPRITE;
 
 public class Player extends PlayerEntity {
 
@@ -28,11 +24,11 @@ public class Player extends PlayerEntity {
         super(width, height, body);
         this.speed = 10f;
         this.jumpCounter = 0;
-        PLAYER_NORMAL = new Sprite(new Texture(Constants.PLAYER_NORMAL));
-        Constants.PLAYER_LEFT_SPRITE = new Sprite(new Texture(Constants.PLAYER_LEFT));
-        PLAYER_LEFT_SWORD = new Sprite(new Texture(Constants.PLAYER_LEFT_SWORD));
-        Constants.PLAYER_RIGHT_SPRITE = new Sprite(new Texture(Constants.PLAYER_RIGHT));
-        PLAYER_RIGHT_SWORD = new Sprite(new Texture(Constants.PLAYER_RIGHT_SWORD));
+        PLAYER_NORMAL = new Sprite(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
+        GameData.Player.Sprite.PLAYER_LEFT_SPRITE = new Sprite(new Texture(GameData.Skins.Player.PLAYER_LEFT));
+        PLAYER_LEFT_SWORD = new Sprite(new Texture(GameData.Skins.Player.PLAYER_LEFT_SWORD));
+        GameData.Player.Sprite.PLAYER_RIGHT_SPRITE = new Sprite(new Texture(GameData.Skins.Player.PLAYER_RIGHT));
+        PLAYER_RIGHT_SWORD = new Sprite(new Texture(GameData.Skins.Player.PLAYER_RIGHT_SWORD));
         this.sprite = new Sprite(PLAYER_NORMAL);
         this.rect = new CollisionService(x, y, width, height);
 
@@ -47,8 +43,8 @@ public class Player extends PlayerEntity {
         rect.move(x, y);
         checkUserInput();
 
-        if (Bullet.diffX(GameData.GameScreen.Camera.ORTHOGRAPHIC_CAMERA, this) < 0) setSprite(PLAYER_LEFT_SPRITE);
-        else setSprite(PLAYER_RIGHT_SPRITE);
+        if (Bullet.diffX(GameData.GameScreen.Camera.ORTHOGRAPHIC_CAMERA, this) < 0) setSprite(GameData.Player.Sprite.PLAYER_LEFT_SPRITE);
+        else setSprite(GameData.Player.Sprite.PLAYER_RIGHT_SPRITE);
     }
 
     @Override
@@ -59,7 +55,7 @@ public class Player extends PlayerEntity {
     private void checkUserInput() {
         velX = 0;
         if (Gdx.input.isKeyPressed(GameData.Player.PLAYER_KEY_LEFT)) {
-            if (!this.sprite.equals(Constants.PLAYER_LEFT_SPRITE)) {
+            if (!this.sprite.equals(GameData.Player.Sprite.PLAYER_LEFT_SPRITE)) {
                 //setSprite(PLAYER_LEFT);
                 GameScreen.setBulletDirection(-3);
                 //float baseX = 14f, baseY = 34f;
@@ -69,7 +65,7 @@ public class Player extends PlayerEntity {
             velX = -1;
         }
         if (Gdx.input.isKeyPressed(GameData.Player.PLAYER_KEY_RIGHT)) {
-            if (!this.sprite.equals(Constants.PLAYER_RIGHT_SPRITE)) {
+            if (!this.sprite.equals(GameData.Player.Sprite.PLAYER_RIGHT_SPRITE)) {
                 //setSprite(PLAYER_RIGHT_SWORD);
                 GameScreen.setBulletDirection(3);
                 //float baseX = 22f, baseY = 34f;

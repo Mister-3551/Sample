@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import core.Constants;
 import core.GameData;
 import core.gamescreen.helper.BodyHelperService;
 import core.gamescreen.helper.TileMapHelper;
@@ -26,8 +25,6 @@ import core.gamescreen.objects.player.Player;
 import core.screens.navigation.NavigationBar;
 
 import java.util.ArrayList;
-
-import static core.Constants.*;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -232,7 +229,7 @@ public class GameScreen extends ScreenAdapter {
 
     public void setPlayer(Player player) {
         this.player = player;
-        this.player.setSprite(new Sprite(new Texture(Constants.PLAYER_NORMAL)));
+        this.player.setSprite(new Sprite(new Texture(GameData.Skins.Player.PLAYER_NORMAL)));
     }
 
     public static void setBulletDirection(int bulletDirection1) {

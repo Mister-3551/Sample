@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import core.Constants;
 import core.GameData;
 import core.screens.ScreenChanger;
 
@@ -18,7 +17,7 @@ public class NavigationBar {
 
     public NavigationBar() {
         navigation = new Table();
-        skin = new Skin(Gdx.files.internal(Constants.SKIN));
+        skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
         username = new TextButton(GameData.Player.PLAYER_USERNAME, skin);
         rank = new TextButton("Rank: " + GameData.Player.PLAYER_RANK, skin);
         money = new TextButton("Money: 0", skin);

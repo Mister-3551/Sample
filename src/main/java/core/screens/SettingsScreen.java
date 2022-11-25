@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import core.Constants;
 import core.GameData;
 import core.levelscreen.LevelConnection;
 import core.levelscreen.objects.Level;
@@ -51,7 +50,7 @@ public class SettingsScreen extends ScreenAdapter {
 
     public SettingsScreen() {
         stage = new Stage();
-        skin = new Skin(Gdx.files.internal(Constants.SKIN));
+        skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
 
         stageTable = new Table();
 
@@ -162,12 +161,12 @@ public class SettingsScreen extends ScreenAdapter {
 
         int index = 0;
         for (Settings.Setting control : setting) {
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Table product = new Table();
 
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Label controlName = new Label(control.getName(), skin);
@@ -213,13 +212,13 @@ public class SettingsScreen extends ScreenAdapter {
         setting.add(new Settings.Setting("MUSIC", playerSettings.getMusic()));
         setting.add(new Settings.Setting("SOUND EFFECT", playerSettings.getSoundEffect()));
 
-        image = new Image(new Texture(Constants.PLAYER_NORMAL));
+        image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
         image.setAlign(Align.center);
 
         Table musicProduct = new Table();
         Table soundEffectProduct = new Table();
 
-        image = new Image(new Texture(Constants.PLAYER_NORMAL));
+        image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
         image.setAlign(Align.center);
 
         Label musicLabel = new Label("Music", skin);
@@ -241,7 +240,7 @@ public class SettingsScreen extends ScreenAdapter {
 
         soundEffectProduct.setBackground(setBackground(Color.GREEN));
 
-        image = new Image(new Texture(Constants.PLAYER_NORMAL));
+        image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
         image.setAlign(Align.center);
 
         soundEffectProduct.add(image).pad(10, 10, 10, 10).width(50).height(50);
@@ -273,12 +272,12 @@ public class SettingsScreen extends ScreenAdapter {
 
         int index = 0;
         for (String setting : settings) {
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Table product = new Table();
 
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Label levelName = new Label(setting, skin);

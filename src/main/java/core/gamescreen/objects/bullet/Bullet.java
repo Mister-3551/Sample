@@ -7,13 +7,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
-import core.Constants;
 import core.GameData;
 import core.gamescreen.helper.CollisionService;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.player.Player;
-
-import static core.Constants.*;
 
 public class Bullet extends BulletEntity {
 

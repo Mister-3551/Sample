@@ -2,7 +2,6 @@ package core.gamescreen.helper;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import core.Constants;
 import core.GameData;
 
 public class BodyHelperService {

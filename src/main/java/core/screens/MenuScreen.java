@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import core.Constants;
 import core.GameData;
 import core.levelscreen.LevelConnection;
 import core.levelscreen.objects.Level;
@@ -35,7 +34,7 @@ public class MenuScreen extends ScreenAdapter {
         levelsList = new LevelConnection().levelsList();
         GameData.CURRENT_LEVEL = (int) levelsList.stream().filter(level -> level.getCompleted() == 1 || level.getCompleted() == 2).count();
         stage = new Stage();
-        skin = new Skin(Gdx.files.internal(Constants.SKIN));
+        skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
         label = new Label("", skin);
         multiplayer = new TextButton("Multiplayer", skin);
         localMultiplayer = new TextButton("Local Multiplayer", skin);

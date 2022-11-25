@@ -17,13 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import core.Constants;
 import core.GameData;
 import core.levelscreen.LevelConnection;
 import core.levelscreen.objects.Level;
-import core.loginscreen.LoginConnection;
 import core.screens.navigation.NavigationBar;
-import core.settingsscreen.SettingsConnection;
 import core.settingsscreen.objects.Settings;
 import core.shopscreen.ShopConnection;
 import core.shopscreen.objects.Unit;
@@ -47,7 +44,7 @@ public class InventoryScreen extends ScreenAdapter {
 
     public InventoryScreen() {
         stage = new Stage();
-        skin = new Skin(Gdx.files.internal(Constants.SKIN));
+        skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
 
         stageTable = new Table();
 
@@ -452,12 +449,12 @@ public class InventoryScreen extends ScreenAdapter {
 
         int index = 0;
         for (Settings control : controlsList) {
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Table product = new Table();
 
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Label levelName = new Label("control.getName(", skin);
@@ -505,13 +502,13 @@ public class InventoryScreen extends ScreenAdapter {
 
         int index = 0;
         for (Settings volume : volumeList) {
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Table product = new Table();
             TextButton play = new TextButton("Play", skin);
 
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Label levelName = new Label("volume.getName()", skin);
@@ -553,12 +550,12 @@ public class InventoryScreen extends ScreenAdapter {
 
         int index = 0;
         for (String setting : settings) {
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Table product = new Table();
 
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Label levelName = new Label(setting, skin);

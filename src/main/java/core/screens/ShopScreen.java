@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import core.Constants;
 import core.GameData;
 import core.levelscreen.LevelConnection;
 import core.levelscreen.objects.Level;
@@ -34,7 +33,7 @@ public class ShopScreen extends ScreenAdapter {
 
     public ShopScreen() {
         stage = new Stage();
-        skin = new Skin(Gdx.files.internal(Constants.SKIN));
+        skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
 
         stageTable = new Table();
         unitsList = new ShopConnection().unitsList();
@@ -118,13 +117,13 @@ public class ShopScreen extends ScreenAdapter {
 
         int index = 0;
         for (Unit unit : unitsList) {
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Table product = new Table();
             TextButton buy = new TextButton("Buy", skin);
 
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Label unitName = new Label(unit.getName(), skin);
@@ -158,13 +157,13 @@ public class ShopScreen extends ScreenAdapter {
 
         int index = 0;
         for (Level level : levelsList) {
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Table product = new Table();
             TextButton buy = new TextButton("Buy", skin);
 
-            image = new Image(new Texture(Constants.PLAYER_NORMAL));
+            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
             image.setAlign(Align.center);
 
             Label levelName = new Label(level.getName(), skin);

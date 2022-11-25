@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import core.Constants;
+import core.GameData;
 import core.loginscreen.LoginConnection;
 
 public class LoginScreen extends ScreenAdapter {
@@ -25,7 +25,7 @@ public class LoginScreen extends ScreenAdapter {
 
     public LoginScreen() {
         stage = new Stage();
-        skin = new Skin(Gdx.files.internal(Constants.SKIN));
+        skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
         errorLabel = new Label("", skin);
         gameName = new TextButton("Sample Case", skin);
         empty = new TextButton("", skin);
