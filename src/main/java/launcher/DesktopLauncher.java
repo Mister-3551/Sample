@@ -5,6 +5,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import core.Boot;
 import core.Constants;
+import core.GameData;
 
 public class DesktopLauncher {
 
@@ -17,7 +18,7 @@ public class DesktopLauncher {
         configuration.setResizable(false);
         configuration.setTitle("Sample Case");
         configuration.setWindowIcon(Constants.PLAYER_LEFT);
-        configuration.setWindowedMode(Constants.SCREENWIDTH, Constants.SCREENHEIGHT);
+        configuration.setWindowedMode(GameData.SCREENWIDTH, GameData.SCREENHEIGHT);
         //configuration.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
         new Lwjgl3Application(new Boot(), configuration);
     }

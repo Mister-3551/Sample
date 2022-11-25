@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import core.Constants;
+import core.GameData;
 import core.levelscreen.LevelConnection;
 import core.levelscreen.objects.Level;
 import core.screens.navigation.NavigationBar;
@@ -86,20 +87,20 @@ public class ShopScreen extends ScreenAdapter {
         stageTable.row();
         stageTable.add(title).pad(0, 0, 10, 0);
         stageTable.row();
-        stageTable.add(unitMap).width(Constants.SCROLL_PANE_SIZE);
+        stageTable.add(unitMap).width(GameData.LevelScreen.SCROLL_PANE_SIZE);
         stageTable.row();
         stageTable.add(new Table()).growY();
 
         unitButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 frame.clear();
-                frame.add(unitsTable()).width(Constants.SCROLL_PANE_SIZE).growY();
+                frame.add(unitsTable()).width(GameData.LevelScreen.SCROLL_PANE_SIZE).growY();
             }
         });
         mapButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 frame.clear();
-                frame.add(mapsTable()).width(Constants.SCROLL_PANE_SIZE).growY();
+                frame.add(mapsTable()).width(GameData.LevelScreen.SCROLL_PANE_SIZE).growY();
             }
         });
     }

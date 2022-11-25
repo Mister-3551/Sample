@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import core.Constants;
+import core.GameData;
 import core.levelscreen.LevelConnection;
 import core.levelscreen.objects.Level;
 import core.loginscreen.LoginConnection;
@@ -411,26 +412,26 @@ public class InventoryScreen extends ScreenAdapter {
         stageTable.row();
         stageTable.add(title).pad(0, 0, 10, 0);
         stageTable.row();
-        stageTable.add(unitMap).width(Constants.SCROLL_PANE_SIZE);
+        stageTable.add(unitMap).width(GameData.LevelScreen.SCROLL_PANE_SIZE);
         stageTable.row();
         stageTable.add(new Table()).growY();
 
         controlSettings.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 frame.clear();
-                frame.add(controlTable()).width(Constants.SCROLL_PANE_SIZE).growY();
+                frame.add(controlTable()).width(GameData.LevelScreen.SCROLL_PANE_SIZE).growY();
             }
         });
         volumeSettings.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 frame.clear();
-                frame.add(volumeTable()).width(Constants.SCROLL_PANE_SIZE).growY();
+                frame.add(volumeTable()).width(GameData.LevelScreen.SCROLL_PANE_SIZE).growY();
             }
         });
         otherSettings.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 frame.clear();
-                frame.add(otherTable()).width(Constants.SCROLL_PANE_SIZE).growY();
+                frame.add(otherTable()).width(GameData.LevelScreen.SCROLL_PANE_SIZE).growY();
             }
         });
     }

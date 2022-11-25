@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import core.Constants;
-import core.PlayerData;
+import core.GameData;
 import core.gamescreen.helper.BodyHelperService;
 import core.gamescreen.helper.TileMapHelper;
 import core.gamescreen.objects.bullet.Bullet;
@@ -80,11 +80,11 @@ public class GameScreen extends ScreenAdapter {
         font.setColor(Color.ORANGE);
         font.getData().setScale(2, 2);
 
-        Pixmap pm = new Pixmap(Gdx.files.internal("gameScreen/aim/aim.png"));
+        Pixmap pm = new Pixmap(Gdx.files.internal(GameData.Skins.Cursor.AIM_CURSOR));
         Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
         pm.dispose();
 
-        GAME_SCREEN = this;
+        GameData.GameScreen.GAME_SCREEN = this;
     }
 
     @Override
@@ -128,7 +128,7 @@ public class GameScreen extends ScreenAdapter {
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) new ScreenChanger().changeScreen("MenuScreen");
 
-        if (Gdx.input.isButtonJustPressed(PlayerData.PLAYER_KEY_SHOOT) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isButtonJustPressed(GameData.Player.PLAYER_KEY_SHOOT) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             var playerWidth = 20;
             if (Bullet.diffX(camera, player) < 0) playerWidth = -6;
             Body body = BodyHelperService.createObjectBody(5, 5, player.getX() + playerWidth, player.getY() + 17, world);
@@ -156,26 +156,26 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void cameraUpdate() {
-        var playerPositionX = Math.abs(player.getBody().getPosition().x * PPM * 10) / 10f;
-        var playerPositionY = Math.abs(player.getBody().getPosition().y * PPM * 10) / 10f;
+        var playerPositionX = Math.abs(player.getBody().getPosition().x * GameData.PPM * 10) / 10f;
+        var playerPositionY = Math.abs(player.getBody().getPosition().y * GameData.PPM * 10) / 10f;
 
         var cameraMovingPositionX = 660;
         var cameraMovingPositionY = 400;
 
-        var mapWidth = MAP_WIDTH * 64;
+        var mapWidth = GameData.MAP_WIDTH * 64;
 
         Vector3 position = camera.position;
 
-        if (!RESET_CAMERA_POSITION) {
+        if (!GameData.GameScreen.Camera.RESET_CAMERA_POSITION) {
             if (playerPositionX > cameraMovingPositionX) position.x = playerPositionX;
-            else if (playerPositionX > mapWidth - SCREENWIDTH / 2) position.x = playerPositionX;
+            else if (playerPositionX > mapWidth - GameData.SCREENWIDTH / 2) position.x = playerPositionX;
             else position.x = cameraMovingPositionX;
             if (playerPositionY > cameraMovingPositionY) position.y = playerPositionY;
         } else {
             position.x = playerPositionX;
             if (playerPositionX < cameraMovingPositionX) position.x = cameraMovingPositionX;
             if (playerPositionY < cameraMovingPositionY) position.y = cameraMovingPositionY;
-            RESET_CAMERA_POSITION = false;
+            GameData.GameScreen.Camera.RESET_CAMERA_POSITION = false;
         }
         camera.position.set(position);
         camera.update();

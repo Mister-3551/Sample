@@ -1,21 +1,17 @@
 package core.gamescreen.objects.player;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import core.Constants;
-import core.PlayerData;
+import core.GameData;
 import core.gamescreen.helper.BodyHelperService;
 import core.gamescreen.helper.CollisionService;
 import core.gamescreen.objects.bullet.Bullet;
 import core.screens.GameScreen;
-
-import java.util.ArrayList;
 
 import static core.Constants.PLAYER_LEFT_SPRITE;
 import static core.Constants.PLAYER_RIGHT_SPRITE;
@@ -46,12 +42,12 @@ public class Player extends PlayerEntity {
 
     @Override
     public void update() {
-        x = body.getPosition().x * Constants.PPM;
-        y = body.getPosition().y * Constants.PPM;
+        x = body.getPosition().x * GameData.PPM;
+        y = body.getPosition().y * GameData.PPM;
         rect.move(x, y);
         checkUserInput();
 
-        if (Bullet.diffX(Constants.ORTHOGRAPHIC_CAMERA, this) < 0) setSprite(PLAYER_LEFT_SPRITE);
+        if (Bullet.diffX(GameData.GameScreen.Camera.ORTHOGRAPHIC_CAMERA, this) < 0) setSprite(PLAYER_LEFT_SPRITE);
         else setSprite(PLAYER_RIGHT_SPRITE);
     }
 
@@ -62,7 +58,7 @@ public class Player extends PlayerEntity {
 
     private void checkUserInput() {
         velX = 0;
-        if (Gdx.input.isKeyPressed(PlayerData.PLAYER_KEY_LEFT)) {
+        if (Gdx.input.isKeyPressed(GameData.Player.PLAYER_KEY_LEFT)) {
             if (!this.sprite.equals(Constants.PLAYER_LEFT_SPRITE)) {
                 //setSprite(PLAYER_LEFT);
                 GameScreen.setBulletDirection(-3);
@@ -72,7 +68,7 @@ public class Player extends PlayerEntity {
             }
             velX = -1;
         }
-        if (Gdx.input.isKeyPressed(PlayerData.PLAYER_KEY_RIGHT)) {
+        if (Gdx.input.isKeyPressed(GameData.Player.PLAYER_KEY_RIGHT)) {
             if (!this.sprite.equals(Constants.PLAYER_RIGHT_SPRITE)) {
                 //setSprite(PLAYER_RIGHT_SWORD);
                 GameScreen.setBulletDirection(3);
@@ -83,7 +79,7 @@ public class Player extends PlayerEntity {
             velX = 1;
         }
 
-        if (Gdx.input.isKeyJustPressed(PlayerData.PLAYER_KEY_JUMP) && jumpCounter < 25) {
+        if (Gdx.input.isKeyJustPressed(GameData.Player.PLAYER_KEY_JUMP) && jumpCounter < 25) {
             float force = body.getMass() * 18;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);

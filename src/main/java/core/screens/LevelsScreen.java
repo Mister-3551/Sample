@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import core.Constants;
-import core.PlayerData;
+import core.GameData;
 import core.levelscreen.LevelConnection;
 import core.levelscreen.objects.Level;
 import core.screens.navigation.NavigationBar;
@@ -109,7 +109,7 @@ public class LevelsScreen extends ScreenAdapter {
             int finalIndex = index;
             play.addListener(new ChangeListener() {
                 public void changed(ChangeEvent event, Actor actor) {
-                    PlayerData.CURRENT_LEVEL = finalIndex;
+                    GameData.CURRENT_LEVEL = finalIndex;
                     new ScreenChanger().changeScreen("GameScreen", level.getMap());
                 }
             });
@@ -123,7 +123,7 @@ public class LevelsScreen extends ScreenAdapter {
         stageTable.add(title);
 
         stageTable.row();
-        stageTable.add(scrollPane).width(Constants.SCROLL_PANE_SIZE);
+        stageTable.add(scrollPane).width(GameData.LevelScreen.SCROLL_PANE_SIZE);
         stageTable.row();
         stageTable.add(new Table()).growY();
     }

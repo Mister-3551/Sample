@@ -12,23 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mysql.cj.xdevapi.JsonArray;
-import com.mysql.cj.xdevapi.JsonParser;
 import core.Constants;
-import core.PlayerData;
+import core.GameData;
 import core.levelscreen.LevelConnection;
 import core.levelscreen.objects.Level;
 import core.screens.navigation.NavigationBar;
 import core.settingsscreen.SettingsConnection;
-import core.settingsscreen.objects.Settings;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class MenuScreen extends ScreenAdapter {
 
@@ -42,13 +33,13 @@ public class MenuScreen extends ScreenAdapter {
 
     public MenuScreen() {
         levelsList = new LevelConnection().levelsList();
-        PlayerData.CURRENT_LEVEL = (int) levelsList.stream().filter(level -> level.getCompleted() == 1 || level.getCompleted() == 2).count();
+        GameData.CURRENT_LEVEL = (int) levelsList.stream().filter(level -> level.getCompleted() == 1 || level.getCompleted() == 2).count();
         stage = new Stage();
         skin = new Skin(Gdx.files.internal(Constants.SKIN));
         label = new Label("", skin);
         multiplayer = new TextButton("Multiplayer", skin);
         localMultiplayer = new TextButton("Local Multiplayer", skin);
-        play = new TextButton("Play - Level " + PlayerData.CURRENT_LEVEL, skin);
+        play = new TextButton("Play - Level " + GameData.CURRENT_LEVEL, skin);
         levels = new TextButton("Levels", skin);
         settings = new TextButton("Settings", skin);
         table = new Table();
@@ -78,7 +69,7 @@ public class MenuScreen extends ScreenAdapter {
 
     private void createStructure() {
 
-        Pixmap pm = new Pixmap(Gdx.files.internal("sword/sword.png"));
+        Pixmap pm = new Pixmap(Gdx.files.internal(GameData.Skins.Cursor.SWORD_CURSOR));
         Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
         pm.dispose();
 
@@ -107,7 +98,7 @@ public class MenuScreen extends ScreenAdapter {
 
         play.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                var currentLevel = levelsList.get(PlayerData.CURRENT_LEVEL - 1).getMap();
+                var currentLevel = levelsList.get(GameData.CURRENT_LEVEL - 1).getMap();
                 new ScreenChanger().changeScreen("GameScreen", currentLevel);
             }
         });

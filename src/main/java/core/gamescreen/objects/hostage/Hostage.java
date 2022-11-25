@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import core.Constants;
+import core.GameData;
 import core.gamescreen.helper.CollisionService;
 
 public class Hostage extends HostageEntity {
@@ -15,9 +16,9 @@ public class Hostage extends HostageEntity {
 
     public Hostage(float width, float height, Body body) {
         super(width, height, body);
-        HOSTAGE_NORMAL = new Sprite(new Texture(Constants.HOSTAGE_NORMAL));
-        HOSTAGE_LEFT = new Sprite(new Texture(Constants.HOSTAGE_LEFT));
-        HOSTAGE_RIGHT = new Sprite(new Texture(Constants.HOSTAGE_RIGHT));
+        HOSTAGE_NORMAL = new Sprite(new Texture(GameData.Skins.Hostage.HOSTAGE_NORMAL));
+        HOSTAGE_LEFT = new Sprite(new Texture(GameData.Skins.Hostage.HOSTAGE_LEFT));
+        HOSTAGE_RIGHT = new Sprite(new Texture(GameData.Skins.Hostage.HOSTAGE_RIGHT));
         this.sprite = new Sprite(HOSTAGE_NORMAL);
 
         this.rect = new CollisionService(x, y, width, height);
@@ -25,8 +26,8 @@ public class Hostage extends HostageEntity {
 
     @Override
     public void update() {
-        x = body.getPosition().x * Constants.PPM;
-        y = body.getPosition().y * Constants.PPM;
+        x = body.getPosition().x * GameData.PPM;
+        y = body.getPosition().y * GameData.PPM;
         rect.move(x, y);
     }
 

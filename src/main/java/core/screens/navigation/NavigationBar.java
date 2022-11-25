@@ -7,8 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import core.Constants;
-import core.PlayerData;
-import core.loginscreen.LoginConnection;
+import core.GameData;
 import core.screens.ScreenChanger;
 
 public class NavigationBar {
@@ -20,15 +19,15 @@ public class NavigationBar {
     public NavigationBar() {
         navigation = new Table();
         skin = new Skin(Gdx.files.internal(Constants.SKIN));
-        username = new TextButton(PlayerData.PLAYER_USERNAME, skin);
-        rank = new TextButton("Rank: " + PlayerData.PLAYER_RANK, skin);
+        username = new TextButton(GameData.Player.PLAYER_USERNAME, skin);
+        rank = new TextButton("Rank: " + GameData.Player.PLAYER_RANK, skin);
         money = new TextButton("Money: 0", skin);
         shop = new TextButton("Shop", skin);
         empty = new TextButton("", skin);
         backToMenu = new TextButton("Back To Menu", skin);
 
-        level = new TextButton("Level: " + PlayerData.CURRENT_LEVEL, skin);
-        enemy = new TextButton("Enemy: " + Constants.ENEMY_KILLS + "/4", skin);
+        level = new TextButton("Level: " + GameData.CURRENT_LEVEL, skin);
+        enemy = new TextButton("Enemy: " + GameData.GameScreen.ENEMY_KILLS + "/4", skin);
         hostage = new TextButton("Hostage: 0/4", skin);
     }
 
@@ -63,7 +62,7 @@ public class NavigationBar {
     }
 
     public Table gameScreenNavigationBar() {
-        level.setText("Level " + PlayerData.CURRENT_LEVEL);
+        level.setText("Level " + GameData.CURRENT_LEVEL);
         navigation.add(level).fill(true).height(50.0f).growX();
         navigation.add(enemy).fill(true).height(50.0f).growX();
         navigation.add(hostage).fill(true).height(50.0f).growX();
@@ -80,6 +79,6 @@ public class NavigationBar {
     }
 
     public void updateEnemyKills() {
-        this.enemy.setText("Enemy: " + (Constants.ENEMY_KILLS += 1) + "/4");
+        this.enemy.setText("Enemy: " + (GameData.GameScreen.ENEMY_KILLS += 1) + "/4");
     }
 }

@@ -13,7 +13,7 @@ public class Boot extends Game {
     private OrthographicCamera orthographicCamera;
 
     public Boot() {
-        Constants.INSTANCE = this;
+        GameData.INSTANCE = this;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class Boot extends Game {
         this.heightScreen = Gdx.graphics.getHeight();
         this.orthographicCamera = new OrthographicCamera();
         this.orthographicCamera.setToOrtho(false, widthScreen, heightScreen);
-        Constants.ORTHOGRAPHIC_CAMERA = orthographicCamera;
+        GameData.GameScreen.Camera.ORTHOGRAPHIC_CAMERA = orthographicCamera;
         new ScreenChanger().changeScreen(isSignIn());
     }
 

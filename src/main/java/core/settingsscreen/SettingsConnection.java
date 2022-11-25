@@ -2,13 +2,10 @@ package core.settingsscreen;
 
 import com.badlogic.gdx.utils.Json;
 import core.ApiResponse;
-import core.PlayerData;
+import core.GameData;
 import core.settingsscreen.objects.Settings;
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
-
-import java.net.URL;
-import java.util.ArrayList;
 
 import static core.API.*;
 
@@ -20,7 +17,7 @@ public class SettingsConnection {
         Settings settings = null;
         try {
             RequestBody formBody = new FormBody.Builder()
-                    .add("gameToken", PlayerData.PLAYER_GAME_TOKEN)
+                    .add("gameToken", GameData.Player.PLAYER_GAME_TOKEN)
                     .build();
             String response = ApiResponse.getResponse(API_GET_SETTINGS, formBody);
             if (!response.isBlank())  {
@@ -34,10 +31,10 @@ public class SettingsConnection {
     }
 
     public void setControls(Settings settings) {
-        PlayerData.PLAYER_KEY_LEFT = settings.getKeyLeft();
-        PlayerData.PLAYER_KEY_RIGHT = settings.getKeyRight();
-        PlayerData.PLAYER_KEY_JUMP = settings.getKeyJump();
-        PlayerData.PLAYER_KEY_SHOOT = settings.getKeyShoot();
-        PlayerData.PLAYER_SETTINGS = settings;
+        GameData.Player.PLAYER_KEY_LEFT = settings.getKeyLeft();
+        GameData.Player.PLAYER_KEY_RIGHT = settings.getKeyRight();
+        GameData.Player.PLAYER_KEY_JUMP = settings.getKeyJump();
+        GameData.Player.PLAYER_KEY_SHOOT = settings.getKeyShoot();
+        GameData.Player.PLAYER_SETTINGS = settings;
     }
 }

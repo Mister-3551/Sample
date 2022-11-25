@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import core.Constants;
+import core.GameData;
 import core.gamescreen.helper.CollisionService;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.player.Player;
@@ -28,7 +29,7 @@ public class Bullet extends BulletEntity {
         super(width, height, body, directionX);
         this.speed = 10f;
         this.jumpCounter = 0;
-        this.BULLET_NORMAL = new Sprite(new Texture(Gdx.files.internal(Constants.BULLET)));
+        this.BULLET_NORMAL = new Sprite(new Texture(Gdx.files.internal(GameData.Skins.Bullet.BULLET)));
         this.sprite = new Sprite(BULLET_NORMAL);
         this.remove = false;
         this.rect = new CollisionService(x, y, width, height);
@@ -36,8 +37,8 @@ public class Bullet extends BulletEntity {
 
     @Override
     public void update() {
-        x = body.getPosition().x * Constants.PPM;
-        y = body.getPosition().y * Constants.PPM;
+        x = body.getPosition().x * GameData.PPM;
+        y = body.getPosition().y * GameData.PPM;
 
         body.setLinearVelocity(speed * MathUtils.cos(angle), speed * MathUtils.sin(angle));
 
@@ -69,7 +70,7 @@ public class Bullet extends BulletEntity {
 
     public static float diffXEnemy(OrthographicCamera camera, Enemy enemy, Player player) {
         float xMouse = player.getX();
-        var XMouse = xMouse + camera.position.x - SCREENWIDTH / 2;
+        var XMouse = xMouse + camera.position.x - GameData.SCREENWIDTH / 2;
         return XMouse - enemy.getX();
     }
 
@@ -77,7 +78,7 @@ public class Bullet extends BulletEntity {
         // mouse ordinate direction is the opposite to pane window
         float yMouse = player.getY();
         // translate screen coordinates to current camera position in world coordinates
-        var YMouse = yMouse + camera.position.y - SCREENHEIGHT / 2;
+        var YMouse = yMouse + camera.position.y - GameData.SCREENHEIGHT / 2;
         return YMouse - enemy.getY();
     }
 
@@ -87,15 +88,15 @@ public class Bullet extends BulletEntity {
 
     public static float diffX(OrthographicCamera camera, Player player) {
         int xMouse = Gdx.input.getX();
-        var XMouse = xMouse + camera.position.x - SCREENWIDTH / 2;
+        var XMouse = xMouse + camera.position.x - GameData.SCREENWIDTH / 2;
         return XMouse - player.getX();
     }
 
     public static float diffY(OrthographicCamera camera, Player player) {
         // mouse ordinate direction is the opposite to pane window
-        int yMouse = SCREENHEIGHT - Gdx.input.getY();
+        int yMouse = GameData.SCREENHEIGHT - Gdx.input.getY();
         // translate screen coordinates to current camera position in world coordinates
-        var YMouse = yMouse + camera.position.y - SCREENHEIGHT / 2;
+        var YMouse = yMouse + camera.position.y - GameData.SCREENHEIGHT / 2;
         return YMouse - player.getY();
     }
 }

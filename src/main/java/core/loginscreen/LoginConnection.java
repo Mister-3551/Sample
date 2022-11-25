@@ -2,7 +2,7 @@ package core.loginscreen;
 
 import core.API;
 import core.ApiResponse;
-import core.PlayerData;
+import core.GameData;
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
 
@@ -30,7 +30,7 @@ public class LoginConnection {
     public boolean userSignOut() {
         try {
             RequestBody formBody = new FormBody.Builder()
-                    .add("gameToken", PlayerData.PLAYER_GAME_TOKEN)
+                    .add("gameToken", GameData.Player.PLAYER_GAME_TOKEN)
                     .build();
             String response = ApiResponse.getResponse(API.API_SIGN_OUT, formBody);
             return Boolean.parseBoolean(response);
@@ -42,9 +42,9 @@ public class LoginConnection {
 
     private void setUserData(String response) throws Exception {
         var object = ApiResponse.getDataFromGameToken(response);
-        PlayerData.PLAYER_NAME = (String) object.get("name");
-        PlayerData.PLAYER_USERNAME = (String) object.get("username");
-        PlayerData.PLAYER_RANK = (String) object.get("rank");
-        PlayerData.PLAYER_GAME_TOKEN = response;
+        GameData.Player.PLAYER_NAME = (String) object.get("name");
+        GameData.Player.PLAYER_USERNAME = (String) object.get("username");
+        GameData.Player.PLAYER_RANK = (String) object.get("rank");
+        GameData.Player.PLAYER_GAME_TOKEN = response;
     }
 }

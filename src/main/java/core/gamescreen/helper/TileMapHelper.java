@@ -11,7 +11,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import core.Constants;
-import core.PlayerData;
+import core.GameData;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.hostage.Hostage;
 import core.gamescreen.objects.player.Player;
@@ -27,13 +27,13 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setupMap(String... level) {
-        Constants.RESET_CAMERA_POSITION = true;
-        String map = level.length == 0 ? Constants.LEVEL_LIST.get(PlayerData.CURRENT_LEVEL - 1).getMap() : level[0];
+        GameData.GameScreen.Camera.RESET_CAMERA_POSITION = true;
+        String map = level.length == 0 ? GameData.LevelScreen.LEVEL_LIST.get(GameData.CURRENT_LEVEL - 1).getMap() : level[0];
         tiledMap = new TmxMapLoader().load("maps/" + map + ".tmx");
         MapProperties prop = tiledMap.getProperties();
 
-        Constants.MAP_WIDTH = prop.get("width", Integer.class);
-        Constants.MAP_HEIGHT = prop.get("height", Integer.class);
+        GameData.MAP_WIDTH = prop.get("width", Integer.class);
+        GameData.MAP_HEIGHT = prop.get("height", Integer.class);
 
         parseMapObject(tiledMap.getLayers().get("Objects").getObjects());
         return new OrthogonalTiledMapRenderer(tiledMap);
@@ -87,7 +87,7 @@ public class TileMapHelper {
         Vector2[] worldVertices = new Vector2[vertices.length / 2];
 
         for (int i = 0; i < vertices.length / 2; i++) {
-            Vector2 current = new Vector2(vertices[i * 2] / Constants.PPM, vertices[i * 2 + 1] / Constants.PPM);
+            Vector2 current = new Vector2(vertices[i * 2] / GameData.PPM, vertices[i * 2 + 1] / GameData.PPM);
             worldVertices[i] = current;
         }
 

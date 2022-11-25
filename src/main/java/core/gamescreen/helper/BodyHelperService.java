@@ -3,6 +3,7 @@ package core.gamescreen.helper;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import core.Constants;
+import core.GameData;
 
 public class BodyHelperService {
 
@@ -19,7 +20,7 @@ public class BodyHelperService {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(x / Constants.PPM, y / Constants.PPM);
+        bodyDef.position.set(x / GameData.PPM, y / GameData.PPM);
         bodyDef.fixedRotation = true;
 
         PolygonShape shape = new PolygonShape();
