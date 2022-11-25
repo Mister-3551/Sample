@@ -86,9 +86,9 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `rank`, `current_xp`, `next_level_xp`, `token`, `email_confirmed`, `email_token`, `game_token`) VALUES
-(1, 'Janez Novak', 'Mister-3551', 'janez@example.com', 'qwqwqwqw', 6, 35, 600, '1664117750574289e426a-8baf-4918-b1ae-c35b83622fb9', '0', '', ''),
+(1, 'Janez Novak', 'janeznovak', 'janez@example.com', 'qwqwqwqw', 6, 35, 600, '1664117750574289e426a-8baf-4918-b1ae-c35b83622fb9', '0', '', ''),
 (2, 'Mr junk', 'Mr-junk', 'mrjunk@example.com', 'qwqwqwqw', 3, 75, 300, '16641190235013e08f52b-d916-44d6-b57a-a9adf716cf98', '0', '', ''),
-(3, 'Jan Novak', 'urban4', 'jan@example.com', 'qwqwqwqw', 2, 55, 200, '166413814992602e2dacf-b7dd-49a3-b5b6-a094ce39a19f', '0', '', '1668081456663b5c2098a-ca4d-4832-83b4-0c79f52ee2f4'),
+(3, 'Jan Novak', 'jannovak4', 'jan@example.com', 'qwqwqwqw', 2, 55, 200, '166413814992602e2dacf-b7dd-49a3-b5b6-a094ce39a19f', '0', '', '1668081456663b5c2098a-ca4d-4832-83b4-0c79f52ee2f4'),
 (4, 'Furi Naturi', 'furi-naturi', 'furinaturi@example.com', 'qwqwqwqw', 1, 80, 100, '166413899274794aaafa7-ef54-44e7-b23f-7521dde8adbb', '0', '', ''),
 (5, 'Jaki Kakaki', 'Jaki-Kakaki', 'jakikakaki@example.com', 'qwqwqwqw', 1, 0, 100, '1664139254431fb5ef7ad-f8b2-4c08-abac-c98cf852d353', '0', '', ''),
 (6, 'Mali Balani', 'malibalani', 'malibalani@example.com', 'qwqwqwqw', 1, 0, 100, '166413945506164228b49-249f-4b70-9207-f41473777615', '0', '', ''),
