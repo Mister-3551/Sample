@@ -9,4 +9,5 @@ public class API {
     public static final String API_SIGN_OUT = HOST + "/sign-out";
     public static final String API_GET_LEVELS = HOST + "/get-levels";
     public static final String API_GET_SETTINGS = HOST + "/get-settings";
+    public static final String API_GET_INVENTORY = HOST + "/get-units";
 }

@@ -1,6 +1,9 @@
 package core.screens;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import core.API;
+import core.gamescreen.DetectionSystem;
+import core.gamescreen.objects.player.Player;
 import okhttp3.*;
 import org.junit.Test;
 

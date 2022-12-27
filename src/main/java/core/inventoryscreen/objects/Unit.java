@@ -1,9 +1,11 @@
-package core.shopscreen.objects;
+package core.inventoryscreen.objects;
 
 public class Unit {
 
     private String name;
     private int healthPoints;
+
+    public Unit() {}
 
     public Unit(String name, int healthPoints) {
         this.name = name;

@@ -15,7 +15,9 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.TimeUtils;
 import core.GameData;
+import core.gamescreen.DetectionSystem;
 import core.gamescreen.helper.BodyHelperService;
 import core.gamescreen.helper.TileMapHelper;
 import core.gamescreen.objects.bullet.Bullet;
@@ -25,6 +27,8 @@ import core.gamescreen.objects.player.Player;
 import core.screens.navigation.NavigationBar;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -46,6 +50,9 @@ public class GameScreen extends ScreenAdapter {
     public ArrayList<Hostage> hostagesToRemove;
     private final ArrayList<Bullet> bullets;
     private final ArrayList<Bullet> bulletsToRemove;
+    private Long startTime = TimeUtils.nanoTime();
+    private final Long timer = 1000000000L;
+    private int bulletRotate;
 
     public GameScreen(OrthographicCamera camera, String... level) {
         this.camera = camera;
@@ -134,6 +141,11 @@ public class GameScreen extends ScreenAdapter {
 
         for (Enemy enemy : enemies) {
             enemy.update();
+            Enemy getEnemy = DetectionSystem.detection(enemy, player);
+
+            if (getEnemy != null) {
+                enemyShoot(getEnemy);
+            }
         }
 
         for (Hostage hostage : hostages) {
@@ -144,12 +156,19 @@ public class GameScreen extends ScreenAdapter {
             bullet.update();
             if (bullet.remove) bulletsToRemove.add(bullet);
         }
+
         checkCollisions();
     }
 
-    public void enemyShoot(Enemy enemy) {
-        Body body = BodyHelperService.createObjectBody(5, 5, enemy.getX() + 30, enemy.getY() + 17, world);
-        bullets.add(new Bullet(5 * 1.5f, 5 * 1.5f, body, Bullet.getBulletAngleEnemy(enemy, player, camera)));
+    private void enemyShoot(Enemy enemy) {
+        if (TimeUtils.timeSinceNanos(startTime) >= timer) {
+
+            bulletRotate = player.getX() < enemy.getX() ? -30 : 30;
+
+            Body body = BodyHelperService.createObjectBody(5, 5, enemy.getX() + bulletRotate, enemy.getY() + 17, world);
+            bullets.add(new Bullet(5 * 1.5f, 5 * 1.5f, body, Bullet.getBulletAngleEnemy(enemy, player, camera)));
+            startTime = TimeUtils.nanoTime();
+        }
     }
 
     private void cameraUpdate() {
@@ -219,6 +238,15 @@ public class GameScreen extends ScreenAdapter {
         if (hostages.size() == 0 && hostagesToRemove.size() != 0) hostagesToRemove.clear();
     }
 
+    private void createStructure() {
+        table.setFillParent(true);
+        table.add(navigationBar.gameScreenNavigationBar()).growX();
+        table.row();
+        table.add(empty).growX().growY();
+
+        stage.addActor(table);
+    }
+
     public World getWorld() {
         return world;
     }
@@ -234,14 +262,5 @@ public class GameScreen extends ScreenAdapter {
 
     public static void setBulletDirection(int bulletDirection1) {
         bulletDirection = bulletDirection1;
-    }
-
-    private void createStructure() {
-        table.setFillParent(true);
-        table.add(navigationBar.gameScreenNavigationBar()).growX();
-        table.row();
-        table.add(empty).growX().growY();
-
-        stage.addActor(table);
     }
 }

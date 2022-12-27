@@ -33,7 +33,7 @@ public class TileMapHelper {
 
         GameData.MAP_WIDTH = prop.get("width", Integer.class);
         GameData.MAP_HEIGHT = prop.get("height", Integer.class);
-
+        
         parseMapObject(tiledMap.getLayers().get("Objects").getObjects());
         return new OrthogonalTiledMapRenderer(tiledMap);
     }
@@ -41,7 +41,7 @@ public class TileMapHelper {
     private void parseMapObject(MapObjects mapObjects) {
         for (MapObject mapObject : mapObjects) {
             if (mapObject instanceof PolygonMapObject) {
-                    createStaticBody((PolygonMapObject) mapObject);
+                createStaticBody((PolygonMapObject) mapObject);
             }
             if (mapObject instanceof TiledMapTileMapObject) {
                 if (mapObject.getName() != null && mapObject.getName().equals("Player")) {

@@ -22,8 +22,8 @@ public class Bullet extends BulletEntity {
 
     private CollisionService rect;
 
-    public Bullet(float width, float height, Body body, float directionX) {
-        super(width, height, body, directionX);
+    public Bullet(float width, float height, Body body, float angle) {
+        super(width, height, body, angle);
         this.speed = 10f;
         this.jumpCounter = 0;
         this.BULLET_NORMAL = new Sprite(new Texture(Gdx.files.internal(GameData.Skins.Bullet.BULLET)));
@@ -62,21 +62,7 @@ public class Bullet extends BulletEntity {
     }
 
     public static float getBulletAngleEnemy(Enemy enemy, Player player, OrthographicCamera camera) {
-        return (float) Math.atan2(diffYEnemy(camera, enemy, player), diffXEnemy(camera, enemy, player));
-    }
-
-    public static float diffXEnemy(OrthographicCamera camera, Enemy enemy, Player player) {
-        float xMouse = player.getX();
-        var XMouse = xMouse + camera.position.x - GameData.SCREENWIDTH / 2;
-        return XMouse - enemy.getX();
-    }
-
-    public static float diffYEnemy(OrthographicCamera camera, Enemy enemy, Player player) {
-        // mouse ordinate direction is the opposite to pane window
-        float yMouse = player.getY();
-        // translate screen coordinates to current camera position in world coordinates
-        var YMouse = yMouse + camera.position.y - GameData.SCREENHEIGHT / 2;
-        return YMouse - enemy.getY();
+        return -90;
     }
 
     public static float getBulletAngle(Player player, OrthographicCamera camera) {

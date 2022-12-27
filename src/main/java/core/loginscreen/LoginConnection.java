@@ -42,6 +42,7 @@ public class LoginConnection {
 
     private void setUserData(String response) throws Exception {
         var object = ApiResponse.getDataFromGameToken(response);
+        GameData.Player.PLAYER_ID = (String) object.get("idUser");
         GameData.Player.PLAYER_NAME = (String) object.get("name");
         GameData.Player.PLAYER_USERNAME = (String) object.get("username");
         GameData.Player.PLAYER_RANK = (String) object.get("rank");

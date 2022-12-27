@@ -26,8 +26,8 @@ public class ScreenChanger {
             case "LevelsScreen":
                 instance.setScreen(new LevelsScreen());
                 return;
-            case "ShopScreen":
-                instance.setScreen(new ShopScreen());
+            case "InventoryScreen":
+                instance.setScreen(new InventoryScreen());
                 return;
             case "GameScreen":
                 instance.setScreen(new GameScreen(camera, level));

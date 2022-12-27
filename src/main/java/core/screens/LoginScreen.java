@@ -162,7 +162,7 @@ public class LoginScreen extends ScreenAdapter {
         forgotPassword.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.net.openURI("http://localhost:3000/forgotpassword");
+                Gdx.net.openURI("http://localhost:3000/resetpassword");
             }
         });
 

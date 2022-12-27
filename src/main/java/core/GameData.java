@@ -18,6 +18,7 @@ public class GameData {
     public static final int SCREENHEIGHT = 800;
 
     public static class Player {
+        public static String PLAYER_ID;
         public static String PLAYER_NAME;
         public static String PLAYER_USERNAME;
         public static String PLAYER_RANK;

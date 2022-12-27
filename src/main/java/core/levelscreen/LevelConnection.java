@@ -18,7 +18,7 @@ public class LevelConnection {
         ArrayList<Level> levels = new ArrayList<>();
         try {
             RequestBody formBody = new FormBody.Builder()
-                    .add("gameToken", GameData.Player.PLAYER_GAME_TOKEN)
+                    .add("idUser", GameData.Player.PLAYER_ID)
                     .build();
             String response = ApiResponse.getResponse(API.API_GET_LEVELS,formBody);
             if (!response.isBlank()) return new Json().fromJson(ArrayList.class, Level.class, response);

@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import core.GameData;
@@ -23,8 +24,8 @@ import core.levelscreen.objects.Level;
 import core.loginscreen.LoginConnection;
 import core.screens.navigation.NavigationBar;
 import core.settingsscreen.objects.Settings;
-import core.shopscreen.ShopConnection;
-import core.shopscreen.objects.Unit;
+import core.inventoryscreen.InventoryConnection;
+import core.inventoryscreen.objects.Unit;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class SettingsScreen extends ScreenAdapter {
 
         stageTable = new Table();
 
-        unitsList = new ShopConnection().unitsList();
+        unitsList = new InventoryConnection().inventoryList();
         levelList = new LevelConnection().levelsList();
         playerSettings = GameData.Player.PLAYER_SETTINGS;
 
@@ -303,6 +304,13 @@ public class SettingsScreen extends ScreenAdapter {
 
             if (index++ % 2 == 0) scrollPaneTable.row();
             scrollPaneTable.add(product).pad(10, 10, 10, 10).height(70).width(400);
+
+            deleteProfile.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    Gdx.net.openURI("http://localhost:3000/deleteprofile");
+                }
+            });
 
             signOut.addListener(new ChangeListener() {
                 public void changed(ChangeEvent event, Actor actor) {
