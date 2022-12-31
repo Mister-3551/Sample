@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="70" tileheight="70" infinite="0" nextlayerid="3" nextobjectid="30">
+ <tileset firstgid="1" name="industrial" tilewidth="70" tileheight="70" tilecount="112" columns="14">
+  <image source="tiles/mapTiles/industrial.png" width="980" height="560"/>
+ </tileset>
+ <tileset firstgid="113" name="player_normal" tilewidth="14" tileheight="34" tilecount="1" columns="1">
+  <image source="../player/player_normal/player_normal.png" width="14" height="34"/>
+ </tileset>
+ <tileset firstgid="114" name="candy" tilewidth="70" tileheight="70" tilecount="98" columns="14">
+  <image source="tiles/mapTiles/candy.png" width="980" height="490"/>
+ </tileset>
+ <tileset firstgid="212" name="ice" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/ice.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="261" name="purple" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/purple.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="310" name="meatal" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/meatal.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="359" name="grass" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/grass.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="408" name="dirt" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/dirt.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="457" name="choco" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/choco.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="506" name="castle" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/castle.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="555" name="cake" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/cake.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="604" name="decorations" tilewidth="70" tileheight="70" tilecount="841" columns="29">
+  <image source="tiles/mapTiles/decorations.png" width="2048" height="2048"/>
+ </tileset>
+ <layer id="1" name="Map" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMAqGFmAHYmYsmI3GdooCMSsWLEIju5HtzATiQCxqqG03sp1RQBwDxFlAHA7EEUAcCcT6VLQP3U58mBx7saUTGCbGThBmIYCxAQD+dwTD
+  </data>
+ </layer>
+ <objectgroup id="2" name="Objects">
+  <object id="5" name="Player" gid="113" x="141" y="1330" width="64" height="64"/>
+  <object id="6" name="Border" x="0" y="1330">
+   <polygon points="0,0 0,-350 70,-350 70,0"/>
+  </object>
+  <object id="23" x="0" y="1330">
+   <polygon points="0,0 0,70 1750,70 1750,0"/>
+  </object>
+  <object id="24" x="1190" y="1330">
+   <polygon points="0,0 0,-70 -420,-70 -420,0"/>
+  </object>
+  <object id="25" x="840" y="1190">
+   <polygon points="0,0 -210,0 0,-210"/>
+  </object>
+  <object id="26" x="770" y="1330">
+   <polygon points="0,0 0,-140 -140,-140 -280,0"/>
+  </object>
+  <object id="27" x="840" y="980">
+   <polygon points="0,0 350,0 350,139.333 0,139.333 0,0"/>
+  </object>
+  <object id="28" x="1190" y="980">
+   <polygon points="0,0 140,140 0,140 0,0"/>
+  </object>
+  <object id="29" x="1260" y="1120">
+   <polygon points="0,0 0,70 140,70 70,0"/>
+  </object>
+ </objectgroup>
+</map>
