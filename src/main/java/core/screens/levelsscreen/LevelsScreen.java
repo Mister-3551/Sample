@@ -1,5 +1,6 @@
 package core.screens.levelsscreen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
@@ -14,24 +15,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import core.Boot;
 import core.GameData;
-import core.downloadfile.DownloadFile;
 import core.screens.ScreenChanger;
 import core.screens.navigation.NavigationBar;
-import core.screens.signinscreen.SignInScreen;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 public class LevelsScreen extends ScreenAdapter {
 
     private Table stageTable;
-    private ArrayList<Level> levelList;
     Texture texture;
     public static Image image;
     private Skin skin;
     private Stage stage;
+    private ArrayList<Level> levelsList;
 
     public LevelsScreen(String s) {}
 
@@ -40,9 +37,10 @@ public class LevelsScreen extends ScreenAdapter {
         skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
         stageTable = new Table();
 
-        levelList = getLevels();
-
         texture = new Texture(GameData.Skins.Player.PLAYER_NORMAL);
+
+        if (GameData.LEVEL_LIST == null) GameData.LEVEL_LIST = getLevels();
+        levelsList = GameData.LEVEL_LIST;
 
         createStructure();
 
@@ -90,7 +88,7 @@ public class LevelsScreen extends ScreenAdapter {
         Label title = new Label("Level Select", skin.get("big-title", Label.LabelStyle.class));
 
         int index = 0;
-        for (Level level : levelList) {
+        for (Level level : levelsList) {
 
             try {
                 image = new Image(new Texture(GameData.Pictures.LEVEL_PICTURE_DIRECTORY + "/" + level.getPicture()));

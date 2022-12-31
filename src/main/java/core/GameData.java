@@ -10,6 +10,7 @@ public class GameData {
 
     public static Boot INSTANCE;
     public static int CURRENT_LEVEL;
+    public static ArrayList<Level> LEVEL_LIST;
     public static int MAP_WIDTH;
     public static int MAP_HEIGHT;
     public static final float PPM = 32.0f;
