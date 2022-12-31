@@ -14,10 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import core.Boot;
 import core.GameData;
 import core.downloadfile.DownloadFile;
 import core.screens.ScreenChanger;
 import core.screens.navigation.NavigationBar;
+import core.screens.signinscreen.SignInScreen;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,20 +27,13 @@ import java.util.ArrayList;
 public class LevelsScreen extends ScreenAdapter {
 
     private Table stageTable;
-
-    private ArrayList<Table> levelTables;
     private ArrayList<Level> levelList;
-    private ScrollPane scrollPane;
-    private Label label;
-    private TextButton textButton;
-    private TextureRegionDrawable background;
-
     Texture texture;
-
-    private URL url;
     public static Image image;
     private Skin skin;
     private Stage stage;
+
+    public LevelsScreen(String s) {}
 
     public LevelsScreen() {
         stage = new Stage();
@@ -68,7 +63,7 @@ public class LevelsScreen extends ScreenAdapter {
         stage.getViewport().update(width, height, true);
     }
 
-    private ArrayList<Level> getLevels() {
+    public ArrayList<Level> getLevels() {
         ArrayList<Level> levels = new ArrayList<>();
         try {
             levels = new LevelsConnection().getLevels();
@@ -97,16 +92,12 @@ public class LevelsScreen extends ScreenAdapter {
         int index = 0;
         for (Level level : levelList) {
 
-            String imageDirectory = "";
             try {
-                imageDirectory = DownloadFile.getFile(level.getPicture()).replace("\\", "/");
+                image = new Image(new Texture(GameData.Pictures.LEVEL_PICTURE_DIRECTORY + "/" + level.getPicture()));
+                image.setAlign(Align.center);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                //TODO
             }
-
-            image = new Image(new Texture(imageDirectory + "/" + level.getPicture()));
-
-            image.setAlign(Align.center);
 
             Table product = new Table();
 
@@ -140,6 +131,7 @@ public class LevelsScreen extends ScreenAdapter {
             });
         }
 
+        image = null;
 
         stageTable.setFillParent(true);
 

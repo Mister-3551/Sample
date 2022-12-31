@@ -46,7 +46,6 @@ public class Tests {
 
     @Test
     public void xml() throws Exception {
-        String downloadFile = DownloadFile.getFile("level1.jpg");
-        System.out.println(downloadFile);
+        DownloadFile.getLevelPicture("level1.jpg");
     }
 }

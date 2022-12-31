@@ -1,5 +1,6 @@
 package core.screens.signinscreen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.*;
@@ -11,9 +12,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import core.GameData;
+import core.downloadfile.DownloadFile;
 import core.screens.ScreenChanger;
+import core.screens.levelsscreen.Level;
+import core.screens.levelsscreen.LevelsScreen;
 import core.screens.signinscreen.SignInConnection;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class SignInScreen extends ScreenAdapter {
 
@@ -147,11 +155,13 @@ public class SignInScreen extends ScreenAdapter {
                     setErrorLabelText("Fields can not be empty");
                 else {
                     try {
-                        if (new SignInConnection().userAuthentication(username.getText(), password.getText()))
+                        if (new SignInConnection().userAuthentication(username.getText(), password.getText())) {
+                            getDataFromInternet();
                             new ScreenChanger().changeScreen("MenuScreen");
-                        else setErrorLabelText("Wrong username or password");
+                        } else setErrorLabelText("Wrong username or password");
                     } catch (Exception e) {
                         setErrorLabelText("Something went wrong!");
+                        System.out.println(e.getMessage());
                     }
                 }
             }
@@ -181,5 +191,16 @@ public class SignInScreen extends ScreenAdapter {
 
     private void setErrorLabelText(String error) {
         errorLabel.setText(error);
+    }
+
+    private void getDataFromInternet() {
+        ArrayList<Level> levels = new LevelsScreen("").getLevels();
+        String picturesDirectory = "";
+        try {
+            for (Level level : levels) picturesDirectory = DownloadFile.getLevelPicture(level.getPicture());
+            GameData.Pictures.LEVEL_PICTURE_DIRECTORY = picturesDirectory;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

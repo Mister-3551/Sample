@@ -49,6 +49,11 @@ public class GameData {
         public static final int SCROLL_PANE_SIZE = 800;
     }
 
+    public static class Pictures {
+
+        public static String LEVEL_PICTURE_DIRECTORY;
+    }
+
     public static class Skins {
 
         public static final String SKIN = "skins/skin/gappy-skin.json";

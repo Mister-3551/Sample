@@ -11,14 +11,21 @@ import java.io.FileOutputStream;
 public class DownloadFile {
 
     private static final String levelPicturesUrl = "http://192.168.1.171:8079/level-picture/";
+    private static final String welcomePicturesUrl = "http://192.168.1.171:8079/welcome-picture/";
     private static String gameNameMap = "GameName";
     private static String assetsMap = "assets";
-    private static String levelPicturesMap = "level-picture";
+    private static String picturesMap = "pictures";
+    private static String levelPicturesMap = "level-pictures";
+    private static String welcomePicturesMap = "welcome-picture";
     private static String levelMapMap = "level-map";
-    private static final String levelPicturesDirectory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameMap + "/" + assetsMap + "/" + levelPicturesMap;
+    private static final String levelPicturesDirectory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameMap + "/" + assetsMap + "/" + picturesMap + "/" + levelPicturesMap;
 
-    public static String getFile(String filename) throws Exception {
-        return responseFile(levelPicturesUrl, filename);
+    public static String getLevelPicture(String filename) throws Exception {
+         return responseFile(levelPicturesUrl, filename).replace("\\", "/");
+    }
+
+    public static String getWelcomePicture(String filename) throws Exception {
+        return responseFile(welcomePicturesUrl, filename).replace("\\", "/");
     }
 
     public static String responseFile(String givenUrl, String filename) throws Exception {
@@ -48,8 +55,14 @@ public class DownloadFile {
         File assetsDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameMap, assetsMap);
         if (!assetsDirectory.exists()) assetsDirectory.mkdirs();
 
-        File levelPicturesDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameMap + "/" + assetsMap, levelPicturesMap);
+        File picturesDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + assetsMap, picturesMap);
+        if (!picturesDirectory.exists()) picturesDirectory.mkdirs();
+
+        File levelPicturesDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameMap + "/" + assetsMap + "/" + picturesMap, levelPicturesMap);
         if (!levelPicturesDirectory.exists()) levelPicturesDirectory.mkdirs();
+
+        File welcomePicturesDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameMap + "/" + assetsMap + "/" + picturesMap, welcomePicturesMap);
+        if (!welcomePicturesDirectory.exists()) welcomePicturesDirectory.mkdirs();
 
         File levelMapsDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameMap + "/" + assetsMap, levelMapMap);
         if (!levelMapsDirectory.exists()) levelMapsDirectory.mkdirs();

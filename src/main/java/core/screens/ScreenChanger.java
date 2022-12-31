@@ -17,24 +17,30 @@ public class ScreenChanger {
         this.camera = GameData.GameScreen.Camera.ORTHOGRAPHIC_CAMERA;
 
         switch (screenName) {
-            case "LoginScreen":
+            case "LoginScreen" -> {
                 instance.setScreen(new SignInScreen());
                 return;
-            case "MenuScreen":
+            }
+            case "MenuScreen" -> {
                 instance.setScreen(new MenuScreen());
                 return;
-            case "SettingsScreen":
+            }
+            case "SettingsScreen" -> {
                 instance.setScreen(new SettingsScreen());
                 return;
-            case "LevelsScreen":
+            }
+            case "LevelsScreen" -> {
                 instance.setScreen(new LevelsScreen());
                 return;
-            case "InventoryScreen":
+            }
+            case "InventoryScreen" -> {
                 instance.setScreen(new InventoryScreen());
                 return;
-            case "GameScreen":
+            }
+            case "GameScreen" -> {
                 instance.setScreen(new GameScreen(camera, level));
                 return;
+            }
         }
     }
 }
