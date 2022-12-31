@@ -96,7 +96,7 @@ public class LevelsScreen extends ScreenAdapter {
                 image = new Image(new Texture(GameData.Pictures.LEVEL_PICTURE_DIRECTORY + "/" + level.getPicture()));
                 image.setAlign(Align.center);
             } catch (Exception e) {
-                //TODO
+                image = new Image(new Texture(new Pixmap(1, 1, Pixmap.Format.RGB565)));
             }
 
             Table product = new Table();
