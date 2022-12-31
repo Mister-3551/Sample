@@ -1,4 +1,4 @@
-package core.screens;
+package core.screens.signinscreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -12,9 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import core.GameData;
-import core.loginscreen.LoginConnection;
+import core.screens.ScreenChanger;
+import core.screens.signinscreen.SignInConnection;
 
-public class LoginScreen extends ScreenAdapter {
+public class SignInScreen extends ScreenAdapter {
 
     private Label errorLabel;
     private TextField username, password;
@@ -23,7 +24,7 @@ public class LoginScreen extends ScreenAdapter {
     private Skin skin;
     private Stage stage;
 
-    public LoginScreen() {
+    public SignInScreen() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
         errorLabel = new Label("", skin);
@@ -145,9 +146,13 @@ public class LoginScreen extends ScreenAdapter {
                 if (username.getText().isEmpty() || password.getText().isEmpty())
                     setErrorLabelText("Fields can not be empty");
                 else {
-                    if (new LoginConnection().userAuthentication(username.getText(), password.getText()))
-                        new ScreenChanger().changeScreen("MenuScreen");
-                    else setErrorLabelText("Wrong username or password");
+                    try {
+                        if (new SignInConnection().userAuthentication(username.getText(), password.getText()))
+                            new ScreenChanger().changeScreen("MenuScreen");
+                        else setErrorLabelText("Wrong username or password");
+                    } catch (Exception e) {
+                        setErrorLabelText("Something went wrong!");
+                    }
                 }
             }
         });

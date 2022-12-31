@@ -27,8 +27,6 @@ import core.gamescreen.objects.player.Player;
 import core.screens.navigation.NavigationBar;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -184,7 +182,7 @@ public class GameScreen extends ScreenAdapter {
 
         if (!GameData.GameScreen.Camera.RESET_CAMERA_POSITION) {
             if (playerPositionX > cameraMovingPositionX) position.x = playerPositionX;
-            else if (playerPositionX > mapWidth - GameData.SCREENWIDTH / 2) position.x = playerPositionX;
+            else if (playerPositionX > mapWidth - GameData.SCREEN_WIDTH / 2) position.x = playerPositionX;
             else position.x = cameraMovingPositionX;
             if (playerPositionY > cameraMovingPositionY) position.y = playerPositionY;
         } else {

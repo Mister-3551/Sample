@@ -28,7 +28,7 @@ public class TileMapHelper {
     public OrthogonalTiledMapRenderer setupMap(String... level) {
         GameData.GameScreen.Camera.RESET_CAMERA_POSITION = true;
         String map = level.length == 0 ? GameData.LevelScreen.LEVEL_LIST.get(GameData.CURRENT_LEVEL - 1).getMap() : level[0];
-        tiledMap = new TmxMapLoader().load("maps/" + map + ".tmx");
+        tiledMap = new TmxMapLoader().load("maps/" + map);
         MapProperties prop = tiledMap.getProperties();
 
         GameData.MAP_WIDTH = prop.get("width", Integer.class);

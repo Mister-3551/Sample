@@ -1,4 +1,4 @@
-package core.screens;
+package core.screens.levelsscreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -15,10 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import core.GameData;
-import core.levelscreen.LevelConnection;
-import core.levelscreen.objects.Level;
+import core.downloadfile.DownloadFile;
+import core.screens.ScreenChanger;
 import core.screens.navigation.NavigationBar;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 public class LevelsScreen extends ScreenAdapter {
@@ -31,7 +32,11 @@ public class LevelsScreen extends ScreenAdapter {
     private Label label;
     private TextButton textButton;
     private TextureRegionDrawable background;
-    private Image image;
+
+    Texture texture;
+
+    private URL url;
+    public static Image image;
     private Skin skin;
     private Stage stage;
 
@@ -40,7 +45,9 @@ public class LevelsScreen extends ScreenAdapter {
         skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
         stageTable = new Table();
 
-        levelList = new LevelConnection().levelsList();
+        levelList = getLevels();
+
+        texture = new Texture(GameData.Skins.Player.PLAYER_NORMAL);
 
         createStructure();
 
@@ -61,6 +68,16 @@ public class LevelsScreen extends ScreenAdapter {
         stage.getViewport().update(width, height, true);
     }
 
+    private ArrayList<Level> getLevels() {
+        ArrayList<Level> levels = new ArrayList<>();
+        try {
+            levels = new LevelsConnection().getLevels();
+        } catch (Exception e) {
+
+        }
+        return levels;
+    }
+
     private void createStructure() {
 
         stageTable.setBackground(setBackground(Color.LIGHT_GRAY));
@@ -79,7 +96,16 @@ public class LevelsScreen extends ScreenAdapter {
 
         int index = 0;
         for (Level level : levelList) {
-            image = new Image(new Texture(GameData.Skins.Player.PLAYER_NORMAL));
+
+            String imageDirectory = "";
+            try {
+                imageDirectory = DownloadFile.getFile(level.getPicture()).replace("\\", "/");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
+            image = new Image(new Texture(imageDirectory + "/" + level.getPicture()));
+
             image.setAlign(Align.center);
 
             Table product = new Table();

@@ -1,8 +1,7 @@
 package core;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import core.levelscreen.objects.Level;
+import core.screens.levelsscreen.Level;
 import core.settingsscreen.objects.Settings;
 
 import java.util.ArrayList;
@@ -14,14 +13,13 @@ public class GameData {
     public static int MAP_WIDTH;
     public static int MAP_HEIGHT;
     public static final float PPM = 32.0f;
-    public static final int SCREENWIDTH = 1200;
-    public static final int SCREENHEIGHT = 800;
+    public static final int SCREEN_WIDTH = 1200;
+    public static final int SCREEN_HEIGHT = 800;
 
     public static class Player {
-        public static String PLAYER_ID;
-        public static String PLAYER_NAME;
+        public static Long PLAYER_ID;
         public static String PLAYER_USERNAME;
-        public static String PLAYER_RANK;
+        public static int PLAYER_RANK;
         public static String PLAYER_GAME_TOKEN;
         public static int PLAYER_KEY_LEFT;
         public static int PLAYER_KEY_RIGHT;

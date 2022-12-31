@@ -1,4 +1,4 @@
-package core.screens;
+package core.screens.menuscreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -13,31 +13,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import core.GameData;
-import core.levelscreen.LevelConnection;
-import core.levelscreen.objects.Level;
+import core.screens.ScreenChanger;
 import core.screens.navigation.NavigationBar;
 import core.settingsscreen.SettingsConnection;
-
-import java.util.ArrayList;
 
 public class MenuScreen extends ScreenAdapter {
 
     private Label label;
-    private TextButton multiplayer, localMultiplayer, play, levels, settings;
+    private TextButton play, levels, settings;
     private Table table, form, combine;
     private Image playerSkin;
     private Skin skin;
     private Stage stage;
-    private ArrayList<Level> levelsList;
 
     public MenuScreen() {
-        levelsList = new LevelConnection().levelsList();
-        GameData.CURRENT_LEVEL = (int) levelsList.stream().filter(level -> level.getCompleted() == 1 || level.getCompleted() == 2).count();
+        playerBasicData();
         stage = new Stage();
         skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
         label = new Label("", skin);
-        multiplayer = new TextButton("Multiplayer", skin);
-        localMultiplayer = new TextButton("Local Multiplayer", skin);
         play = new TextButton("Play - Level " + GameData.CURRENT_LEVEL, skin);
         levels = new TextButton("Levels", skin);
         settings = new TextButton("Settings", skin);
@@ -48,6 +41,11 @@ public class MenuScreen extends ScreenAdapter {
 
         new SettingsConnection().getControls();
         createStructure();
+
+        GameData.Player.PLAYER_KEY_JUMP = 51;
+        GameData.Player.PLAYER_KEY_LEFT = 29;
+        GameData.Player.PLAYER_KEY_RIGHT = 32;
+        GameData.Player.PLAYER_KEY_SHOOT = 0;
 
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
@@ -64,6 +62,14 @@ public class MenuScreen extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+    }
+
+    private void playerBasicData() {
+        try {
+            new MenuConnection().getPlayerBasicData();
+        } catch (Exception e) {
+            //TODO make a popup for trouble
+        }
     }
 
     private void createStructure() {
@@ -97,7 +103,7 @@ public class MenuScreen extends ScreenAdapter {
 
         play.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                var currentLevel = levelsList.get(GameData.CURRENT_LEVEL - 1).getMap();
+                var currentLevel = "map" + GameData.CURRENT_LEVEL + ".tmx";
                 new ScreenChanger().changeScreen("GameScreen", currentLevel);
             }
         });

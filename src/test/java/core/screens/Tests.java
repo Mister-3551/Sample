@@ -1,9 +1,10 @@
 package core.screens;
 
-import com.badlogic.gdx.physics.box2d.Body;
 import core.API;
-import core.gamescreen.DetectionSystem;
-import core.gamescreen.objects.player.Player;
+import core.GameData;
+import core.downloadfile.DownloadFile;
+import core.screens.menuscreen.MenuConnection;
+import core.screens.signinscreen.SignInConnection;
 import okhttp3.*;
 import org.junit.Test;
 
@@ -27,5 +28,25 @@ public class Tests {
         Call call = client.newCall(request);
         Response response = call.execute();
         System.out.println(response.body().string());
+    }
+
+    @Test
+    public void signIn() throws Exception {
+        SignInConnection signInConnection = new SignInConnection();
+
+        boolean authentication = signInConnection.userAuthentication("urban4", "qwqwqwqw");
+        System.out.println(authentication);
+    }
+
+    @Test
+    public void getPlayerBasicData() throws Exception {
+        GameData.Player.PLAYER_ID = 1L;
+        new MenuConnection().getPlayerBasicData();
+    }
+
+    @Test
+    public void xml() throws Exception {
+        String downloadFile = DownloadFile.getFile("level1.jpg");
+        System.out.println(downloadFile);
     }
 }

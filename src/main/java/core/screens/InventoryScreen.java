@@ -14,8 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import core.GameData;
-import core.levelscreen.LevelConnection;
-import core.levelscreen.objects.Level;
+import core.screens.levelsscreen.Level;
 import core.screens.navigation.NavigationBar;
 import core.inventoryscreen.InventoryConnection;
 import core.inventoryscreen.objects.Unit;
@@ -37,7 +36,7 @@ public class InventoryScreen extends ScreenAdapter {
 
         stageTable = new Table();
         unitsList = new InventoryConnection().inventoryList();
-        levelsList = new LevelConnection().levelsList();
+        //levelsList = new LevelConnection().levelsList();
 
         createStructure();
 

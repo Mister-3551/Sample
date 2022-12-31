@@ -9,29 +9,6 @@ import java.util.Base64;
 
 public class ApiResponse {
 
-    private static HttpURLConnection conn;
-
-    /*public static String getResponse(URL url) throws Exception {
-        int responseCode;
-        String inline = "";
-
-        conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.connect();
-
-        responseCode = conn.getResponseCode();
-
-        if (responseCode == 200) {
-            Scanner scanner = new Scanner(url.openStream());
-            while (scanner.hasNext()) {
-                inline += scanner.nextLine();
-            }
-            scanner.close();
-        }
-        conn.disconnect();
-        return inline;
-    }*/
-
     public static String getResponse(String url, RequestBody formBody) throws Exception {
         OkHttpClient client = new OkHttpClient();
 

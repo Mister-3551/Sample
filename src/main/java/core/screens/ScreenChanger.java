@@ -3,6 +3,9 @@ package core.screens;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import core.Boot;
 import core.GameData;
+import core.screens.levelsscreen.LevelsScreen;
+import core.screens.menuscreen.MenuScreen;
+import core.screens.signinscreen.SignInScreen;
 
 public class ScreenChanger {
 
@@ -15,7 +18,7 @@ public class ScreenChanger {
 
         switch (screenName) {
             case "LoginScreen":
-                instance.setScreen(new LoginScreen());
+                instance.setScreen(new SignInScreen());
                 return;
             case "MenuScreen":
                 instance.setScreen(new MenuScreen());

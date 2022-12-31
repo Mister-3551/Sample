@@ -19,9 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import core.GameData;
-import core.levelscreen.LevelConnection;
-import core.levelscreen.objects.Level;
-import core.loginscreen.LoginConnection;
+import core.screens.levelsscreen.Level;
 import core.screens.navigation.NavigationBar;
 import core.settingsscreen.objects.Settings;
 import core.inventoryscreen.InventoryConnection;
@@ -56,7 +54,7 @@ public class SettingsScreen extends ScreenAdapter {
         stageTable = new Table();
 
         unitsList = new InventoryConnection().inventoryList();
-        levelList = new LevelConnection().levelsList();
+        //levelList = new LevelConnection().levelsList();
         playerSettings = GameData.Player.PLAYER_SETTINGS;
 
         musicSlider = new Slider(0.0f, 100.0f, 1.0f, false, skin);
@@ -314,7 +312,7 @@ public class SettingsScreen extends ScreenAdapter {
 
             signOut.addListener(new ChangeListener() {
                 public void changed(ChangeEvent event, Actor actor) {
-                    if (new LoginConnection().userSignOut()) new ScreenChanger().changeScreen("LoginScreen");
+                    //if (new SignInConnection().userSignOut()) new ScreenChanger().changeScreen("LoginScreen");
                 }
             });
         }

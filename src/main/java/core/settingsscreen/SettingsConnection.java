@@ -17,7 +17,7 @@ public class SettingsConnection {
         Settings settings = null;
         try {
             RequestBody formBody = new FormBody.Builder()
-                    .add("idUser", GameData.Player.PLAYER_ID)
+                    .add("idUser", String.valueOf(GameData.Player.PLAYER_ID))
                     .build();
             String response = ApiResponse.getResponse(API_GET_SETTINGS, formBody);
             if (!response.isBlank())  {

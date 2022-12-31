@@ -71,15 +71,15 @@ public class Bullet extends BulletEntity {
 
     public static float diffX(OrthographicCamera camera, Player player) {
         int xMouse = Gdx.input.getX();
-        var XMouse = xMouse + camera.position.x - GameData.SCREENWIDTH / 2;
+        var XMouse = xMouse + camera.position.x - GameData.SCREEN_WIDTH / 2;
         return XMouse - player.getX();
     }
 
     public static float diffY(OrthographicCamera camera, Player player) {
         // mouse ordinate direction is the opposite to pane window
-        int yMouse = GameData.SCREENHEIGHT - Gdx.input.getY();
+        int yMouse = GameData.SCREEN_HEIGHT - Gdx.input.getY();
         // translate screen coordinates to current camera position in world coordinates
-        var YMouse = yMouse + camera.position.y - GameData.SCREENHEIGHT / 2;
+        var YMouse = yMouse + camera.position.y - GameData.SCREEN_HEIGHT / 2;
         return YMouse - player.getY();
     }
 }

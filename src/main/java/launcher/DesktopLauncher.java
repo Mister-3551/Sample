@@ -16,7 +16,7 @@ public class DesktopLauncher {
         configuration.setResizable(false);
         configuration.setTitle("Sample Case");
         configuration.setWindowIcon(GameData.Skins.Player.PLAYER_LEFT);
-        configuration.setWindowedMode(GameData.SCREENWIDTH, GameData.SCREENHEIGHT);
+        configuration.setWindowedMode(GameData.SCREEN_WIDTH, GameData.SCREEN_HEIGHT);
         //configuration.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
         new Lwjgl3Application(new Boot(), configuration);
     }

@@ -1,62 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="60" tileheight="60" infinite="0" nextlayerid="9" nextobjectid="144">
- <tileset firstgid="1" source="tiles/tiles.tsx"/>
- <tileset firstgid="101" name="player_normal" tilewidth="14" tileheight="34" tilecount="1" columns="1">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="70" tileheight="70" infinite="0" nextlayerid="3" nextobjectid="30">
+ <tileset firstgid="1" name="industrial" tilewidth="70" tileheight="70" tilecount="112" columns="14">
+  <image source="tiles/mapTiles/industrial.png" width="980" height="560"/>
+ </tileset>
+ <tileset firstgid="113" name="player_normal" tilewidth="14" tileheight="34" tilecount="1" columns="1">
   <image source="../player/player_normal/player_normal.png" width="14" height="34"/>
  </tileset>
- <tileset firstgid="102" name="enemy_normal" tilewidth="14" tileheight="34" tilecount="1" columns="1">
-  <image source="../enemy/enemy_normal/enemy_normal.png" width="14" height="34"/>
+ <tileset firstgid="114" name="candy" tilewidth="70" tileheight="70" tilecount="98" columns="14">
+  <image source="tiles/mapTiles/candy.png" width="980" height="490"/>
  </tileset>
- <tileset firstgid="103" name="hostage_normal" tilewidth="14" tileheight="34" tilecount="1" columns="1">
-  <image source="../hostage/hostage_normal/hostage_normal.png" width="14" height="34"/>
+ <tileset firstgid="212" name="ice" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/ice.png" width="512" height="512"/>
  </tileset>
- <objectgroup id="2" name="Objects">
-  <object id="123" name="Player" gid="101" x="100" y="1736" width="64" height="64"/>
-  <object id="124" name="Enemy" gid="102" x="1788.33" y="1615" width="64" height="64"/>
-  <object id="143" name="Enemy" gid="102" x="528.33" y="1729" width="64" height="64"/>
-  <object id="125" name="Enemy" gid="102" x="3207" y="1499" width="64" height="64"/>
-  <object id="126" name="Enemy" gid="102" x="3875.42" y="1615.4" width="64" height="64"/>
-  <object id="127" name="Enemy" gid="102" x="4911" y="1737" width="70" height="74"/>
-  <object id="128" x="0" y="1740">
-   <polygon points="0,0 0,60 6000,60 6000,0"/>
-  </object>
-  <object id="130" x="1740" y="1620">
-   <polygon points="0,0 0,120 240,120 240,0 0,0"/>
-  </object>
-  <object id="131" x="1860" y="1620">
-   <polygon points="0,0 0,-120 120,-120 120,0"/>
-  </object>
-  <object id="132" x="3720" y="1620">
-   <polygon points="0,0 0,120 360,120 360,0"/>
-  </object>
-  <object id="133" x="4080" y="1620">
-   <polygon points="0,0 -120,0 -120,-120 0,-120"/>
-  </object>
-  <object id="134" x="3360" y="1620">
-   <polygon points="0,0 -240,0 -240,120 0,120"/>
-  </object>
-  <object id="135" x="3300" y="1620">
-   <polygon points="0,0 0,-120 -120,-120 -120,0"/>
-  </object>
-  <object id="136" x="3720" y="1620">
-   <polygon points="0,0 360,0 360,120 0,120"/>
-  </object>
-  <object id="137" x="4620" y="1500">
-   <polygon points="0,0 120,0 120,240 0,240"/>
-  </object>
-  <object id="138" x="4740" y="1620">
-   <polygon points="0,0 120,0 120,120 0,120"/>
-  </object>
-  <object id="139" x="5940" y="1740">
-   <polygon points="0,0 60,0 60,-1740 0,-1740"/>
-  </object>
-  <object id="140" x="0" y="1740">
-   <polygon points="0,0 60,0 60,-1740 0,-1740"/>
-  </object>
- </objectgroup>
- <layer id="7" name="Map" width="100" height="30">
+ <tileset firstgid="261" name="purple" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/purple.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="310" name="meatal" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/meatal.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="359" name="grass" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/grass.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="408" name="dirt" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/dirt.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="457" name="choco" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/choco.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="506" name="castle" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/castle.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="555" name="cake" tilewidth="70" tileheight="70" tilecount="49" columns="7">
+  <image source="tiles/mapTiles/cake.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="604" name="decorations" tilewidth="70" tileheight="70" tilecount="841" columns="29">
+  <image source="tiles/mapTiles/decorations.png" width="2048" height="2048"/>
+ </tileset>
+ <layer id="1" name="Map" width="30" height="20">
   <data encoding="base64" compression="zlib">
-   eJzt0TEKACAMBDAd/P+XXZwEBxVpkQRua0vhSgEAAAAAAAAAAABu1JEMd3d2Xv0dTR851CkRt+e5kz5+6UUfa01SpQOH7gIp
+   eJxjYBgFo2AUjIJRMAqGFmAHYmYsmI3GdooCMSsWLEIju5HtzATiQCxqqG03sp1RQBwDxFlAHA7EEUAcCcT6VLQP3U58mBx7saUTGCbGThBmIYCxAQD+dwTD
   </data>
  </layer>
+ <objectgroup id="2" name="Objects">
+  <object id="5" name="Player" gid="113" x="141" y="1330" width="64" height="64"/>
+  <object id="6" name="Border" x="0" y="1330">
+   <polygon points="0,0 0,-350 70,-350 70,0"/>
+  </object>
+  <object id="23" x="0" y="1330">
+   <polygon points="0,0 0,70 1750,70 1750,0"/>
+  </object>
+  <object id="24" x="1190" y="1330">
+   <polygon points="0,0 0,-70 -420,-70 -420,0"/>
+  </object>
+  <object id="25" x="840" y="1190">
+   <polygon points="0,0 -210,0 0,-210"/>
+  </object>
+  <object id="26" x="770" y="1330">
+   <polygon points="0,0 0,-140 -140,-140 -280,0"/>
+  </object>
+  <object id="27" x="840" y="980">
+   <polygon points="0,0 350,0 350,139.333 0,139.333 0,0"/>
+  </object>
+  <object id="28" x="1190" y="980">
+   <polygon points="0,0 140,140 0,140 0,0"/>
+  </object>
+  <object id="29" x="1260" y="1120">
+   <polygon points="0,0 0,70 140,70 70,0"/>
+  </object>
+ </objectgroup>
 </map>
