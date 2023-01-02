@@ -5,6 +5,7 @@ import core.Boot;
 import core.GameData;
 import core.screens.levelsscreen.LevelsScreen;
 import core.screens.menuscreen.MenuScreen;
+import core.screens.settingsscreen.SettingsScreen;
 import core.screens.signinscreen.SignInScreen;
 
 public class ScreenChanger {

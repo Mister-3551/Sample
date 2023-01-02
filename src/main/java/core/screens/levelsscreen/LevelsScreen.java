@@ -1,6 +1,5 @@
 package core.screens.levelsscreen;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
@@ -16,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import core.GameData;
+import core.ResponseDataConnection;
 import core.screens.ScreenChanger;
 import core.screens.navigation.NavigationBar;
 
@@ -39,7 +39,11 @@ public class LevelsScreen extends ScreenAdapter {
 
         texture = new Texture(GameData.Skins.Player.PLAYER_NORMAL);
 
-        if (GameData.LEVEL_LIST == null) GameData.LEVEL_LIST = getLevels();
+        try {
+            if (GameData.LEVEL_LIST == null) GameData.LEVEL_LIST = ResponseDataConnection.Levels.getLevels();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         levelsList = GameData.LEVEL_LIST;
 
         createStructure();
@@ -59,16 +63,6 @@ public class LevelsScreen extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-    }
-
-    public ArrayList<Level> getLevels() {
-        ArrayList<Level> levels = new ArrayList<>();
-        try {
-            levels = new LevelsConnection().getLevels();
-        } catch (Exception e) {
-
-        }
-        return levels;
     }
 
     private void createStructure() {
@@ -91,7 +85,7 @@ public class LevelsScreen extends ScreenAdapter {
         for (Level level : levelsList) {
 
             try {
-                image = new Image(new Texture(GameData.Pictures.LEVEL_PICTURE_DIRECTORY + "/" + level.getPicture()));
+                image = new Image(new Texture(GameData.Directory.LEVEL_PICTURE_DIRECTORY + "/" + level.getPicture()));
                 image.setAlign(Align.center);
             } catch (Exception e) {
                 image = new Image(new Texture(new Pixmap(1, 1, Pixmap.Format.RGB565)));

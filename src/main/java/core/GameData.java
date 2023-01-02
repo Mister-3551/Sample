@@ -2,7 +2,6 @@ package core;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import core.screens.levelsscreen.Level;
-import core.settingsscreen.objects.Settings;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,6 @@ public class GameData {
         public static int PLAYER_KEY_RIGHT;
         public static int PLAYER_KEY_JUMP;
         public static int PLAYER_KEY_SHOOT;
-        public static Settings PLAYER_SETTINGS;
 
         public static class Sprite {
             public static com.badlogic.gdx.graphics.g2d.Sprite PLAYER_LEFT_SPRITE;
@@ -35,7 +33,6 @@ public class GameData {
     }
 
     public static class GameScreen {
-
         public static core.screens.GameScreen GAME_SCREEN;
         public static int ENEMY_KILLS = 0;
 
@@ -50,9 +47,12 @@ public class GameData {
         public static final int SCROLL_PANE_SIZE = 800;
     }
 
-    public static class Pictures {
+    public static class Directory {
 
         public static String LEVEL_PICTURE_DIRECTORY;
+        public static String WELCOME_PICTURE_DIRECTORY;
+        public static String LEVEL_MAP_DIRECTORY;
+        public static String TILED_DIRECTORY;
     }
 
     public static class Skins {

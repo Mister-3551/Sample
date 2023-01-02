@@ -1,6 +1,5 @@
 package core.screens.signinscreen;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.*;
@@ -12,16 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import core.GameData;
+import core.ResponseDataConnection;
 import core.downloadfile.DownloadFile;
 import core.screens.ScreenChanger;
 import core.screens.levelsscreen.Level;
-import core.screens.levelsscreen.LevelsScreen;
-import core.screens.signinscreen.SignInConnection;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class SignInScreen extends ScreenAdapter {
 
@@ -194,11 +190,16 @@ public class SignInScreen extends ScreenAdapter {
     }
 
     private void getDataFromInternet() {
-        ArrayList<Level> levels = new LevelsScreen("").getLevels();
-        String picturesDirectory = "";
         try {
-            for (Level level : levels) picturesDirectory = DownloadFile.getLevelPicture(level.getPicture());
-            GameData.Pictures.LEVEL_PICTURE_DIRECTORY = picturesDirectory;
+        ArrayList<Level> levels = ResponseDataConnection.Levels.getLevels();
+        String picturesDirectory = "";
+        String mapsDirectory = "";
+        for (Level level : levels) {
+            picturesDirectory = DownloadFile.getLevelPicture(level.getPicture());
+            mapsDirectory = DownloadFile.getLevelMap(level.getMap());
+        }
+        GameData.Directory.LEVEL_PICTURE_DIRECTORY = picturesDirectory;
+        GameData.Directory.LEVEL_MAP_DIRECTORY = mapsDirectory;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

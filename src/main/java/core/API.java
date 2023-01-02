@@ -1,10 +1,13 @@
 package core;
 
+import com.badlogic.gdx.graphics.g3d.Environment;
+
 public class API {
 
     public static final String HOST = "http://192.168.1.171:8079/";
 
-    public static final String LEVEL_PICTURE = HOST + "level-picture/";
+    public static final String LEVEL_PICTURE = HOST + "level-picture";
+    public static final String LEVEL_MAP = HOST + "level-map";
 
     public static final String SIGN_IN = HOST + "web-sign-in";
     public static final String PLAYER_BASIC_DATA = HOST + "web-get-player-basic-data";

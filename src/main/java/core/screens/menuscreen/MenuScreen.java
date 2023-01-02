@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import core.GameData;
 import core.screens.ScreenChanger;
 import core.screens.navigation.NavigationBar;
-import core.settingsscreen.SettingsConnection;
 
 public class MenuScreen extends ScreenAdapter {
 
@@ -39,7 +38,6 @@ public class MenuScreen extends ScreenAdapter {
         combine = new Table();
         playerSkin = new Image(new Texture(Gdx.files.internal("player/player_normal/player_normal.png")));
 
-        new SettingsConnection().getControls();
         createStructure();
 
         GameData.Player.PLAYER_KEY_JUMP = 51;
