@@ -52,7 +52,7 @@ public class GameData {
         public static String LEVEL_PICTURE_DIRECTORY;
         public static String WELCOME_PICTURE_DIRECTORY;
         public static String LEVEL_MAP_DIRECTORY;
-        public static String TILED_DIRECTORY;
+        public static String TILED_DIRECTORY_70X70;
     }
 
     public static class Skins {

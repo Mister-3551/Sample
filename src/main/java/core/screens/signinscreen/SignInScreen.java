@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Align;
 import core.GameData;
 import core.ResponseDataConnection;
 import core.downloadfile.DownloadFile;
+import core.objects.Tile;
 import core.screens.ScreenChanger;
 import core.screens.levelsscreen.Level;
 
@@ -192,14 +193,20 @@ public class SignInScreen extends ScreenAdapter {
     private void getDataFromInternet() {
         try {
         ArrayList<Level> levels = ResponseDataConnection.Levels.getLevels();
+        ArrayList<Tile> tiles = ResponseDataConnection.Tiles.getTiles();
         String picturesDirectory = "";
         String mapsDirectory = "";
+        String tiles70X70Directory = "";
         for (Level level : levels) {
             picturesDirectory = DownloadFile.getLevelPicture(level.getPicture());
-            mapsDirectory = DownloadFile.getLevelMap(level.getMap());
+            mapsDirectory = DownloadFile.getLevelMaps(level.getMap());
+        }
+        for (Tile tile : tiles) {
+            tiles70X70Directory = DownloadFile.getTiles70X70Pictures(tile.getName());
         }
         GameData.Directory.LEVEL_PICTURE_DIRECTORY = picturesDirectory;
         GameData.Directory.LEVEL_MAP_DIRECTORY = mapsDirectory;
+        GameData.Directory.TILED_DIRECTORY_70X70 = tiles70X70Directory;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

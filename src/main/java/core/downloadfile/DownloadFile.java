@@ -11,6 +11,7 @@ public class DownloadFile {
 
     private static final String levelPictureUrl = API.LEVEL_PICTURE;
     private static final String welcomePictureUrl = "";
+    private static final String tiles70X70Url = API.TILES_PICTURE_70X70;
     private static final String levelMapsUrl = API.LEVEL_MAP;
     private static final String gameNameFolder = "GameName";
     private static final String assetsFolder = "assets";
@@ -23,6 +24,7 @@ public class DownloadFile {
     private static final String tiles70X70Folder = "70x70";
     private static final String levelPicturesDirectory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + picturesFolder + "/" + levelPicturesFolder + "/";
     private static final String levelMapsDirectory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + levelMapsFolder + "/";
+    private static final String tiles70X70Directory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + tilesFolder + "/" + tilesDimensionsFolder + "/" + tiles70X70Folder + "/";
 
     public static String getLevelPicture(String levelName) {
         checkDirectories();
@@ -34,7 +36,12 @@ public class DownloadFile {
         return Picture.savePicture(welcomeName).replace("\\", "/");
     }
 
-    public static String getLevelMap(String mapName) {
+    public static String getTiles70X70Pictures(String tileName) {
+        checkDirectories();
+        return Tile.saveTiles(tileName).replace("\\", "/");
+    }
+
+    public static String getLevelMaps(String mapName) {
         checkDirectories();
         return Map.saveMap(mapName);
     }
@@ -49,6 +56,17 @@ public class DownloadFile {
             }
         }
 
+    }
+
+    private static class Tile {
+        private static String saveTiles(String tileName) {
+            try {
+                Files.copy(new URL(tiles70X70Url + "/" + tileName).openStream(), Paths.get(tiles70X70Directory + tileName)); //3 - StandardCopyOption.REPLACE_EXISTING
+                return tiles70X70Directory;
+            } catch (Exception e) {
+                return tiles70X70Directory;
+            }
+        }
     }
 
     private static class Map {
