@@ -2,7 +2,8 @@ package core;
 
 public class API {
 
-    public static final String HOST = "http://192.168.1.171:8079/";
+    //public static final String HOST = "http://192.168.1.171:8079/";
+    public static final String HOST = "http://localhost:8079/";
 
     public static final String LEVEL_PICTURE = HOST + "level-picture";
     public static final String TILES_PICTURE_70X70 = HOST + "tile-picture-70X70";

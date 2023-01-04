@@ -22,6 +22,11 @@ public class DownloadFile {
     private static final String tilesFolder = "tiles";
     private static final String tilesDimensionsFolder = "tiles-dimensions";
     private static final String tiles70X70Folder = "70x70";
+    private static final String skinsFolder = "skins";
+    private static final String playerFolder = "player";
+    private static final String enemyFolder = "enemy";
+    private static final String hostageFolder = "hostage";
+    private static final String basicPath = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/";
     private static final String levelPicturesDirectory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + picturesFolder + "/" + levelPicturesFolder + "/";
     private static final String levelMapsDirectory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + levelMapsFolder + "/";
     private static final String tiles70X70Directory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + tilesFolder + "/" + tilesDimensionsFolder + "/" + tiles70X70Folder + "/";
@@ -80,32 +85,59 @@ public class DownloadFile {
         }
     }
 
+    private static class Skin {
+        private static String saveSkin(String skinName) {
+            try {
+                Files.copy(new URL("" + "/" + skinName).openStream(), Paths.get("levelMapsDirectory" + skinName)); //3 - StandardCopyOption.REPLACE_EXISTING
+                return "levelMapsDirectory";
+            } catch (Exception e) {
+                return "levelMapsDirectory";
+            }
+        }
+    }
+
     private static void checkDirectories() {
         File mainDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory(), gameNameFolder);
-        if (!mainDirectory.exists()) mainDirectory.mkdirs();
+        checkIfDirectoryExists(mainDirectory);
 
         File assetsDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder, assetsFolder);
-        if (!assetsDirectory.exists()) assetsDirectory.mkdirs();
+        checkIfDirectoryExists(assetsDirectory);
 
-        File picturesDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder, picturesFolder);
-        if (!picturesDirectory.exists()) picturesDirectory.mkdirs();
+        File picturesDirectory = new File(basicPath, picturesFolder);
+        checkIfDirectoryExists(picturesDirectory);
 
-        File levelPicturesDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + picturesFolder, levelPicturesFolder);
-        if (!levelPicturesDirectory.exists()) levelPicturesDirectory.mkdirs();
+        File levelPicturesDirectory = new File(basicPath + "/" + picturesFolder, levelPicturesFolder);
+        checkIfDirectoryExists(levelPicturesDirectory);
 
-        File welcomePicturesDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + picturesFolder, welcomePicturesFolder);
-        if (!welcomePicturesDirectory.exists()) welcomePicturesDirectory.mkdirs();
+        File welcomePicturesDirectory = new File(basicPath + "/" + picturesFolder, welcomePicturesFolder);
+        checkIfDirectoryExists(welcomePicturesDirectory);
 
-        File levelMapsDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder, levelMapsFolder);
-        if (!levelMapsDirectory.exists()) levelMapsDirectory.mkdirs();
+        File levelMapsDirectory = new File(basicPath, levelMapsFolder);
+        checkIfDirectoryExists(levelMapsDirectory);
 
-        File tilesDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder, tilesFolder);
-        if (!tilesDirectory.exists()) tilesDirectory.mkdirs();
+        File tilesDirectory = new File(basicPath, tilesFolder);
+        checkIfDirectoryExists(tilesDirectory);
 
-        File tilesDimensionsDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + tilesFolder, tilesDimensionsFolder);
-        if (!tilesDimensionsDirectory.exists()) tilesDimensionsDirectory.mkdirs();
+        File tilesDimensionsDirectory = new File(basicPath + "/" + tilesFolder, tilesDimensionsFolder);
+        checkIfDirectoryExists(tilesDimensionsDirectory);
 
-        File tiles70X70Directory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + tilesFolder + "/" + tilesDimensionsFolder, tiles70X70Folder);
-        if (!tiles70X70Directory.exists()) tiles70X70Directory.mkdirs();
+        File tiles70X70Directory = new File(basicPath + "/" + tilesFolder + "/" + tilesDimensionsFolder, tiles70X70Folder);
+        checkIfDirectoryExists(tiles70X70Directory);
+
+        File skinsDirectory = new File(basicPath + "/" + picturesFolder, skinsFolder);
+        checkIfDirectoryExists(skinsDirectory);
+
+        File playerDirectory = new File(basicPath + "/" + picturesFolder + "/" + skinsFolder, playerFolder);
+        checkIfDirectoryExists(playerDirectory);
+
+        File enemyDirectory = new File(basicPath + "/" + picturesFolder + "/" + skinsFolder, enemyFolder);
+        checkIfDirectoryExists(enemyDirectory);
+
+        File hostageDirectory = new File(basicPath + "/" + picturesFolder + "/" + skinsFolder, hostageFolder);
+        checkIfDirectoryExists(hostageDirectory);
+    }
+
+    private static void checkIfDirectoryExists(File directory) {
+        if (!directory.exists()) directory.mkdirs();
     }
 }
