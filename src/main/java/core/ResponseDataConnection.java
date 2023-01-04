@@ -31,7 +31,9 @@ public class ResponseDataConnection {
 
     public static class Skins {
         public static ArrayList getSkins() throws Exception {
-            RequestBody formBody = new FormBody.Builder().build();
+            RequestBody formBody = new FormBody.Builder()
+                    .add("idUserOrUsername", String.valueOf(GameData.Player.PLAYER_ID))
+                    .build();
             String response = ApiResponse.getResponse(API.API_GET_SKINS, formBody);
             return new Json().fromJson(ArrayList.class, Skin.class, response);
         }

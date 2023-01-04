@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import core.GameData;
+import core.downloadfile.DownloadFile;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.hostage.Hostage;
 import core.gamescreen.objects.player.Player;
@@ -20,7 +21,6 @@ public class TileMapHelper {
 
     private TiledMap tiledMap;
     private GameScreen gameScreen;
-    private final String levelMapDirectory = GameData.Directory.LEVEL_MAP_DIRECTORY;
 
     public TileMapHelper(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
@@ -29,7 +29,11 @@ public class TileMapHelper {
     public OrthogonalTiledMapRenderer setupMap(String... level) {
         GameData.GameScreen.Camera.RESET_CAMERA_POSITION = true;
         String map = level.length == 0 ? GameData.LevelScreen.LEVEL_LIST.get(GameData.CURRENT_LEVEL - 1).getMap() : level[0];
-        tiledMap = new TmxMapLoader().load(levelMapDirectory + map);
+
+        String skinDirectory = DownloadFile.getSkins("");
+        String mapDirectory = DownloadFile.getLevelMaps(map);
+
+        tiledMap = new TmxMapLoader().load(mapDirectory + GameData.Directory.TEMPORARY_MAP_NAME);
         MapProperties prop = tiledMap.getProperties();
 
         GameData.MAP_WIDTH = prop.get("width", Integer.class);

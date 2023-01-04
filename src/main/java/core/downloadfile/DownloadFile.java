@@ -1,11 +1,14 @@
 package core.downloadfile;
 
 import core.API;
+import core.GameData;
+
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class DownloadFile {
 
@@ -19,19 +22,21 @@ public class DownloadFile {
     private static final String picturesFolder = "pictures";
     private static final String levelPicturesFolder = "level-pictures";
     private static final String welcomePicturesFolder = "welcome-picture";
-    private static final String levelMapsFolder = "level-maps";
+    private static final String levelMapsFolder = "level-map";
     private static final String tilesFolder = "tiles";
     private static final String tilesDimensionsFolder = "tiles-dimensions";
     private static final String tiles70X70Folder = "70x70";
+    private static final String temporaryFolder = "temporary";
     private static final String skinsFolder = "skins";
     private static final String playerFolder = "player";
     private static final String enemyFolder = "enemy";
     private static final String hostageFolder = "hostage";
     private static final String basicPath = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/";
-    private static final String levelPicturesDirectory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + picturesFolder + "/" + levelPicturesFolder + "/";
-    private static final String levelMapsDirectory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + levelMapsFolder + "/";
-    private static final String tiles70X70Directory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + tilesFolder + "/" + tilesDimensionsFolder + "/" + tiles70X70Folder + "/";
-    private static final String skinsDirectory = basicPath + picturesFolder + "/" + skinsFolder + "/";
+    private static final String basicTemporaryPath = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + temporaryFolder + "/";
+    private static final String levelPicturesDirectory = basicPath + picturesFolder + "/" + levelPicturesFolder + "/";
+    private static final String levelMapsDirectory =  basicTemporaryPath + levelMapsFolder + "/";
+    private static final String tiles70X70Directory = basicPath + tilesFolder + "/" + tilesDimensionsFolder + "/" + tiles70X70Folder + "/";
+    private static final String skinsDirectory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + temporaryFolder + "/" + skinsFolder + "/";
 
     public static String getLevelPicture(String levelName) {
         checkDirectories();
@@ -84,7 +89,7 @@ public class DownloadFile {
     private static class Map {
         private static String saveMap(String mapName) {
             try {
-                Files.copy(new URL(levelMapsUrl + "/" + mapName).openStream(), Paths.get(levelMapsDirectory + mapName)); //3 - StandardCopyOption.REPLACE_EXISTING
+                Files.copy(new URL(levelMapsUrl + "/" + mapName).openStream(), Paths.get(levelMapsDirectory + GameData.Directory.TEMPORARY_MAP_NAME), StandardCopyOption.REPLACE_EXISTING); //3 - StandardCopyOption.REPLACE_EXISTING
                 return levelMapsDirectory;
             } catch (Exception e) {
                 return levelMapsDirectory;
@@ -95,10 +100,13 @@ public class DownloadFile {
     private static class Skin {
         private static String saveSkin(String skinName) {
             try {
-                Files.copy(new URL(skinsUrl + "/" + skinName).openStream(), Paths.get(skinsDirectory + skinName)); //3 - StandardCopyOption.REPLACE_EXISTING
-                return skinsDirectory;
+                String skinDirectory = createPlayerSkinsDirectory("player");
+                Files.copy(new URL(skinsUrl + "/" + "player-green" + "-stand.png").openStream(), Paths.get(skinDirectory + "/" + "player-stand.png"), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(new URL(skinsUrl + "/" + "player-green" + "-left.png").openStream(), Paths.get(skinDirectory + "/" + "player-left.png") , StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(new URL(skinsUrl + "/" + "player-green" + "-right.png").openStream(), Paths.get( skinDirectory + "/" + "player-right.png"), StandardCopyOption.REPLACE_EXISTING);
+                return skinDirectory;
             } catch (Exception e) {
-                return skinsDirectory;
+                return "";
             }
         }
     }
@@ -116,11 +124,8 @@ public class DownloadFile {
         File levelPicturesDirectory = new File(basicPath + "/" + picturesFolder, levelPicturesFolder);
         checkIfDirectoryExists(levelPicturesDirectory);
 
-        File welcomePicturesDirectory = new File(basicPath + "/" + picturesFolder, welcomePicturesFolder);
+        File welcomePicturesDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + temporaryFolder, welcomePicturesFolder);
         checkIfDirectoryExists(welcomePicturesDirectory);
-
-        File levelMapsDirectory = new File(basicPath, levelMapsFolder);
-        checkIfDirectoryExists(levelMapsDirectory);
 
         File tilesDirectory = new File(basicPath, tilesFolder);
         checkIfDirectoryExists(tilesDirectory);
@@ -131,17 +136,29 @@ public class DownloadFile {
         File tiles70X70Directory = new File(basicPath + "/" + tilesFolder + "/" + tilesDimensionsFolder, tiles70X70Folder);
         checkIfDirectoryExists(tiles70X70Directory);
 
-        File skinsDirectory = new File(basicPath + "/" + picturesFolder, skinsFolder);
+        File temporaryDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder, temporaryFolder);
+        checkIfDirectoryExists(temporaryDirectory);
+
+        File levelMapsDirectory = new File(basicTemporaryPath, levelMapsFolder);
+        checkIfDirectoryExists(levelMapsDirectory);
+
+        File skinsDirectory = new File(basicTemporaryPath, skinsFolder);
         checkIfDirectoryExists(skinsDirectory);
 
-        File playerDirectory = new File(basicPath + "/" + picturesFolder + "/" + skinsFolder, playerFolder);
+        File playerDirectory = new File(basicTemporaryPath + "/" + skinsFolder, playerFolder);
         checkIfDirectoryExists(playerDirectory);
 
-        File enemyDirectory = new File(basicPath + "/" + picturesFolder + "/" + skinsFolder, enemyFolder);
+        File enemyDirectory = new File(basicTemporaryPath + "/" + skinsFolder, enemyFolder);
         checkIfDirectoryExists(enemyDirectory);
 
-        File hostageDirectory = new File(basicPath + "/" + picturesFolder + "/" + skinsFolder, hostageFolder);
+        File hostageDirectory = new File(basicTemporaryPath + skinsFolder, hostageFolder);
         checkIfDirectoryExists(hostageDirectory);
+    }
+
+    private static String createPlayerSkinsDirectory(String directoryName) {
+        File directoryFolder = new File(skinsDirectory, directoryName);
+        checkIfDirectoryExists(directoryFolder);
+        return directoryFolder.getAbsolutePath();
     }
 
     private static void checkIfDirectoryExists(File directory) {

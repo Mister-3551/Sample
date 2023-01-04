@@ -54,6 +54,8 @@ public class GameData {
         public static String LEVEL_MAP_DIRECTORY;
         public static String TILED_DIRECTORY_70X70;
         public static String SKINS_DIRECTORY;
+
+        public static final String TEMPORARY_MAP_NAME = "temporary-map.tmx";
     }
 
     public static class Skins {
