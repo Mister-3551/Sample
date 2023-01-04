@@ -154,6 +154,7 @@ public class SignInScreen extends ScreenAdapter {
                     try {
                         if (new SignInConnection().userAuthentication(username.getText(), password.getText())) {
                             getDataFromInternet();
+                            new ScreenChanger().changeScreen("MenuScreen");
                         } else setErrorLabelText("Wrong username or password");
                     } catch (Exception e) {
                         setErrorLabelText("Something went wrong!");
@@ -207,6 +208,5 @@ public class SignInScreen extends ScreenAdapter {
             setErrorLabelText("Something went wrong!");
             return;
         }
-        new ScreenChanger().changeScreen("MenuScreen");
     }
 }

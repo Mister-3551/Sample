@@ -1,5 +1,6 @@
 package core;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import core.screens.levelsscreen.Level;
 
@@ -13,8 +14,8 @@ public class GameData {
     public static int MAP_WIDTH;
     public static int MAP_HEIGHT;
     public static final float PPM = 32.0f;
-    public static final int SCREEN_WIDTH = 1200;
-    public static final int SCREEN_HEIGHT = 800;
+    public static int SCREEN_WIDTH = 1200;
+    public static int SCREEN_HEIGHT = 800;
 
     public static class Player {
         public static Long PLAYER_ID;
@@ -63,10 +64,10 @@ public class GameData {
         public static final String SKIN = "skins/skin/gappy-skin.json";
 
         public static class Player {
-            public static final String PLAYER_NORMAL = "player/player_normal/player_normal.png";
-            public static final String PLAYER_LEFT = "player/player_left/player_left.png";
+            public static String PLAYER_NORMAL;
+            public static String PLAYER_LEFT;
+            public static String PLAYER_RIGHT;
             public static final String PLAYER_LEFT_SWORD = "player/player_left/player_left_sword.png";
-            public static final String PLAYER_RIGHT = "player/player_right/player_right.png";
             public static final String PLAYER_RIGHT_SWORD = "player/player_right/player_right_sword.png";
         }
 

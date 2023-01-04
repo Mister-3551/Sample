@@ -3,6 +3,7 @@ package core;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.sun.management.GarbageCollectionNotificationInfo;
 import core.screens.ScreenChanger;
 
 public class Boot extends Game {

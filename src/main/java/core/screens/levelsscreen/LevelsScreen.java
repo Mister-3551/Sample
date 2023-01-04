@@ -24,7 +24,6 @@ import java.util.ArrayList;
 public class LevelsScreen extends ScreenAdapter {
 
     private Table stageTable;
-    Texture texture;
     public static Image image;
     private Skin skin;
     private Stage stage;
@@ -36,8 +35,6 @@ public class LevelsScreen extends ScreenAdapter {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
         stageTable = new Table();
-
-        texture = new Texture(GameData.Skins.Player.PLAYER_NORMAL);
 
         try {
             if (GameData.LEVEL_LIST == null) GameData.LEVEL_LIST = ResponseDataConnection.Levels.getLevels();

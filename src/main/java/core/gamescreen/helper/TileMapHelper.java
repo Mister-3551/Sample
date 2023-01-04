@@ -30,7 +30,7 @@ public class TileMapHelper {
         GameData.GameScreen.Camera.RESET_CAMERA_POSITION = true;
         String map = level.length == 0 ? GameData.LevelScreen.LEVEL_LIST.get(GameData.CURRENT_LEVEL - 1).getMap() : level[0];
 
-        String skinDirectory = DownloadFile.getSkins("");
+        temporarySkin();
         String mapDirectory = DownloadFile.getLevelMaps(map);
 
         tiledMap = new TmxMapLoader().load(mapDirectory + GameData.Directory.TEMPORARY_MAP_NAME);
@@ -98,5 +98,13 @@ public class TileMapHelper {
         PolygonShape shape = new PolygonShape();
         shape.set(worldVertices);
         return shape;
+    }
+
+    private void temporarySkin() {
+        String skinDirectory = DownloadFile.getSkins("");
+
+        GameData.Skins.Player.PLAYER_NORMAL = skinDirectory + "/" + "player-stand.png";
+        GameData.Skins.Player.PLAYER_LEFT = skinDirectory + "/" + "player-left.png";
+        GameData.Skins.Player.PLAYER_RIGHT = skinDirectory + "/" + "player-right.png";
     }
 }

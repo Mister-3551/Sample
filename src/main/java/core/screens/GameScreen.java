@@ -258,7 +258,7 @@ public class GameScreen extends ScreenAdapter {
         this.player.setSprite(new Sprite(new Texture(GameData.Skins.Player.PLAYER_NORMAL)));
     }
 
-    public static void setBulletDirection(int bulletDirection1) {
-        bulletDirection = bulletDirection1;
+    public static void setBulletDirection(int getBulletDirection) {
+        bulletDirection = getBulletDirection;
     }
 }
