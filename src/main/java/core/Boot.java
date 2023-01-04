@@ -22,6 +22,11 @@ public class Boot extends Game {
         this.orthographicCamera = new OrthographicCamera();
         this.orthographicCamera.setToOrtho(false, widthScreen, heightScreen);
         GameData.GameScreen.Camera.ORTHOGRAPHIC_CAMERA = orthographicCamera;
+
+        //TODO: temporary
+        GameData.SCREEN_WIDTH = Gdx.graphics.getWidth();
+        GameData.SCREEN_HEIGHT = Gdx.graphics.getHeight();
+
         new ScreenChanger().changeScreen(isSignIn());
     }
 
