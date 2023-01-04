@@ -13,6 +13,7 @@ public class DownloadFile {
     private static final String welcomePictureUrl = "";
     private static final String tiles70X70Url = API.TILES_PICTURE_70X70;
     private static final String levelMapsUrl = API.LEVEL_MAP;
+    private static final String skinsUrl = API.SKIN_PICTURE;
     private static final String gameNameFolder = "GameName";
     private static final String assetsFolder = "assets";
     private static final String picturesFolder = "pictures";
@@ -30,6 +31,7 @@ public class DownloadFile {
     private static final String levelPicturesDirectory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + picturesFolder + "/" + levelPicturesFolder + "/";
     private static final String levelMapsDirectory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + levelMapsFolder + "/";
     private static final String tiles70X70Directory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + assetsFolder + "/" + tilesFolder + "/" + tilesDimensionsFolder + "/" + tiles70X70Folder + "/";
+    private static final String skinsDirectory = basicPath + picturesFolder + "/" + skinsFolder + "/";
 
     public static String getLevelPicture(String levelName) {
         checkDirectories();
@@ -49,6 +51,11 @@ public class DownloadFile {
     public static String getLevelMaps(String mapName) {
         checkDirectories();
         return Map.saveMap(mapName);
+    }
+
+    public static String getSkins(String skinName) {
+        checkDirectories();
+        return Skin.saveSkin(skinName).replace("\\", "/");
     }
 
     private static class Picture {
@@ -88,10 +95,10 @@ public class DownloadFile {
     private static class Skin {
         private static String saveSkin(String skinName) {
             try {
-                Files.copy(new URL("" + "/" + skinName).openStream(), Paths.get("levelMapsDirectory" + skinName)); //3 - StandardCopyOption.REPLACE_EXISTING
-                return "levelMapsDirectory";
+                Files.copy(new URL(skinsUrl + "/" + skinName).openStream(), Paths.get(skinsDirectory + skinName)); //3 - StandardCopyOption.REPLACE_EXISTING
+                return skinsDirectory;
             } catch (Exception e) {
-                return "levelMapsDirectory";
+                return skinsDirectory;
             }
         }
     }

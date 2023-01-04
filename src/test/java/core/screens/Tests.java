@@ -8,6 +8,8 @@ import core.screens.signinscreen.SignInConnection;
 import okhttp3.*;
 import org.junit.Test;
 
+import javax.swing.filechooser.FileSystemView;
+
 public class Tests {
 
     @Test
@@ -47,5 +49,10 @@ public class Tests {
     @Test
     public void xml() throws Exception {
         System.out.println();
+    }
+
+    @Test
+    public void path() {
+        System.out.println(FileSystemView.getFileSystemView().getDefaultDirectory());
     }
 }

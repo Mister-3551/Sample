@@ -154,7 +154,6 @@ public class SignInScreen extends ScreenAdapter {
                     try {
                         if (new SignInConnection().userAuthentication(username.getText(), password.getText())) {
                             getDataFromInternet();
-                            new ScreenChanger().changeScreen("MenuScreen");
                         } else setErrorLabelText("Wrong username or password");
                     } catch (Exception e) {
                         setErrorLabelText("Something went wrong!");
@@ -192,23 +191,30 @@ public class SignInScreen extends ScreenAdapter {
 
     private void getDataFromInternet() {
         try {
-        ArrayList<Level> levels = ResponseDataConnection.Levels.getLevels();
-        ArrayList<Tile> tiles = ResponseDataConnection.Tiles.getTiles();
-        String picturesDirectory = "";
-        String mapsDirectory = "";
-        String tiles70X70Directory = "";
-        for (Level level : levels) {
-            picturesDirectory = DownloadFile.getLevelPicture(level.getPicture());
-            mapsDirectory = DownloadFile.getLevelMaps(level.getMap());
-        }
-        for (Tile tile : tiles) {
-            tiles70X70Directory = DownloadFile.getTiles70X70Pictures(tile.getName());
-        }
-        GameData.Directory.LEVEL_PICTURE_DIRECTORY = picturesDirectory;
-        GameData.Directory.LEVEL_MAP_DIRECTORY = mapsDirectory;
-        GameData.Directory.TILED_DIRECTORY_70X70 = tiles70X70Directory;
+            String picturesDirectory = "";
+            String mapsDirectory = "";
+            String tiles70X70Directory = "";
+            String skinsDirectory = "";
+
+            ArrayList<Level> levels = ResponseDataConnection.Levels.getLevels();
+            ArrayList<Tile> tiles = ResponseDataConnection.Tiles.getTiles();
+            ArrayList<core.objects.Skin> skins = ResponseDataConnection.Skins.getSkins();
+
+            for (Level level : levels) {
+                picturesDirectory = DownloadFile.getLevelPicture(level.getPicture());
+                mapsDirectory = DownloadFile.getLevelMaps(level.getMap());
+            }
+            for (Tile tile : tiles) tiles70X70Directory = DownloadFile.getTiles70X70Pictures(tile.getName());
+            for (core.objects.Skin skin : skins) skinsDirectory = DownloadFile.getSkins(skin.getPicture());
+
+            GameData.Directory.LEVEL_PICTURE_DIRECTORY = picturesDirectory;
+            GameData.Directory.LEVEL_MAP_DIRECTORY = mapsDirectory;
+            GameData.Directory.TILED_DIRECTORY_70X70 = tiles70X70Directory;
+            GameData.Directory.SKINS_DIRECTORY = skinsDirectory;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            setErrorLabelText("Something went wrong!");
+            return;
         }
+        new ScreenChanger().changeScreen("MenuScreen");
     }
 }
