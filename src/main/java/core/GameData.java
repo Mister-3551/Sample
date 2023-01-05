@@ -45,7 +45,7 @@ public class GameData {
 
     public static class LevelScreen {
         public static ArrayList<Level> LEVEL_LIST;
-        public static final int SCROLL_PANE_SIZE = 800;
+        public static final float SCROLL_PANE_SIZE = 1200.0f;
     }
 
     public static class Directory {

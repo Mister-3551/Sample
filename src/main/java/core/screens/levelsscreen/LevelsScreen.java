@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import core.GameData;
 import core.ResponseDataConnection;
 import core.screens.ScreenChanger;
@@ -44,8 +45,8 @@ public class LevelsScreen extends ScreenAdapter {
         levelsList = GameData.LEVEL_LIST;
 
         createStructure();
-
         stage.addActor(stageTable);
+
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -59,6 +60,7 @@ public class LevelsScreen extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height) {
+        stage.setViewport(new FitViewport(width, height));
         stage.getViewport().update(width, height, true);
     }
 
@@ -108,7 +110,7 @@ public class LevelsScreen extends ScreenAdapter {
             product.row();
             product.add(play).pad(0, 0, 0, 0).height(50).growX();
 
-            if (index++ % 3 == 0) scrollPaneTable.row();
+            if (index++ % 4 == 0) scrollPaneTable.row();
             scrollPaneTable.add(product).pad(0, 10, 10, 10).width(250).growY();
 
             int finalIndex = index;
@@ -129,7 +131,7 @@ public class LevelsScreen extends ScreenAdapter {
         stageTable.add(title);
 
         stageTable.row();
-        stageTable.add(scrollPane).width(GameData.LevelScreen.SCROLL_PANE_SIZE);
+        stageTable.add(scrollPane).growX().maxWidth(GameData.LevelScreen.SCROLL_PANE_SIZE);
         stageTable.row();
         stageTable.add(new Table()).growY();
     }

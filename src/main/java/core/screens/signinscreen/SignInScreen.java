@@ -48,6 +48,7 @@ public class SignInScreen extends ScreenAdapter {
         form = new Table();
 
         createStructure();
+        stage.addActor(table);
 
         table.setDebug(false);
         stage.addActor(table);
@@ -66,7 +67,6 @@ public class SignInScreen extends ScreenAdapter {
     public void resize(int width, int height) {
         stage.setViewport(new FitViewport(width, height));
         stage.getViewport().update(width, height, true);
-        stage.addActor(table);
     }
 
     private void createStructure() {

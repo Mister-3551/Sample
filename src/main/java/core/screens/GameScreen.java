@@ -1,5 +1,6 @@
 package core.screens;
 
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
@@ -76,9 +77,10 @@ public class GameScreen extends ScreenAdapter {
 
         table = new Table();
         empty = new Table();
-        stage = new Stage();
+        stage = new Stage(new FitViewport(GameData.SCREEN_WIDTH, GameData.SCREEN_HEIGHT));
 
         createStructure();
+        stage.addActor(table);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -96,14 +98,13 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         this.update();
-
         Gdx.gl.glClearColor(211, 211, 211, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        orthogonalTiledMapRenderer.render();
-
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
         stage.draw();
+
+        orthogonalTiledMapRenderer.render();
 
         batch.begin();
         player.render(batch);
@@ -121,20 +122,20 @@ public class GameScreen extends ScreenAdapter {
         }
 
         batch.end();
-        //box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+        //box2DDebugRenderer.render(world, camera.combined.scl(GameData.PPM));
     }
 
     @Override
     public void resize(int width, int height) {
-        FitViewport fitViewport = new FitViewport(width, height);
-        camera.setToOrtho(false, width, height);
-        fitViewport.setWorldSize(width, height);
+        stage.setViewport(new FitViewport(width, height));
         stage.getViewport().update(width, height, true);
+
+        camera.setToOrtho(false, width, height);
 
         Vector3 position = camera.position;
 
-        position.x = Math.abs(player.getBody().getPosition().x * GameData.PPM * 10) / 10f;
-        position.y = Math.abs(player.getBody().getPosition().y * GameData.PPM * 10) / 10f;
+        position.x = Math.round(player.getBody().getPosition().x * GameData.PPM * 10) / 10f;
+        position.y = Math.round(player.getBody().getPosition().y * GameData.PPM * 10) / 10f;
 
         camera.position.set(position);
         camera.update();
@@ -146,7 +147,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void update() {
-        world.step(1 / 60f, 6, 2);
+        world.step(1 / 60.0f, 3, 3);
         cameraUpdate();
 
         batch.setProjectionMatrix(camera.combined);
@@ -195,8 +196,8 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void cameraUpdate() {
-        var playerPositionX = Math.abs(player.getBody().getPosition().x * GameData.PPM * 10) / 10f;
-        var playerPositionY = Math.abs(player.getBody().getPosition().y * GameData.PPM * 10) / 10f;
+        var playerPositionX = Math.round(player.getBody().getPosition().x * GameData.PPM * 10) / 10f;
+        var playerPositionY = Math.round(player.getBody().getPosition().y * GameData.PPM * 10) / 10f;
 
         var cameraMovingPositionX = 660;
         var cameraMovingPositionY = 400;
@@ -268,8 +269,6 @@ public class GameScreen extends ScreenAdapter {
         table.add(navigationBar.gameScreenNavigationBar()).growX();
         table.row();
         table.add(empty).growX().growY();
-
-        stage.addActor(table);
     }
 
     public World getWorld() {

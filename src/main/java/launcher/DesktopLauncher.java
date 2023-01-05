@@ -14,13 +14,13 @@ public class DesktopLauncher {
 
     public static void main(String[] args) {
         configuration = new Lwjgl3ApplicationConfiguration();
-        configuration.setIdleFPS(60);
+        configuration.setIdleFPS(144);
+        configuration.setForegroundFPS(144);
         configuration.useVsync(true);
         configuration.setMaximized(true);
         configuration.setResizable(true);
         configuration.setTitle("Game Name");
         configuration.setWindowIcon(GameData.Skins.Player.PLAYER_LEFT_SWORD);
-        //configuration.setWindowedMode(GameData.SCREEN_WIDTH, GameData.SCREEN_HEIGHT);
         new Lwjgl3Application(new Boot(), configuration);
     }
 }

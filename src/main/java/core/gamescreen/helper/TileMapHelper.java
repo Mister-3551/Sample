@@ -1,5 +1,6 @@
 package core.gamescreen.helper;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
@@ -16,6 +17,8 @@ import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.hostage.Hostage;
 import core.gamescreen.objects.player.Player;
 import core.screens.GameScreen;
+
+import java.util.Properties;
 
 public class TileMapHelper {
 

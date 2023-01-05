@@ -34,11 +34,12 @@ public class NavigationBar {
     }
 
     public Table menuNavigationBar() {
-        navigation.add(username).fill(true).height(50.0f).growX();
-        navigation.add(rank).fill(true).height(50.0f).growX();
-        navigation.add(money).fill(true).height(50.0f).growX();
-        navigation.add(inventory).fill(true).height(50).width(200);
-        navigation.add(shop).fill(true).height(50).width(200);
+        navigation.add(username).width(200.0f).height(50.0f);
+        navigation.add(rank).width(200.0f).height(50.0f);
+        navigation.add(money).width(200.0f).height(50.0f);
+        navigation.add(empty).height(50.0f).growX();
+        navigation.add(inventory).width(200.0f).height(50);
+        navigation.add(shop).width(200.0f).height(50);
 
         inventory.addListener(new ClickListener(){
             @Override
@@ -57,11 +58,11 @@ public class NavigationBar {
     }
 
     public Table basicNavigationBar() {
-        navigation.add(username).fill(true).height(50.0f).growX();
-        navigation.add(rank).fill(true).height(50.0f).growX();
-        navigation.add(money).fill(true).height(50.0f).growX();
-        navigation.add(empty).fill(true).width(200);
-        navigation.add(backToMenu).fill(true).width(200.0f).height(50.0f);
+        navigation.add(username).width(200.0f).height(50.0f);
+        navigation.add(rank).width(200.0f).height(50.0f);
+        navigation.add(money).width(200.0f).height(50.0f);
+        navigation.add(empty).height(50.0f).growX();
+        navigation.add(backToMenu).width(200.0f).height(50.0f);
 
         backToMenu.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
@@ -76,8 +77,8 @@ public class NavigationBar {
         navigation.add(level).height(50.0f).growX();
         navigation.add(enemy).height(50.0f).growX();
         navigation.add(hostage).height(50.0f).growX();
-        navigation.add(money).height(50.0f).growX();
-        navigation.add(empty).growX();
+        navigation.add(money).width(200.0f).height(50.0f);
+        navigation.add(empty).height(50.0f).growX();
         navigation.add(backToMenu).width(200.0f).height(50.0f);
 
         backToMenu.addListener(new ChangeListener() {
