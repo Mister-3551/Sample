@@ -13,9 +13,13 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import core.GameData;
 import core.gamescreen.DetectionSystem;
 import core.gamescreen.helper.BodyHelperService;
@@ -85,7 +89,7 @@ public class GameScreen extends ScreenAdapter {
         Pixmap pm = new Pixmap(Gdx.files.internal(GameData.Skins.Cursor.AIM_CURSOR));
         Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
         pm.dispose();
-
+        
         GameData.GameScreen.GAME_SCREEN = this;
     }
 
@@ -118,6 +122,27 @@ public class GameScreen extends ScreenAdapter {
 
         batch.end();
         //box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        FitViewport fitViewport = new FitViewport(width, height);
+        camera.setToOrtho(false, width, height);
+        fitViewport.setWorldSize(width, height);
+        stage.getViewport().update(width, height, true);
+
+        Vector3 position = camera.position;
+
+        position.x = Math.abs(player.getBody().getPosition().x * GameData.PPM * 10) / 10f;
+        position.y = Math.abs(player.getBody().getPosition().y * GameData.PPM * 10) / 10f;
+
+        camera.position.set(position);
+        camera.update();
+
+        GameData.SCREEN_WIDTH = width;
+        GameData.SCREEN_HEIGHT = height;
+
+        GameData.GameScreen.Camera.ORTHOGRAPHIC_CAMERA = camera;
     }
 
     private void update() {
@@ -180,7 +205,9 @@ public class GameScreen extends ScreenAdapter {
 
         Vector3 position = camera.position;
 
-        if (!GameData.GameScreen.Camera.RESET_CAMERA_POSITION) {
+        position.x = playerPositionX;
+        position.y = playerPositionY;
+        /*if (!GameData.GameScreen.Camera.RESET_CAMERA_POSITION) {
             if (playerPositionX > cameraMovingPositionX) position.x = playerPositionX;
             else if (playerPositionX > mapWidth - GameData.SCREEN_WIDTH / 2) position.x = playerPositionX;
             else position.x = cameraMovingPositionX;
@@ -190,7 +217,7 @@ public class GameScreen extends ScreenAdapter {
             if (playerPositionX < cameraMovingPositionX) position.x = cameraMovingPositionX;
             if (playerPositionY < cameraMovingPositionY) position.y = cameraMovingPositionY;
             GameData.GameScreen.Camera.RESET_CAMERA_POSITION = false;
-        }
+        }*/
         camera.position.set(position);
         camera.update();
     }

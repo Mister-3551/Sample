@@ -73,12 +73,12 @@ public class NavigationBar {
 
     public Table gameScreenNavigationBar() {
         level.setText("Level " + GameData.CURRENT_LEVEL);
-        navigation.add(level).fill(true).height(50.0f).growX();
-        navigation.add(enemy).fill(true).height(50.0f).growX();
-        navigation.add(hostage).fill(true).height(50.0f).growX();
-        navigation.add(money).fill(true).height(50.0f).growX();
-        navigation.add(empty).fill(true).growX();
-        navigation.add(backToMenu).fill(true).width(200.0f).height(50.0f);
+        navigation.add(level).height(50.0f).growX();
+        navigation.add(enemy).height(50.0f).growX();
+        navigation.add(hostage).height(50.0f).growX();
+        navigation.add(money).height(50.0f).growX();
+        navigation.add(empty).growX();
+        navigation.add(backToMenu).width(200.0f).height(50.0f);
 
         backToMenu.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {

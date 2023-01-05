@@ -14,8 +14,8 @@ public class GameData {
     public static int MAP_WIDTH;
     public static int MAP_HEIGHT;
     public static final float PPM = 32.0f;
-    public static int SCREEN_WIDTH = 1200;
-    public static int SCREEN_HEIGHT = 800;
+    public static int SCREEN_WIDTH;
+    public static int SCREEN_HEIGHT;
 
     public static class Player {
         public static Long PLAYER_ID;

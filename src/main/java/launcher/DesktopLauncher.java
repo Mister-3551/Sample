@@ -20,7 +20,7 @@ public class DesktopLauncher {
         configuration.setResizable(true);
         configuration.setTitle("Game Name");
         configuration.setWindowIcon(GameData.Skins.Player.PLAYER_LEFT_SWORD);
-        configuration.setWindowedMode(GameData.SCREEN_WIDTH, GameData.SCREEN_HEIGHT);
+        //configuration.setWindowedMode(GameData.SCREEN_WIDTH, GameData.SCREEN_HEIGHT);
         new Lwjgl3Application(new Boot(), configuration);
     }
 }

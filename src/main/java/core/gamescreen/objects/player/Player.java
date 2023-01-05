@@ -42,7 +42,6 @@ public class Player extends PlayerEntity {
         y = body.getPosition().y * GameData.PPM;
         rect.move(x, y);
         checkUserInput();
-
         if (Bullet.diffX(GameData.GameScreen.Camera.ORTHOGRAPHIC_CAMERA, this) < 0) setSprite(GameData.Player.Sprite.PLAYER_LEFT_SPRITE);
         else setSprite(GameData.Player.Sprite.PLAYER_RIGHT_SPRITE);
     }
