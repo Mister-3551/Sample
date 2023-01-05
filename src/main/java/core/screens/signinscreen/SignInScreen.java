@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import core.GameData;
 import core.ResponseDataConnection;
 import core.downloadfile.DownloadFile;
@@ -30,7 +32,7 @@ public class SignInScreen extends ScreenAdapter {
     private Stage stage;
 
     public SignInScreen() {
-        stage = new Stage();
+        stage = new Stage(new FitViewport(GameData.SCREEN_WIDTH, GameData.SCREEN_HEIGHT));
         skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
         errorLabel = new Label("", skin);
         gameName = new TextButton("Sample Case", skin);
@@ -48,7 +50,6 @@ public class SignInScreen extends ScreenAdapter {
         createStructure();
 
         table.setDebug(false);
-
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
     }
@@ -63,7 +64,9 @@ public class SignInScreen extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height) {
+        stage.setViewport(new FitViewport(width, height));
         stage.getViewport().update(width, height, true);
+        stage.addActor(table);
     }
 
     private void createStructure() {

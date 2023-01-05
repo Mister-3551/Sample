@@ -76,8 +76,8 @@ public class GameScreen extends ScreenAdapter {
 
         table = new Table();
         empty = new Table();
-
         stage = new Stage();
+
         createStructure();
 
         Gdx.input.setInputProcessor(stage);
@@ -89,7 +89,7 @@ public class GameScreen extends ScreenAdapter {
         Pixmap pm = new Pixmap(Gdx.files.internal(GameData.Skins.Cursor.AIM_CURSOR));
         Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
         pm.dispose();
-        
+
         GameData.GameScreen.GAME_SCREEN = this;
     }
 

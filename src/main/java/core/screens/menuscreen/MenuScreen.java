@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import core.GameData;
 import core.screens.ScreenChanger;
 import core.screens.navigation.NavigationBar;
@@ -27,7 +28,7 @@ public class MenuScreen extends ScreenAdapter {
 
     public MenuScreen() {
         playerBasicData();
-        stage = new Stage();
+        stage = new Stage(new FitViewport(GameData.SCREEN_WIDTH, GameData.SCREEN_HEIGHT));
         skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
         label = new Label("", skin);
         play = new TextButton("Play - Level " + GameData.CURRENT_LEVEL, skin);
@@ -59,7 +60,9 @@ public class MenuScreen extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height) {
+        stage.setViewport(new FitViewport(width, height));
         stage.getViewport().update(width, height, true);
+        stage.addActor(table);
     }
 
     private void playerBasicData() {
