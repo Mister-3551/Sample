@@ -61,10 +61,6 @@ public class Bullet extends BulletEntity {
         return rect;
     }
 
-    public static float getBulletAngleEnemy(Enemy enemy, Player player, OrthographicCamera camera) {
-        return -90;
-    }
-
     public static float getBulletAngle(Player player, OrthographicCamera camera) {
         return (float) Math.atan2(diffY(camera, player), diffX(camera, player));
     }
@@ -81,5 +77,26 @@ public class Bullet extends BulletEntity {
         // translate screen coordinates to current camera position in world coordinates
         var YMouse = yMouse + camera.position.y - GameData.SCREEN_HEIGHT / 2;
         return YMouse - player.getY();
+    }
+
+    //TODO
+    public static float getBulletAngleEnemy(Enemy enemy, Player player, OrthographicCamera camera) {
+        return (float) Math.atan2(diffYEnemy(camera, player, enemy), diffXEnemy(camera, player, enemy));
+    }
+
+    //TODO
+    public static float diffXEnemy(OrthographicCamera camera, Player player, Enemy enemy) {
+        int xMouse = (int) player.getX();
+        var XMouse = xMouse + camera.position.x - player.getX();
+        return XMouse - enemy.getX();
+    }
+
+    //TODO
+    public static float diffYEnemy(OrthographicCamera camera, Player player, Enemy enemy) {
+        // mouse ordinate direction is the opposite to pane window
+        int yMouse = (int) (GameData.SCREEN_HEIGHT - player.getY());
+        // translate screen coordinates to current camera position in world coordinates
+        var YMouse = yMouse + camera.position.y - player.getY();
+        return YMouse - enemy.getY();
     }
 }

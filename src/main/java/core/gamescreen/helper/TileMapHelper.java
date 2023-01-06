@@ -104,10 +104,16 @@ public class TileMapHelper {
     }
 
     private void temporarySkin() {
-        String skinDirectory = DownloadFile.getSkins("");
 
-        GameData.Skins.Player.PLAYER_NORMAL = skinDirectory + "/" + "player-stand.png";
-        GameData.Skins.Player.PLAYER_LEFT = skinDirectory + "/" + "player-left.png";
-        GameData.Skins.Player.PLAYER_RIGHT = skinDirectory + "/" + "player-right.png";
+        String playerDirectory = DownloadFile.getSkins("player", "green");
+        String enemyDirectory = DownloadFile.getSkins("enemy", "basic");
+
+        GameData.Skins.Player.PLAYER_NORMAL = playerDirectory + "/player-stand.png";
+        GameData.Skins.Player.PLAYER_LEFT = playerDirectory + "/player-left.png";
+        GameData.Skins.Player.PLAYER_RIGHT = playerDirectory + "/player-right.png";
+
+        GameData.Skins.Enemy.ENEMY_NORMAL = enemyDirectory + "/enemy-stand.png";
+        GameData.Skins.Enemy.ENEMY_LEFT = enemyDirectory + "/enemy-left.png";
+        GameData.Skins.Enemy.ENEMY_RIGHT = enemyDirectory + "/enemy-right.png";
     }
 }

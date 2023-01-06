@@ -72,9 +72,9 @@ public class GameData {
         }
 
         public static class Enemy {
-            public static final String ENEMY_NORMAL = "enemy/enemy_normal/enemy_normal.png";
-            public static final String ENEMY_LEFT = "enemy/enemy_left/enemy_left.png";
-            public static final String ENEMY_RIGHT = "enemy/enemy_right/enemy_right.png";
+            public static String ENEMY_NORMAL;
+            public static String ENEMY_LEFT;
+            public static String ENEMY_RIGHT;
         }
 
         public static class Hostage {

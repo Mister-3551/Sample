@@ -58,9 +58,9 @@ public class DownloadFile {
         return Map.saveMap(mapName);
     }
 
-    public static String getSkins(String skinName) {
+    public static String getSkins(String character, String type) {
         checkDirectories();
-        return Skin.saveSkin(skinName).replace("\\", "/");
+        return Skin.saveSkin(character, type).replace("\\", "/");
     }
 
     private static class Picture {
@@ -98,12 +98,12 @@ public class DownloadFile {
     }
 
     private static class Skin {
-        private static String saveSkin(String skinName) {
+        private static String saveSkin(String character, String type) {
             try {
-                String skinDirectory = createPlayerSkinsDirectory("player");
-                Files.copy(new URL(skinsUrl + "/" + "player-green" + "-stand.png").openStream(), Paths.get(skinDirectory + "/" + "player-stand.png"), StandardCopyOption.REPLACE_EXISTING);
-                Files.copy(new URL(skinsUrl + "/" + "player-green" + "-left.png").openStream(), Paths.get(skinDirectory + "/" + "player-left.png") , StandardCopyOption.REPLACE_EXISTING);
-                Files.copy(new URL(skinsUrl + "/" + "player-green" + "-right.png").openStream(), Paths.get( skinDirectory + "/" + "player-right.png"), StandardCopyOption.REPLACE_EXISTING);
+                String skinDirectory = createPlayerSkinsDirectory(character);
+                Files.copy(new URL(skinsUrl + "/" + character + "/" + type + "/" + character + "-" + type + "-stand.png").openStream(), Paths.get(skinDirectory + "/" + character + "-stand.png"), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(new URL(skinsUrl + "/" + character + "/" + type + "/" + character + "-" + type + "-left.png").openStream(), Paths.get(skinDirectory + "/" + character + "-left.png") , StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(new URL(skinsUrl + "/" + character + "/" + type + "/" + character + "-" + type + "-right.png").openStream(), Paths.get( skinDirectory + "/" + character + "-right.png"), StandardCopyOption.REPLACE_EXISTING);
                 return skinDirectory;
             } catch (Exception e) {
                 return "";

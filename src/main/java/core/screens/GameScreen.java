@@ -51,7 +51,6 @@ public class GameScreen extends ScreenAdapter {
     private final ArrayList<Bullet> bulletsToRemove;
     private Long startTime = TimeUtils.nanoTime();
     private final Long timer = 1000000000L;
-    private int bulletRotate;
 
     public static boolean moveCameraWithArrows = false;
 
@@ -173,9 +172,9 @@ public class GameScreen extends ScreenAdapter {
     private void enemyShoot(Enemy enemy) {
         if (TimeUtils.timeSinceNanos(startTime) >= timer) {
 
-            bulletRotate = player.getX() < enemy.getX() ? -30 : 30;
+            var enemyWidth = player.getX() < enemy.getX() ? -20 : 6;
 
-            Body body = BodyHelperService.createObjectBody(5, 5, enemy.getX() + bulletRotate, enemy.getY() + 17, world);
+            Body body = BodyHelperService.createObjectBody(5, 5, enemy.getX() + enemyWidth, enemy.getY() + 17, world);
             bullets.add(new Bullet(5 * 1.5f, 5 * 1.5f, body, Bullet.getBulletAngleEnemy(enemy, player, camera)));
             startTime = TimeUtils.nanoTime();
         }
