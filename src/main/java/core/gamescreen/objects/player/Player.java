@@ -55,6 +55,7 @@ public class Player extends PlayerEntity {
         velX = 0;
         if (Gdx.input.isKeyPressed(GameData.Player.PLAYER_KEY_LEFT)) {
             if (!this.sprite.equals(GameData.Player.Sprite.PLAYER_LEFT_SPRITE)) {
+                GameScreen.moveCameraWithArrows = false;
                 //setSprite(PLAYER_LEFT);
                 GameScreen.setBulletDirection(-3);
                 //float baseX = 14f, baseY = 34f;
@@ -65,6 +66,7 @@ public class Player extends PlayerEntity {
         }
         if (Gdx.input.isKeyPressed(GameData.Player.PLAYER_KEY_RIGHT)) {
             if (!this.sprite.equals(GameData.Player.Sprite.PLAYER_RIGHT_SPRITE)) {
+                GameScreen.moveCameraWithArrows = false;
                 //setSprite(PLAYER_RIGHT_SWORD);
                 GameScreen.setBulletDirection(3);
                 //float baseX = 22f, baseY = 34f;
@@ -75,6 +77,7 @@ public class Player extends PlayerEntity {
         }
 
         if (Gdx.input.isKeyJustPressed(GameData.Player.PLAYER_KEY_JUMP) && jumpCounter < 25) {
+            GameScreen.moveCameraWithArrows = false;
             float force = body.getMass() * 12;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);

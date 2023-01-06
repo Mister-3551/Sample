@@ -1,6 +1,5 @@
 package core.screens;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
@@ -14,11 +13,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import core.GameData;
@@ -56,6 +52,9 @@ public class GameScreen extends ScreenAdapter {
     private Long startTime = TimeUtils.nanoTime();
     private final Long timer = 1000000000L;
     private int bulletRotate;
+
+    public static boolean moveCameraWithArrows = false;
+    public static boolean checkMoveWithCamera = false;
 
     public GameScreen(OrthographicCamera camera, String... level) {
         this.camera = camera;
@@ -134,8 +133,8 @@ public class GameScreen extends ScreenAdapter {
 
         Vector3 position = camera.position;
 
-        position.x = Math.round(player.getBody().getPosition().x * GameData.PPM * 10) / 10f;
-        position.y = Math.round(player.getBody().getPosition().y * GameData.PPM * 10) / 10f;
+        position.x = Math.abs(player.getBody().getPosition().x * GameData.PPM * 10) / 10f;
+        position.y = Math.abs(player.getBody().getPosition().y * GameData.PPM * 10) / 10f;
 
         camera.position.set(position);
         camera.update();
@@ -147,7 +146,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void update() {
-        world.step(1 / 60.0f, 3, 3);
+        world.step(1 / 60.0f, 6, 2);
         cameraUpdate();
 
         batch.setProjectionMatrix(camera.combined);
@@ -196,19 +195,28 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void cameraUpdate() {
-        var playerPositionX = Math.round(player.getBody().getPosition().x * GameData.PPM * 10) / 10f;
-        var playerPositionY = Math.round(player.getBody().getPosition().y * GameData.PPM * 10) / 10f;
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) moveCameraWithArrows("left");
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) moveCameraWithArrows("right");
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) moveCameraWithArrows("up");
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) moveCameraWithArrows("down");
 
-        var cameraMovingPositionX = 660;
-        var cameraMovingPositionY = 400;
+        if (Gdx.input.isKeyPressed(Input.Keys.U)) centerCameraOnPlayer();
 
-        var mapWidth = GameData.MAP_WIDTH * 64;
+        if (!moveCameraWithArrows) {
+            centerCameraOnPlayer();
+            /*var playerPositionX = Math.abs(player.getBody().getPosition().x * GameData.PPM * 10) / 10f;
+            var playerPositionY = Math.abs(player.getBody().getPosition().y * GameData.PPM * 10) / 10f;
 
-        Vector3 position = camera.position;
+            var cameraMovingPositionX = 660;
+            var cameraMovingPositionY = 400;
 
-        position.x = playerPositionX;
-        position.y = playerPositionY;
-        /*if (!GameData.GameScreen.Camera.RESET_CAMERA_POSITION) {
+            var mapWidth = GameData.MAP_WIDTH * 64;
+
+            Vector3 position = camera.position;
+
+            position.x = playerPositionX;
+            position.y = playerPositionY;
+        if (!GameData.GameScreen.Camera.RESET_CAMERA_POSITION) {
             if (playerPositionX > cameraMovingPositionX) position.x = playerPositionX;
             else if (playerPositionX > mapWidth - GameData.SCREEN_WIDTH / 2) position.x = playerPositionX;
             else position.x = cameraMovingPositionX;
@@ -218,9 +226,11 @@ public class GameScreen extends ScreenAdapter {
             if (playerPositionX < cameraMovingPositionX) position.x = cameraMovingPositionX;
             if (playerPositionY < cameraMovingPositionY) position.y = cameraMovingPositionY;
             GameData.GameScreen.Camera.RESET_CAMERA_POSITION = false;
-        }*/
-        camera.position.set(position);
-        camera.update();
+        }
+            camera.position.set(position);
+            camera.update();
+          */
+        }
     }
 
     private void checkCollisions() {
@@ -262,6 +272,28 @@ public class GameScreen extends ScreenAdapter {
         if (bullets.size() == 0 && bulletsToRemove.size() != 0) bulletsToRemove.clear();
         if (enemies.size() == 0 && enemiesToRemove.size() != 0) enemiesToRemove.clear();
         if (hostages.size() == 0 && hostagesToRemove.size() != 0) hostagesToRemove.clear();
+    }
+
+    private void moveCameraWithArrows(String move) {
+        moveCameraWithArrows = true;
+        int param = 3;
+        switch (move) {
+            case "left" -> camera.position.x -= param;
+            case "right" -> camera.position.x += param;
+            case "up" -> camera.position.y += param;
+            case "down" -> camera.position.y -= param;
+        }
+        camera.update();
+    }
+
+    private void centerCameraOnPlayer() {
+        var positionX = Math.abs(player.getBody().getPosition().x * GameData.PPM * 10) / 10f;
+        var positionY = Math.abs(player.getBody().getPosition().y * GameData.PPM * 10) / 10f;
+
+        camera.position.x = positionX;
+        camera.position.y = positionY;
+
+        camera.update();
     }
 
     private void createStructure() {
