@@ -54,7 +54,6 @@ public class GameScreen extends ScreenAdapter {
     private int bulletRotate;
 
     public static boolean moveCameraWithArrows = false;
-    public static boolean checkMoveWithCamera = false;
 
     public GameScreen(OrthographicCamera camera, String... level) {
         this.camera = camera;
@@ -76,7 +75,7 @@ public class GameScreen extends ScreenAdapter {
 
         table = new Table();
         empty = new Table();
-        stage = new Stage(new FitViewport(GameData.SCREEN_WIDTH, GameData.SCREEN_HEIGHT));
+        stage = new Stage(new FitViewport(0, 0));
 
         createStructure();
         stage.addActor(table);
@@ -101,24 +100,18 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
+
         stage.draw();
 
         orthogonalTiledMapRenderer.render();
+        orthogonalTiledMapRenderer.setView(camera);
 
         batch.begin();
         player.render(batch);
 
-        for (Enemy enemy : enemies) {
-            enemy.render(batch);
-        }
-
-        for (Hostage hostage : hostages) {
-            hostage.render(batch);
-        }
-
-        for (Bullet bullet : bullets) {
-            bullet.render(batch);
-        }
+        for (Enemy enemy : enemies) enemy.render(batch);
+        for (Hostage hostage : hostages) hostage.render(batch);
+        for (Bullet bullet : bullets) bullet.render(batch);
 
         batch.end();
         //box2DDebugRenderer.render(world, camera.combined.scl(GameData.PPM));
@@ -131,13 +124,7 @@ public class GameScreen extends ScreenAdapter {
 
         camera.setToOrtho(false, width, height);
 
-        Vector3 position = camera.position;
-
-        position.x = Math.abs(player.getBody().getPosition().x * GameData.PPM * 10) / 10f;
-        position.y = Math.abs(player.getBody().getPosition().y * GameData.PPM * 10) / 10f;
-
-        camera.position.set(position);
-        camera.update();
+        centerCameraOnPlayer();
 
         GameData.SCREEN_WIDTH = width;
         GameData.SCREEN_HEIGHT = height;
