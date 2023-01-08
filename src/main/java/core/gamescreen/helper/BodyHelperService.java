@@ -6,7 +6,7 @@ import core.GameData;
 
 public class BodyHelperService {
 
-    public static Body createObjectBody(float objectWidth, float objectHeight, float x, float y, World world) {
+    public static Body createObjectBody(float objectWidth, float objectHeight, float x, float y, World world, String type) {
 
         var baseUnitX = 64;
         var baseUnitY = 64;
@@ -26,15 +26,17 @@ public class BodyHelperService {
         shape.setAsBox(hx, hy, new Vector2(hx, hy), 0);
 
         Body body = world.createBody(bodyDef);
-        body.createFixture(bodyFixture(shape));
+        body.createFixture(fixtureDef(shape, type));
 
         shape.dispose();
         return body;
     }
 
-    public static FixtureDef bodyFixture(PolygonShape shape) {
+    public static FixtureDef fixtureDef(PolygonShape shape, String type) {
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.friction = 0;
+        if (type.matches("player") || type.matches("bullet")) fixtureDef.friction = 0;
+        if (type.matches("enemy") || type.matches("hostage")) fixtureDef.friction = 20;
+        fixtureDef.density = 1000;
         fixtureDef.shape = shape;
         return fixtureDef;
     }

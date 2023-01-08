@@ -1,10 +1,10 @@
 package core.gamescreen.helper;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
@@ -18,15 +18,18 @@ import core.gamescreen.objects.hostage.Hostage;
 import core.gamescreen.objects.player.Player;
 import core.screens.GameScreen;
 
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class TileMapHelper {
 
-    private TiledMap tiledMap;
+    public static TiledMap tiledMap;
     private GameScreen gameScreen;
+    private ArrayList<core.gamescreen.objects.map.MapObject> mapObjects;
 
     public TileMapHelper(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
+        mapObjects = new ArrayList<>();
     }
 
     public OrthogonalTiledMapRenderer setupMap(String... level) {
@@ -41,8 +44,23 @@ public class TileMapHelper {
 
         GameData.MAP_WIDTH = prop.get("width", Integer.class);
         GameData.MAP_HEIGHT = prop.get("height", Integer.class);
-        
-        parseMapObject(tiledMap.getLayers().get("Objects").getObjects());
+
+        MapObjects objects = tiledMap.getLayers().get("Objects").getObjects();
+        parseMapObject(objects);
+
+        for (MapObject object : objects) {
+
+            if (object instanceof PolygonMapObject) {
+                var name = object.getName();
+                var x = ((PolygonMapObject) object).getPolygon().getX();
+                var y = ((PolygonMapObject) object).getPolygon().getY();
+                var height = 0;
+                var width = 0;
+                mapObjects.add(new core.gamescreen.objects.map.MapObject(name, x, y, height, width));
+            }
+        }
+        GameData.GameScreen.MAP_OBJETS = mapObjects;
+
         return new OrthogonalTiledMapRenderer(tiledMap);
     }
 
@@ -56,14 +74,14 @@ public class TileMapHelper {
                     float posX = ((TiledMapTileMapObject) mapObject).getX();
                     float posY = ((TiledMapTileMapObject) mapObject).getY();
 
-                    Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld());
+                    Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld(), "player");
                     gameScreen.setPlayer(new Player((14 * 1.5f), (34 * 1.5f), body));
                 }
                 else if (mapObject.getName() != null && mapObject.getName().equals("Enemy")) {
                     float posX = ((TiledMapTileMapObject) mapObject).getX();
                     float posY = ((TiledMapTileMapObject) mapObject).getY();
 
-                    Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld());
+                    Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld(), "enemy");
                     gameScreen.enemies.add(new Enemy(14 * 1.5f, 34 * 1.5f, body));
                 }
                 else if (mapObject.getName() != null && mapObject.getName().equals("Hostage")) {
@@ -72,7 +90,7 @@ public class TileMapHelper {
                         float posX = ((TiledMapTileMapObject) mapObject).getX() + i * 4;
                         float posY = ((TiledMapTileMapObject) mapObject).getY() + i * 100;
 
-                        Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld());
+                        Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld(), "hostage");
                         gameScreen.hostages.add(new Hostage(14 * 1.5f, 34 * 1.5f, body));
                     }
                 }

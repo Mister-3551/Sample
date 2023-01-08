@@ -96,7 +96,7 @@ public class Player extends PlayerEntity {
     public void shoot(OrthographicCamera camera, World world) {
         if (Gdx.input.isButtonJustPressed(GameData.Player.PLAYER_KEY_SHOOT) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             var playerWidth = Bullet.diffX(camera, this) < 0 ? -7 : 21;
-            Body body = BodyHelperService.createObjectBody(5, 5, this.getX() + playerWidth, this.getY() + 17, world);
+            Body body = BodyHelperService.createObjectBody(5, 5, this.getX() + playerWidth, this.getY() + 17, world, "bullet");
             playerBullets.add(new Bullet(5 * 1.5f, 5 * 1.5f, body, Bullet.getBulletAngle(this, camera)));
         }
     }
@@ -117,7 +117,7 @@ public class Player extends PlayerEntity {
         Fixture previous = body.getFixtureList().first();
 
         body.destroyFixture(previous);
-        body.createFixture(BodyHelperService.bodyFixture(shape));
+        body.createFixture(BodyHelperService.fixtureDef(shape, "player"));
 
         shape.dispose();
     }

@@ -2,6 +2,7 @@ package core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import core.gamescreen.objects.map.MapObject;
 import core.screens.levelsscreen.Level;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class GameData {
     public static class GameScreen {
         public static core.screens.GameScreen GAME_SCREEN;
         public static int ENEMY_KILLS = 0;
+        public static ArrayList<MapObject> MAP_OBJETS;
 
         public static class Camera {
             public static OrthographicCamera ORTHOGRAPHIC_CAMERA;

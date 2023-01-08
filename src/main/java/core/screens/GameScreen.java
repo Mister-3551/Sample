@@ -7,22 +7,21 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import core.GameData;
 import core.gamescreen.DetectionSystem;
-import core.gamescreen.helper.BodyHelperService;
 import core.gamescreen.helper.TileMapHelper;
 import core.gamescreen.objects.bullet.Bullet;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.hostage.Hostage;
+import core.gamescreen.objects.map.MapObject;
 import core.gamescreen.objects.player.Player;
 import core.screens.navigation.NavigationBar;
 
@@ -30,27 +29,27 @@ import java.util.ArrayList;
 
 public class GameScreen extends ScreenAdapter {
 
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private World world;
-    private Box2DDebugRenderer box2DDebugRenderer;
-    private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
-    private TileMapHelper tileMapHelper;
-    private BitmapFont font;
-    private NavigationBar navigationBar;
+    private final OrthographicCamera camera;
+    private final SpriteBatch batch;
+    private final World world;
+    private final Box2DDebugRenderer box2DDebugRenderer;
+    private final OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
+    private final TileMapHelper tileMapHelper;
+    private final BitmapFont font;
+    private final NavigationBar navigationBar;
     private Player player;
-    private Table table, empty;
-    private Stage stage;
+    private final Table table, empty;
+    private final Stage stage;
     private static int bulletDirection;
     public ArrayList<Enemy> enemies;
     public ArrayList<Enemy> enemiesToRemove;
     public ArrayList<Hostage> hostages;
     public ArrayList<Hostage> hostagesToRemove;
-    public static ArrayList<Bullet> playerBullets;
-    public static ArrayList<Bullet> enemyBullets;
-    private final ArrayList<Bullet> playerBulletsToRemove, enemyBulletsToRemove;
-
+    public static ArrayList<Bullet> playerBullets, enemyBullets;
+    private static ArrayList<Bullet> playerBulletsToRemove, enemyBulletsToRemove;
     public static boolean moveCameraWithArrows = false;
+
+    private static MapObjects mapObjects;
 
     public GameScreen(OrthographicCamera camera, String... level) {
         this.camera = camera;
@@ -141,6 +140,12 @@ public class GameScreen extends ScreenAdapter {
         player.update();
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) new ScreenChanger().changeScreen("MenuScreen");
+
+        if (Gdx.input.isKeyPressed(Input.Keys.I)) {
+            for (MapObject mapObject : GameData.GameScreen.MAP_OBJETS) {
+
+            }
+        }
 
         player.shoot(camera, world);
 
@@ -300,5 +305,9 @@ public class GameScreen extends ScreenAdapter {
 
     public static void setBulletDirection(int getBulletDirection) {
         bulletDirection = getBulletDirection;
+    }
+
+    public static void setMapObjets(MapObjects getMapObjects) {
+        mapObjects = getMapObjects;
     }
 }
