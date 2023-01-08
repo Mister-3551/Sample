@@ -20,11 +20,11 @@ public class Bullet extends BulletEntity {
     public boolean remove;
     private float posX, posY = 0.0f;
 
-    private CollisionService rect;
+    private final CollisionService rect;
 
     public Bullet(float width, float height, Body body, float angle) {
         super(width, height, body, angle);
-        this.speed = 10f;
+        this.speed = 20f;
         this.jumpCounter = 0;
         this.BULLET_NORMAL = new Sprite(new Texture(Gdx.files.internal(GameData.Skins.Bullet.BULLET)));
         this.sprite = new Sprite(BULLET_NORMAL);
@@ -33,11 +33,16 @@ public class Bullet extends BulletEntity {
     }
 
     @Override
+    public void render(SpriteBatch batch) {
+        batch.draw(sprite, x, y, width, height);
+    }
+
+    @Override
     public void update() {
         x = body.getPosition().x * GameData.PPM;
         y = body.getPosition().y * GameData.PPM;
 
-        body.setLinearVelocity(speed * MathUtils.cos(angle), speed * MathUtils.sin(angle));
+        body.setLinearVelocity((float) (speed * Math.cos(angle)), (float) (speed * Math.sin(angle)));
 
         if (posX == x || posY == y) {
             remove = true;
@@ -47,10 +52,6 @@ public class Bullet extends BulletEntity {
         posY = y;
 
         this.rect.move(x, y);
-    }
-    @Override
-    public void render(SpriteBatch batch) {
-        batch.draw(sprite, x, y, width, height);
     }
 
     public void destroyBullet() {
@@ -79,24 +80,15 @@ public class Bullet extends BulletEntity {
         return YMouse - player.getY();
     }
 
-    //TODO
-    public static float getBulletAngleEnemy(Enemy enemy, Player player, OrthographicCamera camera) {
-        return (float) Math.atan2(diffYEnemy(camera, player, enemy), diffXEnemy(camera, player, enemy));
+    public static float getBulletAngleEnemy(Enemy enemy, Player player) {
+        return (float) Math.atan2(diffYEnemy(player, enemy), diffXEnemy(player, enemy));
     }
 
-    //TODO
-    public static float diffXEnemy(OrthographicCamera camera, Player player, Enemy enemy) {
-        int xMouse = (int) player.getX();
-        var XMouse = xMouse + camera.position.x - player.getX();
-        return XMouse - enemy.getX();
+    public static float diffXEnemy(Player player, Enemy enemy) {
+        return player.getX() - enemy.getX();
     }
 
-    //TODO
-    public static float diffYEnemy(OrthographicCamera camera, Player player, Enemy enemy) {
-        // mouse ordinate direction is the opposite to pane window
-        int yMouse = (int) (GameData.SCREEN_HEIGHT - player.getY());
-        // translate screen coordinates to current camera position in world coordinates
-        var YMouse = yMouse + camera.position.y - player.getY();
-        return YMouse - enemy.getY();
+    public static float diffYEnemy(Player player, Enemy enemy) {
+        return player.getY() - enemy.getY();
     }
 }

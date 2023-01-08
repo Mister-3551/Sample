@@ -2,6 +2,8 @@ package core.gamescreen;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.player.Player;
 
+import java.util.ArrayList;
+
 public class DetectionSystem {
 
     public static Enemy detection(Enemy enemy, Player player) {
@@ -9,9 +11,6 @@ public class DetectionSystem {
     }
 
     private static boolean calculateDistance(float enemyX, float enemyY, float playerX, float playerY, float maxDistance) {
-        float distanceX = enemyX > playerX ? enemyX - playerX : playerX - enemyX;
-        float distanceY = enemyY > playerY ? enemyY - playerY : playerY - enemyY;
-
-        return distanceX <= maxDistance && distanceY <= maxDistance;
+        return Math.sqrt(Math.pow(enemyX - playerX, 2) + Math.pow(enemyY - playerY, 2)) < maxDistance;
     }
 }

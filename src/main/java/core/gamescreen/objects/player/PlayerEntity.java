@@ -20,8 +20,8 @@ public abstract class PlayerEntity {
         this.speed = 0;
     }
 
-    public abstract void update();
     public abstract void render(SpriteBatch batch);
+    public abstract void update();
     public Body getBody() {
         return body;
     }
