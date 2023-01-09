@@ -12,6 +12,7 @@ import core.GameData;
 import core.gamescreen.helper.BodyHelperService;
 import core.gamescreen.helper.CollisionService;
 import core.gamescreen.objects.bullet.Bullet;
+import core.screens.gamescreen.ArrowsCamera;
 import core.screens.gamescreen.GameScreen;
 
 import java.util.ArrayList;

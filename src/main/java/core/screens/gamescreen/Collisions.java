@@ -4,13 +4,13 @@ import core.gamescreen.objects.bullet.Bullet;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.hostage.Hostage;
 import core.gamescreen.objects.player.Player;
-
+import core.screens.navigation.NavigationBar;
 
 import static core.screens.gamescreen.GameScreen.*;
 
 public class Collisions {
 
-    public static void checkCollisions(Player player) {
+    public static void checkCollisions(Player player, NavigationBar navigationBar) {
         for (Enemy enemy : enemies) {
             for (Bullet bullet : playerBullets) {
                 if (enemy.getCollisionRect().collidesWith(bullet.getCollisionRect())) {
@@ -18,7 +18,7 @@ public class Collisions {
                     enemy.destroyEnemy();
                     playerBulletsToRemove.add(bullet);
                     enemiesToRemove.add(enemy);
-                    //navigationBar.updateEnemyKills();
+                    navigationBar.updateEnemyKills();
                 }
             }
         }
@@ -50,6 +50,7 @@ public class Collisions {
             if (hostage.getCollisionRect().collidesWith(player.getCollisionRect())) {
                 hostage.destroyHostage();
                 hostagesToRemove.add(hostage);
+                navigationBar.updateHostageSaved();
             }
         }
         hostages.removeAll(hostagesToRemove);

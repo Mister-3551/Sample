@@ -36,7 +36,7 @@ public class BodyHelperService {
         FixtureDef fixtureDef = new FixtureDef();
         if (type.matches("player") || type.matches("bullet")) fixtureDef.friction = 0;
         if (type.matches("enemy") || type.matches("hostage")) fixtureDef.friction = 20;
-        fixtureDef.density = 1000;
+        fixtureDef.density = 0;
         fixtureDef.shape = shape;
         return fixtureDef;
     }
