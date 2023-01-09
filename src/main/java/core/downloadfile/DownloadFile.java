@@ -106,6 +106,7 @@ public class DownloadFile {
                 Files.copy(new URL(skinsUrl + "/" + character + "/" + type + "/" + character + "-" + type + "-right.png").openStream(), Paths.get( skinDirectory + "/" + character + "-right.png"), StandardCopyOption.REPLACE_EXISTING);
                 return skinDirectory;
             } catch (Exception e) {
+                System.out.println(e.getMessage());
                 return "";
             }
         }

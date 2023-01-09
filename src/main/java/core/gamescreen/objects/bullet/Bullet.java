@@ -22,6 +22,7 @@ import core.gamescreen.helper.TileMapHelper;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.map.MapObject;
 import core.gamescreen.objects.player.Player;
+import core.screens.GameScreen;
 
 public class Bullet extends BulletEntity {
 
@@ -54,16 +55,11 @@ public class Bullet extends BulletEntity {
 
         body.setLinearVelocity((float) (speed * Math.cos(angle)), (float) (speed * Math.sin(angle)));
 
-        for (MapObject mapObject : GameData.GameScreen.MAP_OBJETS) {
-            if (this.rect.collidesWith(mapObject.getCollisionRect())) {
-                System.out.println(mapObject.getI());
-            }
-        }
         this.rect.move(x, y);
     }
 
     public void destroyBullet() {
-        if (!body.getFixtureList().isEmpty()) body.destroyFixture(body.getFixtureList().first());
+        if (body.getFixtureList().size > 0) body.destroyFixture(body.getFixtureList().first());
     }
 
     public CollisionService getCollisionRect() {

@@ -48,23 +48,12 @@ public class TileMapHelper {
         MapObjects objects = tiledMap.getLayers().get("Objects").getObjects();
         parseMapObject(objects);
 
-        for (MapObject object : objects) {
-
-            if (object instanceof PolygonMapObject) {
-                var name = object.getName();
-                var x = ((PolygonMapObject) object).getPolygon().getX();
-                var y = ((PolygonMapObject) object).getPolygon().getY();
-                var height = 0;
-                var width = 0;
-                mapObjects.add(new core.gamescreen.objects.map.MapObject(name, x, y, height, width));
-            }
-        }
-        GameData.GameScreen.MAP_OBJETS = mapObjects;
-
         return new OrthogonalTiledMapRenderer(tiledMap);
     }
 
     private void parseMapObject(MapObjects mapObjects) {
+        int countEnemies = 0, countHostages = 0;
+
         for (MapObject mapObject : mapObjects) {
             if (mapObject instanceof PolygonMapObject) {
                 createStaticBody((PolygonMapObject) mapObject);
@@ -83,19 +72,22 @@ public class TileMapHelper {
 
                     Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld(), "enemy");
                     gameScreen.enemies.add(new Enemy(14 * 1.5f, 34 * 1.5f, body));
+
+                    countEnemies++;
                 }
                 else if (mapObject.getName() != null && mapObject.getName().equals("Hostage")) {
+                    float posX = ((TiledMapTileMapObject) mapObject).getX();
+                    float posY = ((TiledMapTileMapObject) mapObject).getY();
 
-                    for (int i = 0; i < 10; i++) {
-                        float posX = ((TiledMapTileMapObject) mapObject).getX() + i * 4;
-                        float posY = ((TiledMapTileMapObject) mapObject).getY() + i * 100;
+                    Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld(), "hostage");
+                    gameScreen.hostages.add(new Hostage(14 * 1.5f, 34 * 1.5f, body));
 
-                        Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld(), "hostage");
-                        gameScreen.hostages.add(new Hostage(14 * 1.5f, 34 * 1.5f, body));
-                    }
+                    countHostages++;
                 }
             }
         }
+        GameData.GameScreen.Statistics.MAX_ENEMIES = countEnemies;
+        GameData.GameScreen.Statistics.MAX_HOSTAGE = countHostages;
     }
 
     private void createStaticBody(PolygonMapObject polygonMapObject) {
@@ -125,6 +117,7 @@ public class TileMapHelper {
 
         String playerDirectory = DownloadFile.getSkins("player", "green");
         String enemyDirectory = DownloadFile.getSkins("enemy", "basic");
+        String hostageDirectory = DownloadFile.getSkins("hostage", "basic");
 
         GameData.Skins.Player.PLAYER_NORMAL = playerDirectory + "/player-stand.png";
         GameData.Skins.Player.PLAYER_LEFT = playerDirectory + "/player-left.png";
@@ -133,5 +126,13 @@ public class TileMapHelper {
         GameData.Skins.Enemy.ENEMY_NORMAL = enemyDirectory + "/enemy-stand.png";
         GameData.Skins.Enemy.ENEMY_LEFT = enemyDirectory + "/enemy-left.png";
         GameData.Skins.Enemy.ENEMY_RIGHT = enemyDirectory + "/enemy-right.png";
+
+        GameData.Skins.Hostage.HOSTAGE_NORMAL = hostageDirectory + "/hostage-stand.png";
+        GameData.Skins.Hostage.HOSTAGE_LEFT = hostageDirectory + "/hostage-left.png";
+        GameData.Skins.Hostage.HOSTAGE_RIGHT = hostageDirectory + "/hostage-right.png";
+    }
+
+    public static TiledMap getTiledMap() {
+        return tiledMap;
     }
 }

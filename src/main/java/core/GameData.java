@@ -36,12 +36,19 @@ public class GameData {
 
     public static class GameScreen {
         public static core.screens.GameScreen GAME_SCREEN;
-        public static int ENEMY_KILLS = 0;
         public static ArrayList<MapObject> MAP_OBJETS;
 
         public static class Camera {
             public static OrthographicCamera ORTHOGRAPHIC_CAMERA;
             public static boolean RESET_CAMERA_POSITION;
+        }
+
+        public static class Statistics {
+            public static int ENEMY_KILLS = 0;
+            public static int MAX_ENEMIES = 0;
+            public static int HOSTAGE_SAVED = 0;
+            public static int MAX_HOSTAGE = 0;
+            public static int MONEY = 0;
         }
     }
 
@@ -80,9 +87,9 @@ public class GameData {
         }
 
         public static class Hostage {
-            public static final String HOSTAGE_NORMAL = "hostage/hostage_normal/hostage_normal.png";
-            public static final String HOSTAGE_LEFT = "hostage/hostage_left/hostage_left.png";
-            public static final String HOSTAGE_RIGHT = "hostage/hostage_right/hostage_right.png";
+            public static String HOSTAGE_NORMAL;
+            public static String HOSTAGE_LEFT;
+            public static String HOSTAGE_RIGHT;
         }
 
         public static class Bullet {

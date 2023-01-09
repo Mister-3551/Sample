@@ -17,10 +17,10 @@ public class CollisionService {
     }
 
     public boolean collidesWith(CollisionService rect) {
-        return x < rect.x + rect.width
-                && y < rect.y + rect.height
-                && x + width > rect.x
-                && y + height > rect.y;
+        return x < rect.x + rect.width + 1
+                && y < rect.y + rect.height + 1
+                && x + width + 1 > rect.x
+                && y + height + 1 > rect.y;
     }
 
     public float getX() {

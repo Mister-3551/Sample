@@ -22,15 +22,15 @@ public class NavigationBar {
         skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
         username = new TextButton(GameData.Player.PLAYER_USERNAME, skin);
         rank = new TextButton("Rank: " + GameData.Player.PLAYER_RANK, skin);
-        money = new TextButton("Money: 0", skin);
+        money = new TextButton("Money: " + GameData.GameScreen.Statistics.MONEY, skin);
         inventory = new TextButton("Inventory", skin);
         shop = new TextButton("Shop", skin);
         empty = new TextButton("", skin);
         backToMenu = new TextButton("Back To Menu", skin);
 
         level = new TextButton("Level: " + GameData.CURRENT_LEVEL, skin);
-        enemy = new TextButton("Enemy: " + GameData.GameScreen.ENEMY_KILLS + "/4", skin);
-        hostage = new TextButton("Hostage: 0/4", skin);
+        enemy = new TextButton("Enemy: " + GameData.GameScreen.Statistics.ENEMY_KILLS + "/" + GameData.GameScreen.Statistics.MAX_ENEMIES, skin);
+        hostage = new TextButton("Hostage: " + GameData.GameScreen.Statistics.HOSTAGE_SAVED + "/" + GameData.GameScreen.Statistics.MAX_HOSTAGE, skin);
     }
 
     public Table menuNavigationBar() {
@@ -90,6 +90,10 @@ public class NavigationBar {
     }
 
     public void updateEnemyKills() {
-        this.enemy.setText("Enemy: " + (GameData.GameScreen.ENEMY_KILLS += 1) + "/4");
+        this.enemy.setText("Enemy: " + (GameData.GameScreen.Statistics.ENEMY_KILLS += 1) + "/" + GameData.GameScreen.Statistics.MAX_ENEMIES);
+    }
+
+    public void updateHostageSaved() {
+        this.hostage.setText("Hostages: " + (GameData.GameScreen.Statistics.HOSTAGE_SAVED += 1) + "/" + GameData.GameScreen.Statistics.MAX_HOSTAGE);
     }
 }
