@@ -11,8 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -65,6 +64,30 @@ public class GameScreen extends ScreenAdapter {
 
         batch = new SpriteBatch();
         world = new World(new Vector2(0, -25f), false);
+
+        world.setContactListener(new ContactListener() {
+            @Override
+            public void beginContact(Contact contact) {
+                Fixture f1 = contact.getFixtureA();
+                Fixture f2 = contact.getFixtureB();
+
+            }
+
+            @Override
+            public void endContact(Contact contact) {
+
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold manifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse contactImpulse) {
+
+            }
+        });
         box2DDebugRenderer = new Box2DDebugRenderer();
         tileMapHelper = new TileMapHelper(this);
         orthogonalTiledMapRenderer = tileMapHelper.setupMap(level);
@@ -113,7 +136,9 @@ public class GameScreen extends ScreenAdapter {
         for (Bullet bullet : enemyBullets) bullet.render(batch);
 
         batch.end();
-        //box2DDebugRenderer.render(world, camera.combined.scl(GameData.PPM));
+
+        this.update(delta);
+//      box2DDebugRenderer.render(world, camera.combined.scl(GameData.PPM));
     }
 
     @Override
