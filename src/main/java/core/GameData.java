@@ -1,6 +1,5 @@
 package core;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import core.gamescreen.objects.map.MapObject;
 import core.screens.levelsscreen.Level;
@@ -35,7 +34,7 @@ public class GameData {
     }
 
     public static class GameScreen {
-        public static core.screens.GameScreen GAME_SCREEN;
+        public static core.screens.gamescreen.GameScreen GAME_SCREEN;
         public static ArrayList<MapObject> MAP_OBJETS;
 
         public static class Camera {

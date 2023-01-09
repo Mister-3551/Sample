@@ -5,24 +5,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.PolygonMapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import core.GameData;
-import core.downloadfile.DownloadFile;
 import core.gamescreen.helper.CollisionService;
-import core.gamescreen.helper.TileMapHelper;
 import core.gamescreen.objects.enemy.Enemy;
-import core.gamescreen.objects.map.MapObject;
 import core.gamescreen.objects.player.Player;
-import core.screens.GameScreen;
 
 public class Bullet extends BulletEntity {
 

@@ -4,7 +4,6 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
@@ -16,10 +15,9 @@ import core.downloadfile.DownloadFile;
 import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.hostage.Hostage;
 import core.gamescreen.objects.player.Player;
-import core.screens.GameScreen;
+import core.screens.gamescreen.GameScreen;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class TileMapHelper {
 

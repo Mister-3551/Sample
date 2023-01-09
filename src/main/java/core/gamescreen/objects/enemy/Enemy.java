@@ -4,16 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import core.GameData;
 import core.gamescreen.helper.BodyHelperService;
 import core.gamescreen.helper.CollisionService;
 import core.gamescreen.objects.bullet.Bullet;
 import core.gamescreen.objects.player.Player;
-import core.screens.GameScreen;
+import core.screens.gamescreen.GameScreen;
 
 import java.util.ArrayList;
 

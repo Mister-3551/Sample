@@ -3,6 +3,7 @@ package core.screens;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import core.Boot;
 import core.GameData;
+import core.screens.gamescreen.GameScreen;
 import core.screens.levelsscreen.LevelsScreen;
 import core.screens.menuscreen.MenuScreen;
 import core.screens.settingsscreen.SettingsScreen;

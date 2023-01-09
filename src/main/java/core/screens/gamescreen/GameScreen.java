@@ -1,4 +1,4 @@
-package core.screens;
+package core.screens.gamescreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -23,6 +23,7 @@ import core.gamescreen.objects.enemy.Enemy;
 import core.gamescreen.objects.hostage.Hostage;
 import core.gamescreen.objects.map.MapObject;
 import core.gamescreen.objects.player.Player;
+import core.screens.ScreenChanger;
 import core.screens.navigation.NavigationBar;
 
 import java.util.ArrayList;
@@ -41,12 +42,12 @@ public class GameScreen extends ScreenAdapter {
     private final Table table, empty;
     private final Stage stage;
     private static int bulletDirection;
-    public ArrayList<Enemy> enemies;
-    public ArrayList<Enemy> enemiesToRemove;
-    public ArrayList<Hostage> hostages;
-    public ArrayList<Hostage> hostagesToRemove;
+    public static ArrayList<Enemy> enemies;
+    public static ArrayList<Enemy> enemiesToRemove;
+    public static ArrayList<Hostage> hostages;
+    public static ArrayList<Hostage> hostagesToRemove;
     public static ArrayList<Bullet> playerBullets, enemyBullets;
-    private static ArrayList<Bullet> playerBulletsToRemove, enemyBulletsToRemove;
+    public static ArrayList<Bullet> playerBulletsToRemove, enemyBulletsToRemove;
     public static boolean moveCameraWithArrows = false;
 
     private static MapObjects mapObjects;
@@ -170,7 +171,7 @@ public class GameScreen extends ScreenAdapter {
             if (bullet.remove) enemyBulletsToRemove.add(bullet);
         }
 
-        checkCollisions();
+        Collisions.checkCollisions(player);
     }
 
     private void cameraUpdate() {
@@ -206,55 +207,6 @@ public class GameScreen extends ScreenAdapter {
             camera.update();
           */
         }
-    }
-
-    private void checkCollisions() {
-        for (Enemy enemy : enemies) {
-            for (Bullet bullet : playerBullets) {
-                if (enemy.getCollisionRect().collidesWith(bullet.getCollisionRect())) {
-                    bullet.destroyBullet();
-                    enemy.destroyEnemy();
-                    playerBulletsToRemove.add(bullet);
-                    enemiesToRemove.add(enemy);
-                    navigationBar.updateEnemyKills();
-                }
-            }
-        }
-        playerBullets.removeAll(playerBulletsToRemove);
-        enemies.removeAll(enemiesToRemove);
-
-        for (Bullet bullet : enemyBullets) {
-            if (player.getCollisionRect().collidesWith(bullet.getCollisionRect())) {
-                bullet.destroyBullet();
-                enemyBulletsToRemove.add(bullet);
-            }
-        }
-        enemyBullets.removeAll(enemyBulletsToRemove);
-
-        for (Hostage hostage : hostages) {
-            for (Bullet bullet : playerBullets) {
-                if (hostage.getCollisionRect().collidesWith(bullet.getCollisionRect())) {
-                    bullet.destroyBullet();
-                    hostage.destroyHostage();
-                    playerBulletsToRemove.add(bullet);
-                    hostagesToRemove.add(hostage);
-                }
-            }
-        }
-        playerBullets.removeAll(playerBulletsToRemove);
-        hostages.removeAll(hostagesToRemove);
-
-        for (Hostage hostage : hostages) {
-            if (hostage.getCollisionRect().collidesWith(player.getCollisionRect())) {
-                hostage.destroyHostage();
-                hostagesToRemove.add(hostage);
-            }
-        }
-        hostages.removeAll(hostagesToRemove);
-
-        if (playerBullets.size() == 0 && playerBulletsToRemove.size() != 0) playerBulletsToRemove.clear();
-        if (enemies.size() == 0 && enemiesToRemove.size() != 0) enemiesToRemove.clear();
-        if (hostages.size() == 0 && hostagesToRemove.size() != 0) hostagesToRemove.clear();
     }
 
     private void moveCameraWithArrows(String move) {
