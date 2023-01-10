@@ -120,6 +120,7 @@ public class GameScreen extends ScreenAdapter {
         stage.getViewport().update(width, height, true);
 
         camera.setToOrtho(false, width, height);
+        centerCameraOnPlayer();
 
         GameData.SCREEN_WIDTH = width;
         GameData.SCREEN_HEIGHT = height;
