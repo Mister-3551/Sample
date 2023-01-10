@@ -1,4 +1,4 @@
-package core.gamescreen.objects.player;
+package core.screens.gamescreen.objects.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -9,10 +9,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import core.GameData;
-import core.gamescreen.helper.BodyHelperService;
-import core.gamescreen.helper.CollisionService;
-import core.gamescreen.objects.bullet.Bullet;
-import core.screens.gamescreen.ArrowsCamera;
+import core.screens.gamescreen.helper.BodyHelperService;
+import core.screens.gamescreen.helper.CollisionObject;
+import core.screens.gamescreen.objects.bullet.Bullet;
 import core.screens.gamescreen.GameScreen;
 
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class Player extends PlayerEntity {
     private int jumpCounter;
     private Sprite sprite;
     private final Sprite PLAYER_NORMAL, PLAYER_LEFT_SWORD, PLAYER_RIGHT_SWORD;
-    private CollisionService rect, rectRight, rectLeft;
+    private CollisionObject rect, rectRight, rectLeft;
     private static ArrayList<Bullet> playerBullets;
 
     public Player(float width, float height, Body body) {
@@ -35,10 +34,10 @@ public class Player extends PlayerEntity {
         GameData.Player.Sprite.PLAYER_RIGHT_SPRITE = new Sprite(new Texture(GameData.Skins.Player.PLAYER_RIGHT));
         PLAYER_RIGHT_SWORD = new Sprite(new Texture(GameData.Skins.Player.PLAYER_RIGHT_SWORD));
         this.sprite = new Sprite(PLAYER_NORMAL);
-        this.rect = new CollisionService(x, y, width, height);
+        this.rect = new CollisionObject(x, y, width, height);
 
-        this.rectLeft = new CollisionService(x, y, width, height);
-        this.rectRight = new CollisionService(x, y, 22 * 1.5f, height);
+        this.rectLeft = new CollisionObject(x, y, width, height);
+        this.rectRight = new CollisionObject(x, y, 22 * 1.5f, height);
 
         playerBullets = GameScreen.playerBullets;
     }
@@ -128,7 +127,7 @@ public class Player extends PlayerEntity {
         this.sprite = sprite;
     }
 
-    public CollisionService getCollisionRect() {
+    public CollisionObject getCollisionRect() {
         return this.rect;
     }
 }

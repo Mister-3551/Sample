@@ -1,4 +1,4 @@
-package core.gamescreen.objects.enemy;
+package core.screens.gamescreen.objects.enemy;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -7,10 +7,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import core.GameData;
-import core.gamescreen.helper.BodyHelperService;
-import core.gamescreen.helper.CollisionService;
-import core.gamescreen.objects.bullet.Bullet;
-import core.gamescreen.objects.player.Player;
+import core.screens.gamescreen.helper.BodyHelperService;
+import core.screens.gamescreen.helper.CollisionObject;
+import core.screens.gamescreen.objects.bullet.Bullet;
+import core.screens.gamescreen.objects.player.Player;
 import core.screens.gamescreen.GameScreen;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class Enemy extends EnemyEntity {
 
     private Sprite sprite;
     private final Sprite ENEMY_NORMAL, ENEMY_LEFT, ENEMY_RIGHT;
-    private CollisionService rect;
+    private CollisionObject rect;
     private static ArrayList<Bullet> enemyBullets;
 
     public Enemy(float width, float height, Body body) {
@@ -30,7 +30,7 @@ public class Enemy extends EnemyEntity {
         ENEMY_RIGHT = new Sprite(new Texture(GameData.Skins.Enemy.ENEMY_RIGHT));
         this.sprite = new Sprite(ENEMY_NORMAL);
 
-        this.rect = new CollisionService(x, y, width, height);
+        this.rect = new CollisionObject(x, y, width, height);
 
         enemyBullets = GameScreen.enemyBullets;
     }
@@ -62,7 +62,7 @@ public class Enemy extends EnemyEntity {
         }
     }
 
-    public CollisionService getCollisionRect() {
+    public CollisionObject getCollisionRect() {
         return this.rect;
     }
 }

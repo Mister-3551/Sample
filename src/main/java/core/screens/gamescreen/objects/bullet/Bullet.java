@@ -1,4 +1,4 @@
-package core.gamescreen.objects.bullet;
+package core.screens.gamescreen.objects.bullet;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import core.GameData;
-import core.gamescreen.helper.CollisionService;
-import core.gamescreen.objects.enemy.Enemy;
-import core.gamescreen.objects.player.Player;
+import core.screens.gamescreen.helper.CollisionObject;
+import core.screens.gamescreen.objects.enemy.Enemy;
+import core.screens.gamescreen.objects.player.Player;
 
 public class Bullet extends BulletEntity {
 
@@ -18,7 +18,7 @@ public class Bullet extends BulletEntity {
     private final Sprite BULLET_NORMAL;
     public boolean remove;
     private float posX, posY = 0.0f;
-    private final CollisionService rect;
+    private final CollisionObject rect;
 
     public Bullet(float width, float height, Body body, float angle) {
         super(width, height, body, angle);
@@ -27,7 +27,7 @@ public class Bullet extends BulletEntity {
         this.BULLET_NORMAL = new Sprite(new Texture(Gdx.files.internal(GameData.Skins.Bullet.BULLET)));
         this.sprite = new Sprite(BULLET_NORMAL);
         this.remove = false;
-        this.rect = new CollisionService(x, y, width, height);
+        this.rect = new CollisionObject(x, y, width, height);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Bullet extends BulletEntity {
         if (body.getFixtureList().size > 0) body.destroyFixture(body.getFixtureList().first());
     }
 
-    public CollisionService getCollisionRect() {
+    public CollisionObject getCollisionRect() {
         return rect;
     }
 

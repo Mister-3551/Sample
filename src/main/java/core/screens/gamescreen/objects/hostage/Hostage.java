@@ -1,17 +1,17 @@
-package core.gamescreen.objects.hostage;
+package core.screens.gamescreen.objects.hostage;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import core.GameData;
-import core.gamescreen.helper.CollisionService;
+import core.screens.gamescreen.helper.CollisionObject;
 
 public class Hostage extends HostageEntity {
     private Sprite sprite;
     private final Sprite HOSTAGE_NORMAL, HOSTAGE_LEFT, HOSTAGE_RIGHT;
 
-    private CollisionService rect;
+    private CollisionObject rect;
 
     public Hostage(float width, float height, Body body) {
         super(width, height, body);
@@ -20,7 +20,7 @@ public class Hostage extends HostageEntity {
         HOSTAGE_RIGHT = new Sprite(new Texture(GameData.Skins.Hostage.HOSTAGE_RIGHT));
         this.sprite = new Sprite(HOSTAGE_NORMAL);
 
-        this.rect = new CollisionService(x, y, width, height);
+        this.rect = new CollisionObject(x, y, width, height);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Hostage extends HostageEntity {
         if (!body.getFixtureList().isEmpty()) body.destroyFixture(body.getFixtureList().first());
     }
 
-    public CollisionService getCollisionRect() {
+    public CollisionObject getCollisionRect() {
         return this.rect;
     }
 }

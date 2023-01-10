@@ -1,10 +1,10 @@
-package core.gamescreen.helper;
+package core.screens.gamescreen.helper;
 
-public class CollisionService {
+public class CollisionObject {
 
     float x, y, width, height;
 
-    public CollisionService(float x, float y, float width, float height) {
+    public CollisionObject(float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -16,7 +16,7 @@ public class CollisionService {
         this.y = y;
     }
 
-    public boolean collidesWith(CollisionService rect) {
+    public boolean collidesWith(CollisionObject rect) {
         return x < rect.x + rect.width + 1
                 && y < rect.y + rect.height + 1
                 && x + width + 1 > rect.x

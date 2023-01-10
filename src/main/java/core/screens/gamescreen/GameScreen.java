@@ -1,14 +1,11 @@
 package core.screens.gamescreen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -16,14 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import core.GameData;
-import core.gamescreen.DetectionSystem;
-import core.gamescreen.helper.TileMapHelper;
-import core.gamescreen.objects.bullet.Bullet;
-import core.gamescreen.objects.enemy.Enemy;
-import core.gamescreen.objects.hostage.Hostage;
-import core.gamescreen.objects.map.MapObject;
-import core.gamescreen.objects.player.Player;
-import core.screens.ScreenChanger;
+import core.screens.gamescreen.helper.TileMapHelper;
+import core.screens.gamescreen.objects.bullet.Bullet;
+import core.screens.gamescreen.objects.enemy.Enemy;
+import core.screens.gamescreen.objects.hostage.Hostage;
+import core.screens.gamescreen.objects.player.Player;
 import core.screens.navigation.NavigationBar;
 
 import java.util.ArrayList;

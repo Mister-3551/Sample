@@ -1,8 +1,6 @@
-package core.gamescreen;
-import core.gamescreen.objects.enemy.Enemy;
-import core.gamescreen.objects.player.Player;
-
-import java.util.ArrayList;
+package core.screens.gamescreen;
+import core.screens.gamescreen.objects.enemy.Enemy;
+import core.screens.gamescreen.objects.player.Player;
 
 public class DetectionSystem {
 

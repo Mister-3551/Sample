@@ -1,9 +1,9 @@
 package core.screens.gamescreen;
 
-import core.gamescreen.objects.bullet.Bullet;
-import core.gamescreen.objects.enemy.Enemy;
-import core.gamescreen.objects.hostage.Hostage;
-import core.gamescreen.objects.player.Player;
+import core.screens.gamescreen.objects.bullet.Bullet;
+import core.screens.gamescreen.objects.enemy.Enemy;
+import core.screens.gamescreen.objects.hostage.Hostage;
+import core.screens.gamescreen.objects.player.Player;
 import core.screens.navigation.NavigationBar;
 
 import static core.screens.gamescreen.GameScreen.*;

@@ -1,4 +1,4 @@
-package core.gamescreen.helper;
+package core.screens.gamescreen.helper;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -12,9 +12,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import core.GameData;
 import core.downloadfile.DownloadFile;
-import core.gamescreen.objects.enemy.Enemy;
-import core.gamescreen.objects.hostage.Hostage;
-import core.gamescreen.objects.player.Player;
+import core.screens.gamescreen.objects.enemy.Enemy;
+import core.screens.gamescreen.objects.hostage.Hostage;
+import core.screens.gamescreen.objects.player.Player;
 import core.screens.gamescreen.GameScreen;
 
 import java.util.ArrayList;
@@ -23,11 +23,9 @@ public class TileMapHelper {
 
     public static TiledMap tiledMap;
     private GameScreen gameScreen;
-    private ArrayList<core.gamescreen.objects.map.MapObject> mapObjects;
 
     public TileMapHelper(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
-        mapObjects = new ArrayList<>();
     }
 
     public OrthogonalTiledMapRenderer setupMap(String... level) {
