@@ -34,8 +34,8 @@ public class BodyHelperService {
 
     public static FixtureDef fixtureDef(PolygonShape shape, String type) {
         FixtureDef fixtureDef = new FixtureDef();
-        if (type.matches("player") || type.matches("bullet")) fixtureDef.friction = 0;
-        if (type.matches("enemy") || type.matches("hostage")) fixtureDef.friction = 20;
+        if (type.matches("Player") || type.matches("Bullet")) fixtureDef.friction = 0;
+        if (type.matches("Enemy") || type.matches("Hostage")) fixtureDef.friction = 20;
         fixtureDef.density = 0;
         fixtureDef.shape = shape;
         //fixtureDef.filter.categoryBits = new Byte(null);

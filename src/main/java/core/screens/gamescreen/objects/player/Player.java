@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import core.GameData;
 import core.screens.gamescreen.helper.BodyHelperService;
-import core.screens.gamescreen.helper.CollisionObject;
 import core.screens.gamescreen.objects.bullet.Bullet;
 import core.screens.gamescreen.GameScreen;
 
@@ -19,7 +18,6 @@ public class Player extends PlayerEntity {
     private int jumpCounter;
     private Sprite sprite;
     private final Sprite PLAYER_NORMAL, PLAYER_LEFT_SWORD, PLAYER_RIGHT_SWORD;
-    private CollisionObject rect, rectRight, rectLeft;
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
@@ -31,10 +29,6 @@ public class Player extends PlayerEntity {
         GameData.Player.Sprite.PLAYER_RIGHT_SPRITE = new Sprite(new Texture(GameData.Skins.Player.PLAYER_RIGHT));
         PLAYER_RIGHT_SWORD = new Sprite(new Texture(GameData.Skins.Player.PLAYER_RIGHT_SWORD));
         this.sprite = new Sprite(PLAYER_NORMAL);
-        this.rect = new CollisionObject(x, y, width, height);
-
-        this.rectLeft = new CollisionObject(x, y, width, height);
-        this.rectRight = new CollisionObject(x, y, 22 * 1.5f, height);
     }
 
     @Override
@@ -46,7 +40,6 @@ public class Player extends PlayerEntity {
     public void update() {
         x = body.getPosition().x * GameData.PPM;
         y = body.getPosition().y * GameData.PPM;
-        rect.move(x, y);
         checkUserInput();
         if (Bullet.diffX(GameData.GameScreen.Camera.ORTHOGRAPHIC_CAMERA, this) < 0) setSprite(GameData.Player.Sprite.PLAYER_LEFT_SPRITE);
         else setSprite(GameData.Player.Sprite.PLAYER_RIGHT_SPRITE);
@@ -61,7 +54,6 @@ public class Player extends PlayerEntity {
                 GameScreen.setBulletDirection(-3);
                 //float baseX = 14f, baseY = 34f;
                 //changeShape(baseX, baseY);
-                this.rect = rectLeft;
             }
             velX = -1;
         }
@@ -72,7 +64,6 @@ public class Player extends PlayerEntity {
                 GameScreen.setBulletDirection(3);
                 //float baseX = 22f, baseY = 34f;
                 //changeShape(baseX, baseY);
-                this.rect = rectRight;
             }
             velX = 1;
         }
@@ -91,12 +82,11 @@ public class Player extends PlayerEntity {
     public void shoot(OrthographicCamera camera, World world) {
         if (Gdx.input.isButtonJustPressed(GameData.Player.PLAYER_KEY_SHOOT) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             var playerWidth = Bullet.diffX(camera, this) < 0 ? -7 : 21;
-            Body body = BodyHelperService.createObjectBody(5, 5, this.getX() + playerWidth, this.getY() + 17, world, "bullet");
+            Body body = BodyHelperService.createObjectBody(5, 5, this.getX() + playerWidth, this.getY() + 17, world, "Bullet");
             body.setUserData("PlayerBullet");
             GameScreen.playerBullets.add(new Bullet(5 * 1.5f, 5 * 1.5f, body, Bullet.getBulletAngle(this, camera)));
         }
     }
-
 
     private void changeShape(float baseX, float baseY) {
         int baseUnitX = 64, baseUnitY = 64;
@@ -120,9 +110,5 @@ public class Player extends PlayerEntity {
 
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
-    }
-
-    public CollisionObject getCollisionRect() {
-        return this.rect;
     }
 }

@@ -13,89 +13,122 @@ public class Collisions {
 
     public static void checkCollisions(Player player, NavigationBar navigationBar) {
 
-        /*for (Enemy enemy : enemies) {
-            for (Bullet bullet : playerBullets) {
-                if (enemy.getCollisionRect().collidesWith(bullet.getCollisionRect())) {
-                    bullet.destroyBullet();
-                    enemy.destroyEnemy();
-                    playerBulletsToRemove.add(bullet);
-                    enemiesToRemove.add(enemy);
-                    navigationBar.updateEnemyKills();
-                }
+        for (Body body : WorldCollision.enemyShootPlayer) {
+            if (player.getBody() == body) {
+                WorldCollision.enemyShootPlayerToRemove.add(body);
             }
         }
-        playerBullets.removeAll(playerBulletsToRemove);
-        enemies.removeAll(enemiesToRemove);*/
+        WorldCollision.enemyShootPlayer.removeAll(WorldCollision.enemyShootPlayerToRemove);
 
-        for (Bullet bullet : enemyBullets) {
-            if (player.getCollisionRect().collidesWith(bullet.getCollisionRect())) {
-                bullet.destroyBullet();
-                enemyBulletsToRemove.add(bullet);
-            }
-        }
-        enemyBullets.removeAll(enemyBulletsToRemove);
 
-        /*for (Hostage hostage : hostages) {
-            for (Bullet bullet : playerBullets) {
-                if (hostage.getCollisionRect().collidesWith(bullet.getCollisionRect())) {
-                    bullet.destroyBullet();
+        for (Body body : WorldCollision.playerShootHostage) {
+            for (Hostage hostage : hostages) {
+                if (hostage.getBody() == body) {
                     hostage.destroyHostage();
-                    playerBulletsToRemove.add(bullet);
                     hostagesToRemove.add(hostage);
+                    WorldCollision.playerBulletsHostageToRemove.add(body);
                 }
             }
         }
-        playerBullets.removeAll(playerBulletsToRemove);
-        hostages.removeAll(hostagesToRemove);*/
+        WorldCollision.playerShootHostage.removeAll(WorldCollision.playerBulletsHostageToRemove);
+        hostages.removeAll(hostagesToRemove);
 
+        for (Body body : WorldCollision.enemyShootHostage) {
+            for (Hostage hostage : hostages) {
+                if (hostage.getBody() == body) {
+                    hostage.destroyHostage();
+                    hostagesToRemove.add(hostage);
+                    WorldCollision.enemyBulletsHostageToRemove.add(body);
+                }
+            }
+        }
+        WorldCollision.enemyShootHostage.removeAll(WorldCollision.enemyBulletsHostageToRemove);
+        hostages.removeAll(hostagesToRemove);
 
-        for (Body body : WorldCollision.bulletsEnemies) {
+        for (Body body : WorldCollision.enemyShootEnemy) {
             for (Enemy enemy : enemies) {
                 if (enemy.getBody() == body) {
                     enemy.destroyEnemy();
+                    navigationBar.updateEnemyKills();
+                    enemiesToRemove.add(enemy);
+                    WorldCollision.enemyWithBulletToRemove.add(body);
+                }
+            }
+        }
+        WorldCollision.enemyShootEnemy.removeAll(WorldCollision.enemyWithBulletToRemove);
+        enemies.removeAll(enemiesToRemove);
+
+        for (Body body : WorldCollision.playerShootEnemy) {
+            for (Enemy enemy : enemies) {
+                if (enemy.getBody() == body) {
+                    enemy.destroyEnemy();
+                    navigationBar.updateEnemyKills();
                     enemiesToRemove.add(enemy);
                     WorldCollision.bulletsEnemiesToRemove.add(body);
                 }
             }
         }
-        WorldCollision.bulletsEnemies.removeAll(WorldCollision.bulletsEnemiesToRemove);
+        WorldCollision.playerShootEnemy.removeAll(WorldCollision.bulletsEnemiesToRemove);
         enemies.removeAll(enemiesToRemove);
 
-        for (Body body : WorldCollision.playerHostages) {
+        for (Body body : WorldCollision.playerCollectHostage) {
             for (Hostage hostage : hostages) {
                 if (hostage.getBody() == body) {
                     hostage.destroyHostage();
+                    navigationBar.updateHostageSaved();
                     hostagesToRemove.add(hostage);
                     WorldCollision.playerHostagesToRemove.add(body);
                 }
             }
         }
-        WorldCollision.playerHostages.removeAll(WorldCollision.playerHostagesToRemove);
+        WorldCollision.playerCollectHostage.removeAll(WorldCollision.playerHostagesToRemove);
         hostages.removeAll(hostagesToRemove);
 
-        for (Body body : WorldCollision.fallenPlayerBullets) {
+        for (Body body : WorldCollision.playerBullets) {
             for (Bullet bullet : playerBullets) {
                 if (bullet.getBody() == body) {
                     bullet.destroyBullet();
                     playerBulletsToRemove.add(bullet);
-                    WorldCollision.fallenPlayerBulletsToRemove.add(body);
+                    WorldCollision.playerBulletsToRemove.add(body);
                 }
             }
         }
-        WorldCollision.fallenPlayerBullets.removeAll(WorldCollision.fallenPlayerBulletsToRemove);
+        WorldCollision.playerBullets.removeAll(WorldCollision.playerBulletsToRemove);
         playerBullets.removeAll(playerBulletsToRemove);
 
-        for (Body body : WorldCollision.fallenEnemyBullets) {
+        for (Body body : WorldCollision.enemyBullets) {
             for (Bullet bullet : enemyBullets) {
                 if (bullet.getBody() == body) {
                     bullet.destroyBullet();
                     enemyBulletsToRemove.add(bullet);
-                    WorldCollision.fallenEnemyBulletsToRemove.add(body);
+                    WorldCollision.enemyBulletsToRemove.add(body);
                 }
             }
         }
-        WorldCollision.fallenEnemyBullets.removeAll(WorldCollision.fallenPlayerBulletsToRemove);
+        WorldCollision.enemyBullets.removeAll(WorldCollision.enemyBulletsToRemove);
         enemyBullets.removeAll(enemyBulletsToRemove);
+
+
+
+        for (Body body : WorldCollision.enemyBulletTouchPlayerBullet) {
+            for (Bullet bullet : enemyBullets) {
+                if (bullet.getBody() == body) {
+                    bullet.destroyBullet();
+                    enemyBulletsToRemove.add(bullet);
+                    WorldCollision.enemyBulletsToRemove.add(body);
+                }
+            }
+        }
+
+        for (Body body : WorldCollision.enemyBulletTouchPlayerBullet) {
+            for (Bullet bullet : playerBullets) {
+                if (bullet.getBody() == body) {
+                    bullet.destroyBullet();
+                    playerBulletsToRemove.add(bullet);
+                    WorldCollision.playerBulletsToRemove.add(body);
+                }
+            }
+        }
 
         if (playerBullets.size() == 0 && playerBulletsToRemove.size() != 0) playerBulletsToRemove.clear();
         if (enemies.size() == 0 && enemiesToRemove.size() != 0) enemiesToRemove.clear();

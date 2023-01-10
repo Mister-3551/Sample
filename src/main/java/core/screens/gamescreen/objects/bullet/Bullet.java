@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import core.GameData;
-import core.screens.gamescreen.helper.CollisionObject;
 import core.screens.gamescreen.objects.enemy.Enemy;
 import core.screens.gamescreen.objects.player.Player;
 
@@ -18,7 +17,6 @@ public class Bullet extends BulletEntity {
     private final Sprite BULLET_NORMAL;
     public boolean remove;
     private float posX, posY = 0.0f;
-    private final CollisionObject rect;
 
     public Bullet(float width, float height, Body body, float angle) {
         super(width, height, body, angle);
@@ -27,7 +25,6 @@ public class Bullet extends BulletEntity {
         this.BULLET_NORMAL = new Sprite(new Texture(Gdx.files.internal(GameData.Skins.Bullet.BULLET)));
         this.sprite = new Sprite(BULLET_NORMAL);
         this.remove = false;
-        this.rect = new CollisionObject(x, y, width, height);
     }
 
     @Override
@@ -41,16 +38,10 @@ public class Bullet extends BulletEntity {
         y = body.getPosition().y * GameData.PPM;
 
         body.setLinearVelocity((float) (speed * Math.cos(angle)), (float) (speed * Math.sin(angle)));
-
-        this.rect.move(x, y);
     }
 
     public void destroyBullet() {
         if (body.getFixtureList().size > 0) body.destroyFixture(body.getFixtureList().first());
-    }
-
-    public CollisionObject getCollisionRect() {
-        return rect;
     }
 
     public static float getBulletAngle(Player player, OrthographicCamera camera) {

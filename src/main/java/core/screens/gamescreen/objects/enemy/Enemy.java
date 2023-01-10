@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import core.GameData;
 import core.screens.gamescreen.helper.BodyHelperService;
-import core.screens.gamescreen.helper.CollisionObject;
 import core.screens.gamescreen.objects.bullet.Bullet;
 import core.screens.gamescreen.objects.player.Player;
 import core.screens.gamescreen.GameScreen;
@@ -19,7 +18,6 @@ public class Enemy extends EnemyEntity {
 
     private Sprite sprite;
     private final Sprite ENEMY_NORMAL, ENEMY_LEFT, ENEMY_RIGHT;
-    private CollisionObject rect;
     private static ArrayList<Bullet> enemyBullets;
 
     public Enemy(float width, float height, Body body) {
@@ -29,9 +27,6 @@ public class Enemy extends EnemyEntity {
         ENEMY_LEFT = new Sprite(new Texture(GameData.Skins.Enemy.ENEMY_LEFT));
         ENEMY_RIGHT = new Sprite(new Texture(GameData.Skins.Enemy.ENEMY_RIGHT));
         this.sprite = new Sprite(ENEMY_NORMAL);
-
-        this.rect = new CollisionObject(x, y, width, height);
-
         enemyBullets = GameScreen.enemyBullets;
     }
 
@@ -44,7 +39,6 @@ public class Enemy extends EnemyEntity {
     public void update() {
         x = body.getPosition().x * GameData.PPM;
         y = body.getPosition().y * GameData.PPM;
-        rect.move(x, y);
     }
 
     public void destroyEnemy() {
@@ -53,17 +47,13 @@ public class Enemy extends EnemyEntity {
 
     public void shoot(Player player, World world) {
         long timer = 1000000000L;
-        var enemyWidth = player.getX() < this.getX() ? -7 : 21;
+        var enemyWidth = player.getX() < this.getX() ? -10 : 24;
         this.sprite = enemyWidth < 0 ? ENEMY_LEFT : ENEMY_RIGHT;
         if (TimeUtils.timeSinceNanos(startTime) >= timer) {
-            Body body = BodyHelperService.createObjectBody(5, 5, this.getX() + enemyWidth, this.getY() + 17, world, "bullet");
+            Body body = BodyHelperService.createObjectBody(5, 5, this.getX() + enemyWidth, this.getY() + 17, world, "Bullet");
             body.setUserData("EnemyBullet");
             enemyBullets.add(new Bullet(5 * 1.5f, 5 * 1.5f, body, Bullet.getBulletAngleEnemy(this, player)));
             startTime = TimeUtils.nanoTime();
         }
-    }
-
-    public CollisionObject getCollisionRect() {
-        return this.rect;
     }
 }

@@ -59,7 +59,7 @@ public class TileMapHelper {
                     float posX = ((TiledMapTileMapObject) mapObject).getX();
                     float posY = ((TiledMapTileMapObject) mapObject).getY();
 
-                    Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld(), "player");
+                    Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld(), "Player");
                     body.setUserData("Player");
                     gameScreen.setPlayer(new Player((14 * 1.5f), (34 * 1.5f), body));
                 }
@@ -67,7 +67,7 @@ public class TileMapHelper {
                     float posX = ((TiledMapTileMapObject) mapObject).getX();
                     float posY = ((TiledMapTileMapObject) mapObject).getY();
 
-                    Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld(), "enemy");
+                    Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld(), "Enemy");
                     body.setUserData("Enemy");
                     GameScreen.enemies.add(new Enemy(14 * 1.5f, 34 * 1.5f, body));
 
@@ -77,7 +77,7 @@ public class TileMapHelper {
                     float posX = ((TiledMapTileMapObject) mapObject).getX();
                     float posY = ((TiledMapTileMapObject) mapObject).getY();
 
-                    Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld(), "hostage");
+                    Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld(), "Hostage");
                     body.setUserData("Hostage");
                     GameScreen.hostages.add(new Hostage(14 * 1.5f, 34 * 1.5f, body));
 
