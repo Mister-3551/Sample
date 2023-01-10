@@ -21,8 +21,8 @@ import java.util.ArrayList;
 
 public class TileMapHelper {
 
-    public static TiledMap tiledMap;
-    private GameScreen gameScreen;
+    private TiledMap tiledMap;
+    private final GameScreen gameScreen;
 
     public TileMapHelper(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
@@ -67,7 +67,7 @@ public class TileMapHelper {
                     float posY = ((TiledMapTileMapObject) mapObject).getY();
 
                     Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld(), "enemy");
-                    gameScreen.enemies.add(new Enemy(14 * 1.5f, 34 * 1.5f, body));
+                    GameScreen.enemies.add(new Enemy(14 * 1.5f, 34 * 1.5f, body));
 
                     countEnemies++;
                 }
@@ -76,7 +76,7 @@ public class TileMapHelper {
                     float posY = ((TiledMapTileMapObject) mapObject).getY();
 
                     Body body = BodyHelperService.createObjectBody(14, 34, posX, posY, gameScreen.getWorld(), "hostage");
-                    gameScreen.hostages.add(new Hostage(14 * 1.5f, 34 * 1.5f, body));
+                    GameScreen.hostages.add(new Hostage(14 * 1.5f, 34 * 1.5f, body));
 
                     countHostages++;
                 }
@@ -126,9 +126,5 @@ public class TileMapHelper {
         GameData.Skins.Hostage.HOSTAGE_NORMAL = hostageDirectory + "/hostage-stand.png";
         GameData.Skins.Hostage.HOSTAGE_LEFT = hostageDirectory + "/hostage-left.png";
         GameData.Skins.Hostage.HOSTAGE_RIGHT = hostageDirectory + "/hostage-right.png";
-    }
-
-    public static TiledMap getTiledMap() {
-        return tiledMap;
     }
 }

@@ -14,15 +14,12 @@ import core.screens.gamescreen.helper.CollisionObject;
 import core.screens.gamescreen.objects.bullet.Bullet;
 import core.screens.gamescreen.GameScreen;
 
-import java.util.ArrayList;
-
 public class Player extends PlayerEntity {
 
     private int jumpCounter;
     private Sprite sprite;
     private final Sprite PLAYER_NORMAL, PLAYER_LEFT_SWORD, PLAYER_RIGHT_SWORD;
     private CollisionObject rect, rectRight, rectLeft;
-    private static ArrayList<Bullet> playerBullets;
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
@@ -38,8 +35,6 @@ public class Player extends PlayerEntity {
 
         this.rectLeft = new CollisionObject(x, y, width, height);
         this.rectRight = new CollisionObject(x, y, 22 * 1.5f, height);
-
-        playerBullets = GameScreen.playerBullets;
     }
 
     @Override
@@ -98,7 +93,7 @@ public class Player extends PlayerEntity {
             var playerWidth = Bullet.diffX(camera, this) < 0 ? -7 : 21;
             Body body = BodyHelperService.createObjectBody(5, 5, this.getX() + playerWidth, this.getY() + 17, world, "bullet");
             body.setUserData("bullet");
-            playerBullets.add(new Bullet(5 * 1.5f, 5 * 1.5f, body, Bullet.getBulletAngle(this, camera)));
+            GameScreen.playerBullets.add(new Bullet(5 * 1.5f, 5 * 1.5f, body, Bullet.getBulletAngle(this, camera)));
         }
     }
 

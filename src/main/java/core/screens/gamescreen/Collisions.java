@@ -1,5 +1,6 @@
 package core.screens.gamescreen;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import core.screens.gamescreen.objects.bullet.Bullet;
 import core.screens.gamescreen.objects.enemy.Enemy;
 import core.screens.gamescreen.objects.hostage.Hostage;
@@ -54,6 +55,8 @@ public class Collisions {
             }
         }
         hostages.removeAll(hostagesToRemove);
+
+        for (Body body : WorldCollision.fallenBullets) if (body.getFixtureList().size > 0) body.destroyFixture(body.getFixtureList().first());
 
         if (playerBullets.size() == 0 && playerBulletsToRemove.size() != 0) playerBulletsToRemove.clear();
         if (enemies.size() == 0 && enemiesToRemove.size() != 0) enemiesToRemove.clear();

@@ -38,6 +38,7 @@ public class BodyHelperService {
         if (type.matches("enemy") || type.matches("hostage")) fixtureDef.friction = 20;
         fixtureDef.density = 0;
         fixtureDef.shape = shape;
+        //fixtureDef.filter.categoryBits = new Byte(null);
         return fixtureDef;
     }
 }

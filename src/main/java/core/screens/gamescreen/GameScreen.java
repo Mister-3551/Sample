@@ -59,29 +59,6 @@ public class GameScreen extends ScreenAdapter {
         batch = new SpriteBatch();
         world = new World(new Vector2(0, -25f), false);
 
-        world.setContactListener(new ContactListener() {
-            @Override
-            public void beginContact(Contact contact) {
-                Fixture f1 = contact.getFixtureA();
-                Fixture f2 = contact.getFixtureB();
-
-            }
-
-            @Override
-            public void endContact(Contact contact) {
-
-            }
-
-            @Override
-            public void preSolve(Contact contact, Manifold manifold) {
-
-            }
-
-            @Override
-            public void postSolve(Contact contact, ContactImpulse contactImpulse) {
-
-            }
-        });
         box2DDebugRenderer = new Box2DDebugRenderer();
         tileMapHelper = new TileMapHelper(this);
         orthogonalTiledMapRenderer = tileMapHelper.setupMap(level);
@@ -104,6 +81,8 @@ public class GameScreen extends ScreenAdapter {
         Pixmap pm = new Pixmap(Gdx.files.internal(GameData.Skins.Cursor.AIM_CURSOR));
         Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
         pm.dispose();
+
+        WorldCollision.checkCollision(world);
 
         GameData.GameScreen.GAME_SCREEN = this;
     }
