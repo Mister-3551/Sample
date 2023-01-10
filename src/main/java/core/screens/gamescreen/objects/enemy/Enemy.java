@@ -57,6 +57,7 @@ public class Enemy extends EnemyEntity {
         this.sprite = enemyWidth < 0 ? ENEMY_LEFT : ENEMY_RIGHT;
         if (TimeUtils.timeSinceNanos(startTime) >= timer) {
             Body body = BodyHelperService.createObjectBody(5, 5, this.getX() + enemyWidth, this.getY() + 17, world, "bullet");
+            body.setUserData("EnemyBullet");
             enemyBullets.add(new Bullet(5 * 1.5f, 5 * 1.5f, body, Bullet.getBulletAngleEnemy(this, player)));
             startTime = TimeUtils.nanoTime();
         }
