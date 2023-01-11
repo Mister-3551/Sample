@@ -21,6 +21,7 @@ import core.screens.ScreenChanger;
 import core.screens.levelsscreen.Level;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class SignInScreen extends ScreenAdapter {
 
@@ -197,10 +198,10 @@ public class SignInScreen extends ScreenAdapter {
         try {
             String picturesDirectory = "";
             String tiles70X70Directory = "";
+            String skinsDirectory = "";
 
             ArrayList<Level> levels = ResponseDataConnection.Levels.getLevels();
             ArrayList<Tile> tiles = ResponseDataConnection.Tiles.getTiles();
-            ArrayList<core.objects.Skin> skins = ResponseDataConnection.Skins.getSkins();
 
             for (Level level : levels) picturesDirectory = DownloadFile.getLevelPicture(level.getPicture());
             for (Tile tile : tiles) tiles70X70Directory = DownloadFile.getTiles70X70Pictures(tile.getName());

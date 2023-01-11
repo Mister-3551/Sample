@@ -8,6 +8,7 @@ import core.screens.levelsscreen.LevelsScreen;
 import core.screens.menuscreen.MenuScreen;
 import core.screens.settingsscreen.SettingsScreen;
 import core.screens.signinscreen.SignInScreen;
+import core.screens.skinscreen.SkinScreen;
 
 public class ScreenChanger {
 
@@ -23,7 +24,7 @@ public class ScreenChanger {
             case "MenuScreen" -> instance.setScreen(new MenuScreen());
             case "SettingsScreen" -> instance.setScreen(new SettingsScreen());
             case "LevelsScreen" -> instance.setScreen(new LevelsScreen());
-            case "InventoryScreen" -> instance.setScreen(new InventoryScreen());
+            case "SkinScreen" -> instance.setScreen(new SkinScreen());
             case "GameScreen" -> instance.setScreen(new GameScreen(camera, level));
         }
     }

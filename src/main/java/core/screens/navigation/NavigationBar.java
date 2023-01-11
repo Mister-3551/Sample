@@ -44,7 +44,7 @@ public class NavigationBar {
         inventory.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                new ScreenChanger().changeScreen("InventoryScreen");
+                new ScreenChanger().changeScreen("SkinScreen");
             }
         });
 

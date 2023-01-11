@@ -9,7 +9,6 @@ public class GameData {
 
     public static Boot INSTANCE;
     public static int CURRENT_LEVEL;
-    public static ArrayList<Level> LEVEL_LIST;
     public static int MAP_WIDTH;
     public static int MAP_HEIGHT;
     public static final float PPM = 32.0f;
@@ -25,10 +24,15 @@ public class GameData {
         public static int PLAYER_KEY_RIGHT;
         public static int PLAYER_KEY_JUMP;
         public static int PLAYER_KEY_SHOOT;
+        public static String CURRENT_SKIN = "basic";
 
         public static class Sprite {
             public static com.badlogic.gdx.graphics.g2d.Sprite PLAYER_LEFT_SPRITE;
             public static com.badlogic.gdx.graphics.g2d.Sprite PLAYER_RIGHT_SPRITE;
+        }
+
+        public static class Other {
+            public static ArrayList<Level> LEVEL_LIST;
         }
     }
 

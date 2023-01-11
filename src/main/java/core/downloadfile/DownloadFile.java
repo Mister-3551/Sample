@@ -16,11 +16,12 @@ public class DownloadFile {
     private static final String welcomePictureUrl = "";
     private static final String tiles70X70Url = API.TILES_PICTURE_70X70;
     private static final String levelMapsUrl = API.LEVEL_MAP;
-    private static final String skinsUrl = API.SKIN_PICTURE;
+    private static final String skinUrl = API.SKIN_PICTURE;
     private static final String gameNameFolder = "GameName";
     private static final String assetsFolder = "assets";
     private static final String picturesFolder = "pictures";
     private static final String levelPicturesFolder = "level-pictures";
+    private static final String ownedSkinsPicturesFolder = "skin-pictures";
     private static final String welcomePicturesFolder = "welcome-picture";
     private static final String levelMapsFolder = "level-map";
     private static final String tilesFolder = "tiles";
@@ -36,7 +37,8 @@ public class DownloadFile {
     private static final String levelPicturesDirectory = basicPath + picturesFolder + "/" + levelPicturesFolder + "/";
     private static final String levelMapsDirectory =  basicTemporaryPath + levelMapsFolder + "/";
     private static final String tiles70X70Directory = basicPath + tilesFolder + "/" + tilesDimensionsFolder + "/" + tiles70X70Folder + "/";
-    private static final String skinsDirectory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + temporaryFolder + "/" + skinsFolder + "/";
+    private static final String skinsTemporaryDirectory = FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + temporaryFolder + "/" + skinsFolder + "/";
+    private static final String ownedSkinsDirectory = basicPath + picturesFolder + "/" + ownedSkinsPicturesFolder + "/";
 
     public static String getLevelPicture(String levelName) {
         checkDirectories();
@@ -58,9 +60,14 @@ public class DownloadFile {
         return Map.saveMap(mapName);
     }
 
-    public static String getSkins(String character, String type) {
+    public static String getTemporarySkin(String character, String type) {
         checkDirectories();
-        return Skin.saveSkin(character, type).replace("\\", "/");
+        return Skin.saveTemporarySkin(character, type).replace("\\", "/");
+    }
+
+    public static String getOwnedSkins(String character, String type) {
+        checkDirectories();
+        return Skin.saveOwnedSkin(character, type).replace("\\", "/");
     }
 
     private static class Picture {
@@ -72,7 +79,6 @@ public class DownloadFile {
                 return levelPicturesDirectory;
             }
         }
-
     }
 
     private static class Tile {
@@ -98,14 +104,25 @@ public class DownloadFile {
     }
 
     private static class Skin {
-        private static String saveSkin(String character, String type) {
+        private static String saveTemporarySkin(String character, String type) {
             try {
                 String skinDirectory = createPlayerSkinsDirectory(character);
-                Files.copy(new URL(skinsUrl + "/" + character + "/" + type + "/" + character + "-" + type + "-stand.png").openStream(), Paths.get(skinDirectory + "/" + character + "-stand.png"), StandardCopyOption.REPLACE_EXISTING);
-                Files.copy(new URL(skinsUrl + "/" + character + "/" + type + "/" + character + "-" + type + "-left.png").openStream(), Paths.get(skinDirectory + "/" + character + "-left.png") , StandardCopyOption.REPLACE_EXISTING);
-                Files.copy(new URL(skinsUrl + "/" + character + "/" + type + "/" + character + "-" + type + "-right.png").openStream(), Paths.get( skinDirectory + "/" + character + "-right.png"), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(new URL(skinUrl + "/" + character + "/" + type + "/" + character + "-" + type + "-stand.png").openStream(), Paths.get(skinDirectory + "/" + character + "-stand.png"), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(new URL(skinUrl + "/" + character + "/" + type + "/" + character + "-" + type + "-left.png").openStream(), Paths.get(skinDirectory + "/" + character + "-left.png") , StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(new URL(skinUrl + "/" + character + "/" + type + "/" + character + "-" + type + "-right.png").openStream(), Paths.get( skinDirectory + "/" + character + "-right.png"), StandardCopyOption.REPLACE_EXISTING);
                 return skinDirectory;
             } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return "";
+            }
+        }
+
+        private static String saveOwnedSkin(String character, String type) {
+            try {
+                Files.copy(new URL(skinUrl + "/" + character + "/" + type.split("-")[1] + "/" + type + "-stand.png").openStream(), Paths.get(ownedSkinsDirectory + "/" + type + ".png"));
+                return ownedSkinsDirectory;
+            } catch (Exception e) {
+                if (!e.getMessage().matches("java.nio.file.FileAlreadyExistsException")) return ownedSkinsDirectory;
                 System.out.println(e.getMessage());
                 return "";
             }
@@ -124,6 +141,9 @@ public class DownloadFile {
 
         File levelPicturesDirectory = new File(basicPath + "/" + picturesFolder, levelPicturesFolder);
         checkIfDirectoryExists(levelPicturesDirectory);
+
+        File ownedSkinsPicturesDirectory = new File(basicPath + "/" + picturesFolder, ownedSkinsPicturesFolder);
+        checkIfDirectoryExists(ownedSkinsPicturesDirectory);
 
         File welcomePicturesDirectory = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + "/" + gameNameFolder + "/" + temporaryFolder, welcomePicturesFolder);
         checkIfDirectoryExists(welcomePicturesDirectory);
@@ -157,7 +177,7 @@ public class DownloadFile {
     }
 
     private static String createPlayerSkinsDirectory(String directoryName) {
-        File directoryFolder = new File(skinsDirectory, directoryName);
+        File directoryFolder = new File(skinsTemporaryDirectory, directoryName);
         checkIfDirectoryExists(directoryFolder);
         return directoryFolder.getAbsolutePath();
     }

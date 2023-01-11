@@ -1,4 +1,4 @@
-package core.screens.levelsscreen;
+package core.screens.skinscreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -17,33 +17,35 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import core.GameData;
 import core.ResponseDataConnection;
+import core.downloadfile.DownloadFile;
 import core.screens.ScreenChanger;
+import core.screens.levelsscreen.Level;
 import core.screens.navigation.NavigationBar;
 
 import java.util.ArrayList;
 
-public class LevelsScreen extends ScreenAdapter {
+public class SkinScreen extends ScreenAdapter {
 
     private Table stageTable;
     public static Image image;
     private Skin skin;
     private Stage stage;
-    private ArrayList<Level> levelsList;
+    private ArrayList<core.objects.Skin> skinsList;
 
-    public LevelsScreen(String s) {}
+    private String skinsDirectory;
 
-    public LevelsScreen() {
+    public SkinScreen() {
         stage = new Stage();
         skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
         stageTable = new Table();
 
+        skinsList = new ArrayList<>();
         try {
-            if (GameData.Player.Other.LEVEL_LIST == null) GameData.Player.Other.LEVEL_LIST = ResponseDataConnection.Levels.getLevels();
+            skinsList = ResponseDataConnection.Skins.getSkins();
+            for (core.objects.Skin playerSkin : skinsList) skinsDirectory = DownloadFile.getOwnedSkins(playerSkin.getPicture().split("-")[0], playerSkin.getPicture());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        levelsList = GameData.Player.Other.LEVEL_LIST;
-
         createStructure();
         stage.addActor(stageTable);
 
@@ -78,49 +80,9 @@ public class LevelsScreen extends ScreenAdapter {
         scrollPane.setFlickScroll(false);
         scrollPane.setScrollingDisabled(true, false);
 
-        Label title = new Label("Level Select", skin.get("big-title", Label.LabelStyle.class));
+        Label title = new Label("Owned Skins", skin.get("big-title", Label.LabelStyle.class));
 
-        int index = 0;
-        for (Level level : levelsList) {
-
-            try {
-                image = new Image(new Texture(GameData.Directory.LEVEL_PICTURE_DIRECTORY + "/" + level.getPicture()));
-                image.setAlign(Align.center);
-            } catch (Exception e) {
-                image = new Image(new Texture(new Pixmap(1, 1, Pixmap.Format.RGB565)));
-            }
-
-            Table product = new Table();
-
-            int completed = level.getCompleted();
-            String levelType = completed == 0  ? "Locked" : completed == 1 ? "Completed / Play" : "Uncompleted / Play";
-
-            TextButton play = new TextButton(levelType, skin);
-            if (completed == 0) play.setTouchable(Touchable.disabled);
-
-            Label levelName = new Label(level.getName(), skin);
-            levelName.setAlignment(Align.center);
-            levelName.setColor(Color.RED);
-
-            product.setBackground(setBackground(Color.GREEN));
-
-            product.add(levelName).pad(10, 10, 10, 10).growX();
-            product.row();
-            product.add(image).pad(0, 10, 10, 10).width(100).height(100);
-            product.row();
-            product.add(play).pad(0, 0, 0, 0).height(50).growX();
-
-            if (index++ % 4 == 0) scrollPaneTable.row();
-            scrollPaneTable.add(product).pad(0, 10, 10, 10).width(250).growY();
-
-            int finalIndex = index;
-            play.addListener(new ChangeListener() {
-                public void changed(ChangeEvent event, Actor actor) {
-                    GameData.CURRENT_LEVEL = finalIndex;
-                    new ScreenChanger().changeScreen("GameScreen", level.getMap());
-                }
-            });
-        }
+        product(scrollPaneTable);
 
         image = null;
 
@@ -134,6 +96,59 @@ public class LevelsScreen extends ScreenAdapter {
         stageTable.add(scrollPane).growX().maxWidth(GameData.LevelScreen.SCROLL_PANE_SIZE);
         stageTable.row();
         stageTable.add(new Table()).growY();
+    }
+
+    private void product(Table scrollPaneTable) {
+        Table product;
+        int index = 0;
+        for (core.objects.Skin skin : skinsList) {
+
+            Image imageNotFound = null;
+            try {
+                image = new Image(new Texture(skinsDirectory + skin.getPicture() + ".png"));
+                image.setAlign(Align.center);
+            } catch (Exception e) {
+                imageNotFound = new Image(new Texture(new Pixmap(1, 1, Pixmap.Format.RGB565)));
+                image = imageNotFound;
+            }
+
+            product = new Table();
+
+            TextButton use = new TextButton("", this.skin);
+            var current = GameData.Player.CURRENT_SKIN;
+            if (current.matches(skin.getPicture().split("-")[1])) use.setText("In use");
+            else use.setText("Use");
+            if (imageNotFound != null) {
+                use.setText("Error");
+                use.setDisabled(true);
+            }
+
+            Label skinName = new Label(skin.getName(), this.skin);
+            skinName.setAlignment(Align.center);
+            skinName.setColor(Color.RED);
+
+            product.setBackground(setBackground(Color.GREEN));
+
+            product.add(skinName).pad(10, 10, 10, 10).growX();
+            product.row();
+            product.add(image).pad(0, 10, 10, 10).width(100).height(100);
+            product.row();
+            product.add(use).pad(0, 0, 0, 0).height(50).growX();
+
+            if (index++ % 4 == 0) scrollPaneTable.row();
+            scrollPaneTable.add(product).pad(0, 10, 10, 10).width(250).growY();
+
+            use.addListener(new ChangeListener() {
+                public void changed(ChangeEvent event, Actor actor) {
+                    GameData.Player.CURRENT_SKIN = skin.getPicture().split("-")[1];
+                    scrollPaneTable.clear();
+                    product(scrollPaneTable);
+                }
+            });
+        }
+        if (skinsList.size() == 1) for (int i = 0; i < 3; i++) scrollPaneTable.add(new Table()).pad(0, 10, 10, 10).width(250).growY();
+        if (skinsList.size() == 2) for (int i = 0; i < 2; i++) scrollPaneTable.add(new Table()).pad(0, 10, 10, 10).width(250).growY();
+        if (skinsList.size() == 3) scrollPaneTable.add(new Table()).pad(0, 10, 10, 10).width(250).growY();
     }
 
     private TextureRegionDrawable setBackground(Color color) {

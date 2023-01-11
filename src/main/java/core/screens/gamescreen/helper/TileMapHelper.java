@@ -17,8 +17,6 @@ import core.screens.gamescreen.objects.hostage.Hostage;
 import core.screens.gamescreen.objects.player.Player;
 import core.screens.gamescreen.GameScreen;
 
-import java.util.ArrayList;
-
 public class TileMapHelper {
 
     private TiledMap tiledMap;
@@ -114,9 +112,9 @@ public class TileMapHelper {
 
     private void temporarySkin() {
 
-        String playerDirectory = DownloadFile.getSkins("player", "green");
-        String enemyDirectory = DownloadFile.getSkins("enemy", "basic");
-        String hostageDirectory = DownloadFile.getSkins("hostage", "basic");
+        String playerDirectory = DownloadFile.getTemporarySkin("player", GameData.Player.CURRENT_SKIN);
+        String enemyDirectory = DownloadFile.getTemporarySkin("enemy", "basic");
+        String hostageDirectory = DownloadFile.getTemporarySkin("hostage", "basic");
 
         GameData.Skins.Player.PLAYER_NORMAL = playerDirectory + "/player-stand.png";
         GameData.Skins.Player.PLAYER_LEFT = playerDirectory + "/player-left.png";
