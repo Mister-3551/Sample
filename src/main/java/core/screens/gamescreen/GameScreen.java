@@ -111,7 +111,7 @@ public class GameScreen extends ScreenAdapter {
         batch.end();
 
         this.update(delta);
-//      box2DDebugRenderer.render(world, camera.combined.scl(GameData.PPM));
+        //box2DDebugRenderer.render(world, camera.combined.scl(GameData.PPM));
     }
 
     @Override
