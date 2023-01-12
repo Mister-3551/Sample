@@ -71,7 +71,7 @@ public class GameData {
 
     public static class Skins {
 
-        public static final String SKIN = "skins/skin/gappy-skin.json";
+        public static final String SKIN = "gameskins/json/my-skin.json";
 
         public static class Player {
             public static String PLAYER_NORMAL;

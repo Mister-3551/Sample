@@ -7,13 +7,16 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import core.GameData;
 import core.screens.gamescreen.helper.TileMapHelper;
@@ -111,6 +114,7 @@ public class GameScreen extends ScreenAdapter {
         stage.draw();
 
         batch.begin();
+
         player.render(batch);
 
         for (Enemy enemy : enemies) enemy.render(batch);
@@ -120,21 +124,23 @@ public class GameScreen extends ScreenAdapter {
 
         batch.end();
 
-        if (gameStats == GameStats.IN_PROCESS) {
-            this.update(delta);
-        }
+        if (gameStats == GameStats.IN_PROCESS) this.update(delta);
+
         //box2DDebugRenderer.render(world, camera.combined.scl(GameData.PPM));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.P) && gameStats == GameStats.IN_PROCESS){
             gameStats = GameStats.PAUSE;
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.P) && gameStats == GameStats.PAUSE) {
+            stage.addActor(PauseMenu.create());
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.P) && gameStats == GameStats.PAUSE) {
             gameStats = GameStats.IN_PROCESS;
+            var actors = stage.getActors();
+            actors.get(1).remove();
         }
     }
 
     @Override
     public void resize(int width, int height) {
+
         stage.setViewport(new FitViewport(width, height));
         stage.getViewport().update(width, height, true);
 
