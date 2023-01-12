@@ -3,6 +3,7 @@ package core.screens;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import core.Boot;
 import core.GameData;
+import core.screens.endscreen.EndScreen;
 import core.screens.gamescreen.GameScreen;
 import core.screens.levelsscreen.LevelsScreen;
 import core.screens.menuscreen.MenuScreen;
@@ -26,6 +27,7 @@ public class ScreenChanger {
             case "LevelsScreen" -> instance.setScreen(new LevelsScreen());
             case "SkinScreen" -> instance.setScreen(new SkinScreen());
             case "GameScreen" -> instance.setScreen(new GameScreen(camera, level));
+            case "EndScreen" -> instance.setScreen(new EndScreen());
         }
     }
 }

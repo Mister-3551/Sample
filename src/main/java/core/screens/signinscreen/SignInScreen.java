@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -21,7 +20,6 @@ import core.screens.ScreenChanger;
 import core.screens.levelsscreen.Level;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class SignInScreen extends ScreenAdapter {
 
@@ -156,7 +154,7 @@ public class SignInScreen extends ScreenAdapter {
                     setErrorLabelText("Fields can not be empty");
                 else {
                     try {
-                        if (new SignInConnection().userAuthentication(username.getText(), password.getText())) {
+                        if (ResponseDataConnection.SignInScreen.userAuthentication(username.getText(), password.getText())) {
                             getDataFromInternet();
                             new ScreenChanger().changeScreen("MenuScreen");
                         } else setErrorLabelText("Wrong username or password");
@@ -200,7 +198,7 @@ public class SignInScreen extends ScreenAdapter {
             String tiles70X70Directory = "";
             String skinsDirectory = "";
 
-            ArrayList<Level> levels = ResponseDataConnection.Levels.getLevels();
+            ArrayList<Level> levels = ResponseDataConnection.LevelsScreen.getLevels();
             ArrayList<Tile> tiles = ResponseDataConnection.Tiles.getTiles();
 
             for (Level level : levels) picturesDirectory = DownloadFile.getLevelPicture(level.getPicture());

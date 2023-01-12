@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import core.GameData;
+import core.ResponseDataConnection;
 import core.screens.ScreenChanger;
 import core.screens.navigation.NavigationBar;
 
@@ -67,7 +68,7 @@ public class MenuScreen extends ScreenAdapter {
 
     private void playerBasicData() {
         try {
-            new MenuConnection().getPlayerBasicData();
+            ResponseDataConnection.MenuScreen.getPlayerBasicData();
         } catch (Exception e) {
             //TODO make a popup for trouble
         }

@@ -1,6 +1,7 @@
 package core.screens.gamescreen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -10,7 +11,9 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import core.GameData;
 import core.screens.gamescreen.helper.TileMapHelper;
@@ -18,6 +21,7 @@ import core.screens.gamescreen.objects.bullet.Bullet;
 import core.screens.gamescreen.objects.enemy.Enemy;
 import core.screens.gamescreen.objects.hostage.Hostage;
 import core.screens.gamescreen.objects.player.Player;
+import core.screens.gamescreen.timer.DurationTimer;
 import core.screens.navigation.NavigationBar;
 
 import java.util.ArrayList;
@@ -43,6 +47,13 @@ public class GameScreen extends ScreenAdapter {
     public static ArrayList<Bullet> playerBullets, enemyBullets;
     public static ArrayList<Bullet> playerBulletsToRemove, enemyBulletsToRemove;
     public static boolean moveCameraWithArrows = false;
+
+    private enum GameStats {
+        IN_PROCESS,
+        PAUSE
+    }
+
+    private GameStats gameStats = GameStats.IN_PROCESS;
 
     public GameScreen(OrthographicCamera camera, String... level) {
         this.camera = camera;
@@ -97,7 +108,6 @@ public class GameScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.combined);
 
         stage.act(Math.min(delta, 1 / 60f));
-
         stage.draw();
 
         batch.begin();
@@ -110,8 +120,17 @@ public class GameScreen extends ScreenAdapter {
 
         batch.end();
 
-        this.update(delta);
+        if (gameStats == GameStats.IN_PROCESS) {
+            this.update(delta);
+        }
         //box2DDebugRenderer.render(world, camera.combined.scl(GameData.PPM));
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P) && gameStats == GameStats.IN_PROCESS){
+            gameStats = GameStats.PAUSE;
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.P) && gameStats == GameStats.PAUSE) {
+            gameStats = GameStats.IN_PROCESS;
+        }
     }
 
     @Override
@@ -139,6 +158,8 @@ public class GameScreen extends ScreenAdapter {
         player.update();
 
         player.shoot(camera, world);
+
+        DurationTimer.timer();
 
         for (Enemy enemy : enemies) {
             enemy.update();

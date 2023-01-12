@@ -1,4 +1,6 @@
-package core.objects;
+package core.screens.skinscreen;
+
+import com.badlogic.gdx.files.FileHandle;
 
 public class Skin {
 

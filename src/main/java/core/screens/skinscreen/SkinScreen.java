@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -18,8 +17,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import core.GameData;
 import core.ResponseDataConnection;
 import core.downloadfile.DownloadFile;
-import core.screens.ScreenChanger;
-import core.screens.levelsscreen.Level;
 import core.screens.navigation.NavigationBar;
 
 import java.util.ArrayList;
@@ -28,21 +25,21 @@ public class SkinScreen extends ScreenAdapter {
 
     private Table stageTable;
     public static Image image;
-    private Skin skin;
+    private com.badlogic.gdx.scenes.scene2d.ui.Skin skin;
     private Stage stage;
-    private ArrayList<core.objects.Skin> skinsList;
+    private ArrayList<Skin> skinsList;
 
     private String skinsDirectory;
 
     public SkinScreen() {
         stage = new Stage();
-        skin = new Skin(Gdx.files.internal(GameData.Skins.SKIN));
+        skin = new com.badlogic.gdx.scenes.scene2d.ui.Skin(Gdx.files.internal(GameData.Skins.SKIN));
         stageTable = new Table();
 
         skinsList = new ArrayList<>();
         try {
-            skinsList = ResponseDataConnection.Skins.getSkins();
-            for (core.objects.Skin playerSkin : skinsList) skinsDirectory = DownloadFile.getOwnedSkins(playerSkin.getPicture().split("-")[0], playerSkin.getPicture());
+            skinsList = ResponseDataConnection.SkinsScreen.getSkins();
+            for (Skin playerSkin : skinsList) skinsDirectory = DownloadFile.getOwnedSkins(playerSkin.getPicture().split("-")[0], playerSkin.getPicture());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -101,7 +98,7 @@ public class SkinScreen extends ScreenAdapter {
     private void product(Table scrollPaneTable) {
         Table product;
         int index = 0;
-        for (core.objects.Skin skin : skinsList) {
+        for (Skin skin : skinsList) {
 
             Image imageNotFound = null;
             try {

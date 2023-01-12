@@ -2,9 +2,7 @@ package core.screens;
 
 import core.API;
 import core.GameData;
-import core.downloadfile.DownloadFile;
-import core.screens.menuscreen.MenuConnection;
-import core.screens.signinscreen.SignInConnection;
+import core.ResponseDataConnection;
 import okhttp3.*;
 import org.junit.Test;
 
@@ -34,16 +32,14 @@ public class Tests {
 
     @Test
     public void signIn() throws Exception {
-        SignInConnection signInConnection = new SignInConnection();
-
-        boolean authentication = signInConnection.userAuthentication("urban4", "qwqwqwqw");
+        boolean authentication = ResponseDataConnection.SignInScreen.userAuthentication("", "");
         System.out.println(authentication);
     }
 
     @Test
     public void getPlayerBasicData() throws Exception {
         GameData.Player.PLAYER_ID = 1L;
-        new MenuConnection().getPlayerBasicData();
+        ResponseDataConnection.MenuScreen.getPlayerBasicData();
     }
 
     @Test

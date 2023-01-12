@@ -38,7 +38,7 @@ public class LevelsScreen extends ScreenAdapter {
         stageTable = new Table();
 
         try {
-            if (GameData.Player.Other.LEVEL_LIST == null) GameData.Player.Other.LEVEL_LIST = ResponseDataConnection.Levels.getLevels();
+            if (GameData.Player.Other.LEVEL_LIST == null) GameData.Player.Other.LEVEL_LIST = ResponseDataConnection.LevelsScreen.getLevels();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
