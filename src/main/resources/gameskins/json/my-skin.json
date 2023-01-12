@@ -1,0 +1,110 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	Basic-font: {
+		file: Basic-font.fnt
+	}
+	Big-font: {
+		file: Big-font.fnt
+	}
+	Medium-font: {
+		file: Medium-font.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	Black: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	Light-Blue: {
+		r: 0.6784314
+		g: 0.84705883
+		b: 0.9019608
+		a: 1
+	}
+	Light-Gray: {
+		r: 0.827451
+		g: 0.827451
+		b: 0.827451
+		a: 1
+	}
+	Light-Green: {
+		r: 0.5647059
+		g: 0.93333334
+		b: 0.5647059
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	TextField-background: {
+		name: white-pixel
+		color: Light-Gray
+	}
+	TextField-cursor: {
+		name: white-pixel
+		color: Light-Green
+	}
+	TextField-selection: {
+		name: white-pixel
+		color: Light-Green
+	}
+	TextButton-up: {
+		name: white-pixel
+		color: Light-Blue
+	}
+	Window-background: {
+		name: white-pixel
+		color: Light-Gray
+	}
+	ScrollPane-background: {
+		name: white-pixel
+		color: Light-Gray
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: Basic-font
+		fontColor: Black
+	}
+	big-title: {
+		font: Big-font
+		fontColor: Black
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		background: ScrollPane-background
+		vScrollKnob: scrool-pane-vscroll-knob
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: Basic-font
+		fontColor: Black
+		up: TextButton-up
+		pressedOffsetY: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: Basic-font
+		fontColor: Black
+		background: TextField-background
+		cursor: TextField-cursor
+		selection: TextField-selection
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: Window-background
+		titleFont: Basic-font
+		titleFontColor: Light-Blue
+	}
+}
+}

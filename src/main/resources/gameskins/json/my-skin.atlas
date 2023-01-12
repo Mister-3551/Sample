@@ -1,0 +1,41 @@
+
+my-skin.png
+size: 512, 512
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+white-pixel
+  rotate: false
+  xy: 509, 507
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+scrool-pane-vscroll-knob
+  rotate: false
+  xy: 1, 25
+  size: 13, 67
+  orig: 13, 67
+  offset: 0, 0
+  index: -1
+Basic-font
+  rotate: false
+  xy: 1, 438
+  size: 506, 70
+  orig: 506, 70
+  offset: 0, 0
+  index: -1
+Big-font
+  rotate: false
+  xy: 1, 229
+  size: 506, 207
+  orig: 506, 207
+  offset: 0, 0
+  index: -1
+Medium-font
+  rotate: false
+  xy: 1, 94
+  size: 506, 133
+  orig: 506, 133
+  offset: 0, 0
+  index: -1
